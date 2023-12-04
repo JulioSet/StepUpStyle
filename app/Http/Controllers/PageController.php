@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 // Mengatur perpindahan halaman
 class PageController extends Controller
 {
+    //user
+
     public function viewHome(){
         //pengecekan Auth User
         return view('home');
@@ -16,6 +18,11 @@ class PageController extends Controller
     public function viewLogin(){
         //pengecekan Auth User
         return view('login');
+    }
+
+    public function viewRegister(){
+        //pengecekan Auth User
+        return view('register');
     }
 
     public function viewContact(){
@@ -32,6 +39,15 @@ class PageController extends Controller
         //select DB
         return view('products');
     }
+
+    public function viewOrders(){
+        //pengecekan Auth User
+        return view('tracking');
+    }
+
+
+
+    // admin
 
     function viewAdminUser() {
         user::all();

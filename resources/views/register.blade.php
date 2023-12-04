@@ -23,36 +23,41 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6">
-					<div class="login_box_img">
-						<img class="img-fluid" src="img/login.jpg" alt="">
-						<div class="hover">
-							<h4>New to our website?</h4>
-							<p>Register now on our website and embark on a journey of seamless experiences and exclusive benefits!!</p>
-							<a class="primary-btn" href="/register">Create an Account</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
 					<div class="login_form_inner">
-						<h3>Log in to enter</h3>
-						<form class="row login_form" action="{{ route('user-login') }}" method="post" id="login">
+						<h3>Register</h3>
+						<form class="row login_form" action="{{ route('user-register') }}" method="post" id="register">
 							@csrf
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+								<input type="text" class="form-control" id="name" name="name" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'">
+								<br><span style="color: red;">{{ $errors->first('name') }}</span>
+							</div>	
+							<div class="col-md-12 form-group">
+								<input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+								<br><span style="color: red;">{{ $errors->first('email') }}</span>
 							</div>
 							<div class="col-md-12 form-group">
 								<input type="password" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<br><span style="color: red;">{{ $errors->first('password') }}</span>
 							</div>
 							<div class="col-md-12 form-group">
-								<div class="creat_account">
-									<input type="checkbox" id="f-option2" name="selector">
-									<label for="f-option2">Keep me logged in</label>
-								</div>
+								<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'">
+								<br><span style="color: red;">{{ $errors->first('password_confirmation') }}</span>
 							</div>
+
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="primary-btn">Log In</button>
+								<button type="submit" value="submit" class="primary-btn">Register</button>
 							</div>
 						</form>
+					</div>
+				</div>
+                <div class="col-lg-6">
+					<div class="login_box_img">
+						<img class="img-fluid" src="img/login.jpg" alt="">
+						<div class="hover">
+							<h4>Already have an account?</h4>
+							<p>Log in to our website now for instant access to a tailored online experience!</p>
+							<a class="primary-btn" href="/login">Log In</a>
+						</div>
 					</div>
 				</div>
 			</div>
