@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg navbar-light main_box">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <a class="navbar-brand logo_h" href="/"><img src="{{ asset('img/logo-full.png') }}" alt=""></a>
+                <a class="navbar-brand logo_h" href="/"><img src="{{ asset('img/logo-full.png') }}" width="150px"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -16,10 +16,10 @@
                         <li class="nav-item submenu dropdown">
                             <a href="/products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="/products">All Products</a></li>
-                                <li class="nav-item"><a class="nav-link" href="new-arrival">New Arrival</a></li>
-                                <li class="nav-item"><a class="nav-link" href="best-seller">Best Seller</a></li>
-                                <li class="nav-item"><a class="nav-link" href="flash-sale">Flash Sale</a></li>
+                                <li class="nav-item"><a class="nav-link" href=" {{url('/products')}} ">All Products</a></li>
+                                <li class="nav-item"><a class="nav-link" href=" {{url('/products/new-arrival')}} ">New Arrival</a></li>
+                                <li class="nav-item"><a class="nav-link" href=" {{url('/products/best-seller')}} ">Best Seller</a></li>
+                                <li class="nav-item"><a class="nav-link" href=" {{url('/products/flash-sale')}} ">Flash Sale</a></li>
                             </ul>
                         </li>
                         {{-- <li class="nav-item submenu dropdown">
