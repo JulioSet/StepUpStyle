@@ -30,6 +30,10 @@ Route::get('/admineditukuran/{id}', [PageController::class, 'viewAdminEditUkuran
 Route::post('/admineditukuran/{id}', [AdminController::class, 'EditUkuran'])->name('AdminEditukuran');
 
 
+Route::get('/admineditukuran/{id}', [PageController::class, 'viewAdminEditUser'])->name('viewEditUser');
+Route::post('/admineditukuran/{id}', [AdminController::class, 'EditUser'])->name('UserEditAdmin');
+
+
 Route::get('/adminproduct', [PageController::class, 'viewAdminProduct']);
 Route::get('/adminaddproduct', [PageController::class, 'viewAdminAddProduct']);
 
