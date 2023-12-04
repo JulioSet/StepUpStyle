@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,9 +38,11 @@ Route::get('/adminadduser', [PageController::class, 'viewAdminAddUser']);
 Route::post('/adminadduser',[AdminController::class, 'addUser'])->name('Useraddadmin');
 
 Route::get('/login', [PageController::class, 'viewLogin']);
-Route::post('/login', [PageController::class, 'login']);
+Route::get('/register', [PageController::class, 'viewRegister']);
 
-Route::get('/', [PageController::class, 'viewHome']);
+Route::get('/orders', [PageController::class, 'viewOrders']);
+
+Route::get('/', [PageController::class, 'viewHome'])->name('home');
 Route::get('/contact', [PageController::class, 'viewContact']);
 Route::prefix('products')->group(function () {
     Route::get('/', [PageController::class, 'viewAllProducts']);
@@ -50,3 +53,8 @@ Route::prefix('products')->group(function () {
 Route::get('/cart', [PageController::class, 'viewCart']);
 Route::post('/search', [PageController::class, 'search']);
 
+
+// user login, register & logout
+Route::post('login', [UserController::class, 'login'])->name('user-login');
+Route::post('register', [UserController::class, 'register'])->name('user-register');
+Route::get('logout', [UserController::class, 'logout'])->name('user-logout');
