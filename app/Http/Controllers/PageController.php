@@ -79,6 +79,10 @@ class PageController extends Controller
     function viewAdminEditUkuran(Request $request){
         return view('admin.ukuran.admineditukuran',['IdUkuran'=>ukuran::find($request->id)]);
     }
+
+    function viewAdminEditUser(Request $request){
+        return view('admin.user.adminedituser',['IdUser'=>user::find($request->id)]);
+    }
     
     
 }

@@ -44,6 +44,45 @@ class AdminController extends Controller
         return redirect("/adminuser");
     }
 
+
+    public function EditUser (Request $request){
+
+
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        foreach ($request->foto as $photo) {
+            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+            $namaFolderPhoto = "photo/";
+
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+        }
+
+        $role="customer";
+        if ($request->input('admin')) {
+            $role="admin";
+        }
+        elseif ($request->input('customer')) 
+        {
+            $role="customer";
+        }
+        
+
+        $user= user::find($request->id);
+        $user->user_name = $request->input('nama');
+        $user->user_email = $request->input('email');
+        $user->user_password= $request->input('password');
+        $user->user_profile= $namaFilePhoto;
+        $user->user_role=$role;
+        $user->save();
+
+        return redirect("/adminuser");
+    }
+
+
+
+     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                           UKURAN
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     public function addUkuran (Request $request){
         
 

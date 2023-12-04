@@ -31,7 +31,7 @@
                         <th>{{$item->user_email}}</th>
                         <th>{{$item->user_profile}}</th>
                         <th>{{$item->user_role}}</th>
-                        <th><a  href="#" class="btn btn-success mr-1">Edit</a><a  href="#" class="btn btn-danger">Delete</a></th>
+                        <th><a href="{{route('viewEditUser',$item->user_id)}} " class="btn btn-success mr-1">Edit</a><a  href="#" class="btn btn-danger">Delete</a></th>
                     </tr>
                     @endforeach
                 </tbody>
