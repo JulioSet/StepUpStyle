@@ -21,12 +21,20 @@ Route::get('/', function () {
 
 
 // /adminproduct
+
+Route::get('/adminukuran', [PageController::class, 'viewAdminUkuran']);
+Route::get('/adminaddukuran', [PageController::class, 'viewAdminAddUkuran']);
+Route::post('/adminaddukuran', [AdminController::class, 'addUkuran'])->name('Useraddukuran');
+Route::get('/admineditukuran/{id}', [PageController::class, 'viewAdminEditUkuran'])->name('viewEditUkuran');
+Route::post('/admineditukuran/{id}', [AdminController::class, 'EditUkuran'])->name('AdminEditukuran');
+
+
 Route::get('/adminproduct', [PageController::class, 'viewAdminProduct']);
 Route::get('/adminaddproduct', [PageController::class, 'viewAdminAddProduct']);
 
 Route::get('/adminuser', [PageController::class, 'viewAdminUser']);
 Route::get('/adminadduser', [PageController::class, 'viewAdminAddUser']);
-Route::post('/adminadduser',[AdminController::class, 'add'])->name('Useraddadmin');
+Route::post('/adminadduser',[AdminController::class, 'addUser'])->name('Useraddadmin');
 
 Route::get('/login', [PageController::class, 'viewLogin']);
 Route::post('/login', [PageController::class, 'login']);

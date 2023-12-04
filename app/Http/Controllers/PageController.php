@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ukuran;
 use App\Models\user;
 use Illuminate\Http\Request;
 
@@ -35,19 +36,33 @@ class PageController extends Controller
 
     function viewAdminUser() {
         user::all();
-        return view('admin.adminuser',['listuser'=>user::all()]);
+        return view('admin.user.adminuser',['listuser'=>user::all()]);
     }
 
     function viewAdminAddUser(){
-        return view('admin.adminadduser');
+        return view('admin.user.adminadduser');
     }
 
     function viewAdminProduct(){
-        return view('admin.adminproduct');
+        return view('admin.product.adminproduct');
     }
 
     function viewAdminAddProduct(){
-        return view('admin.adminaddproduct');
+        return view('admin.product.adminaddproduct');
     }
+
+    function viewAdminUkuran(){
+
+        return view('admin.ukuran.adminukuran',['listukuran'=>ukuran::all()]);
+    }
+
+    function viewAdminAddUkuran(){
+        return view('admin.ukuran.adminaddukuran');
+    }
+
+    function viewAdminEditUkuran(Request $request){
+        return view('admin.ukuran.admineditukuran',['IdUkuran'=>ukuran::find($request->id)]);
+    }
+    
     
 }
