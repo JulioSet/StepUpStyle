@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\user;
 use Illuminate\Http\Request;
 
 // Mengatur perpindahan halaman
@@ -31,4 +32,22 @@ class PageController extends Controller
         //select DB
         return view('products');
     }
+
+    function viewAdminUser() {
+        user::all();
+        return view('admin.adminuser',['listuser'=>user::all()]);
+    }
+
+    function viewAdminAddUser(){
+        return view('admin.adminadduser');
+    }
+
+    function viewAdminProduct(){
+        return view('admin.adminproduct');
+    }
+
+    function viewAdminAddProduct(){
+        return view('admin.adminaddproduct');
+    }
+    
 }
