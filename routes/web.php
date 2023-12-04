@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,14 @@ Route::get('/', function () {
     return view('login');
 });
 
+
+// /adminproduct
+Route::get('/adminproduct', [PageController::class, 'viewAdminProduct']);
+Route::get('/adminaddproduct', [PageController::class, 'viewAdminAddProduct']);
+
+Route::get('/adminuser', [PageController::class, 'viewAdminUser']);
+Route::get('/adminadduser', [PageController::class, 'viewAdminAddUser']);
+Route::post('/adminadduser',[AdminController::class, 'add'])->name('Useraddadmin');
 
 Route::get('/login', [PageController::class, 'viewLogin']);
 Route::post('/login', [PageController::class, 'login']);
