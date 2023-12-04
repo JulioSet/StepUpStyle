@@ -78,6 +78,15 @@
                             </p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="/adminukuran" class="nav-link">
+                            <i class="nav-icon fas fa-truck"></i>
+                            <p>
+                                Master Ukuran
+                            </p>
+                        </a>
+                    </li>
                     
                     <!-- Add more menu items as needed -->
         
