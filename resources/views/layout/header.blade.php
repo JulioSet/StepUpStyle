@@ -1,4 +1,4 @@
-@php 
+@php
     $userCekLog = Session::get('userLoggedIn');
 @endphp
 <header class="header_area sticky-header">
@@ -35,19 +35,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/contact">Contact</a>
                         </li>
-                        @if ($userCekLog != null)
-                            <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $userCekLog['name'] }}</a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/orders">Orders</a></li>
-                                    <form action="" method="get">
-                                        @csrf
-                                        <li class="nav-item"><a class="nav-link" href="{{ route('user-logout') }}">Logout</a></li>
-                                    </form>
-                                </ul>
-                            </li>
-                        @endif
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
@@ -57,6 +44,20 @@
                             <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
                         </li>
                     </ul>
+                    @if ($userCekLog != null)
+                    <ul class="nav navbar-nav menu_nav ml-4">
+                        <li class="nav-item submenu dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="lnr lnr-user" id="profile"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" style="margin-left: -9rem">
+                                <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/orders">Orders</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('user-logout') }}">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    @endif
                 </div>
             </div>
         </nav>

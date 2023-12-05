@@ -46,7 +46,7 @@ Route::get('/register', [PageController::class, 'viewRegister']);
 
 Route::get('/orders', [PageController::class, 'viewOrders']);
 
-Route::get('/', [PageController::class, 'viewHome'])->name('home');
+Route::get('/home', [PageController::class, 'viewHome'])->name('home');
 Route::get('/contact', [PageController::class, 'viewContact']);
 Route::prefix('products')->group(function () {
     Route::get('/', [PageController::class, 'viewAllProducts']);
