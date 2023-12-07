@@ -51,6 +51,11 @@ class PageController extends Controller
         return view('profile');
     }
 
+    public function viewCategory(){
+        //pengecekan Auth User
+        return view('category');
+    }
+
 
     // admin
 
