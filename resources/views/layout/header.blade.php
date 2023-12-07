@@ -43,6 +43,11 @@
                         <li class="nav-item">
                             <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
                         </li>
+                        @if ($userCekLog == null)
+                        <li class="nav-item">
+                            <a href="/login" class="enter"><span class="lnr lnr-enter"></span></a>
+                        </li> 
+                        @endif
                     </ul>
                     @if ($userCekLog != null)
                     <ul class="nav navbar-nav menu_nav ml-4">

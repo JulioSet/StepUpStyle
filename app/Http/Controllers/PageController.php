@@ -46,6 +46,10 @@ class PageController extends Controller
         return view('tracking');
     }
 
+    public function viewProfile(){
+        //pengecekan Auth User
+        return view('profile');
+    }
 
 
     // admin
