@@ -9,8 +9,8 @@
 				<div class="col-first">
 					<h1>Login/Register</h1>
 					<nav class="d-flex align-items-center">
-						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="category.html">Login/Register</a>
+						<a href="/home">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="/login">Login/Register</a>
 					</nav>
 				</div>
 			</div>
@@ -53,6 +53,11 @@
 								<button type="submit" value="submit" class="primary-btn">Log In</button>
 							</div>
 						</form>
+						@if (Session::has('msg'))
+							<div style="color: red">
+								<span>{{ Session::get('msg'); }}</span>
+							</div>
+						@endif
 					</div>
 				</div>
 			</div>

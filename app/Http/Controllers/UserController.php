@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\user;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -30,10 +31,12 @@ class UserController extends Controller
             ];
             $request->validate($rules, $messages);
 
+            $hashPassword = Hash::make($password);
+
             DB::table('user')->insert([
                 'user_name' => $name,
                 'user_email' => $email,
-                'user_password' => $password
+                'user_password' => $hashPassword
             ]);
     
             return redirect('/login')->with('msg', 'Registration succeed!');
@@ -48,31 +51,36 @@ class UserController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        $cekUser = DB::table('user')->where("user_email", "=", $email)->where("user_password", "=", $password)->first();
+        $cekUser = DB::table('user')->where("user_email", "=", $email)->first();
 
         if ($cekUser != null) {
             $listUser = user::all();
-
+            
             foreach($listUser as $key) {
                 if ($key->user_email == $email) {
-                    
-                    $userLoggedIn = [
-                        "id" => $key->user_id,
-                        "name" => $key->user_name,
-                        "email" => $key->user_email,
-                        "password" => $key->user_password,
-                        "profile" => $key->user_profile,
-                        "role" => $key->user_role
-                    ];
+                    if(Hash::check($password, $key->user_password) == true) {
+         
+                        $userLoggedIn = [
+                            "id" => $key->user_id,
+                            "name" => $key->user_name,
+                            "email" => $key->user_email,
+                            "password" => $key->user_password,
+                            "profile" => $key->user_profile,
+                            "role" => $key->user_role
+                        ];
 
-                    Session::put('userLoggedIn', $userLoggedIn);
-                    
-                    return redirect()->route('home');          
+                        Session::put('userLoggedIn', $userLoggedIn);
+                        
+                        return redirect()->route('home');  
+                    }
+                    else {
+                        return redirect()->back()->with('msg', 'Password is Incorrect!');
+                    }       
                 }
             }
         }
         else{
-            return redirect()->back()->with('msg', 'Email or Password is Incorrect!');
+            return redirect()->back()->with('msg', 'Email is not registered!');
         }  
     }
 

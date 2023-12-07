@@ -45,6 +45,7 @@ Route::get('/login', [PageController::class, 'viewLogin']);
 Route::get('/register', [PageController::class, 'viewRegister']);
 
 Route::get('/orders', [PageController::class, 'viewOrders']);
+Route::get('/profile', [PageController::class, 'viewProfile']);
 
 Route::get('/home', [PageController::class, 'viewHome'])->name('home');
 Route::get('/contact', [PageController::class, 'viewContact']);
