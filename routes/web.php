@@ -20,26 +20,38 @@ Route::get('/', function () {
     return view('login');
 });
 
-
-// /adminproduct
-
-Route::get('/adminukuran', [PageController::class, 'viewAdminUkuran']);
-Route::get('/adminaddukuran', [PageController::class, 'viewAdminAddUkuran']);
-Route::post('/adminaddukuran', [AdminController::class, 'addUkuran'])->name('Useraddukuran');
-Route::get('/admineditukuran/{id}', [PageController::class, 'viewAdminEditUkuran'])->name('viewEditUkuran');
-Route::post('/admineditukuran/{id}', [AdminController::class, 'EditUkuran'])->name('AdminEditukuran');
+Route::prefix('admin')->group(function () {
+    Route::get('/ukuran', [PageController::class, 'viewAdminUkuran']);
+    Route::get('/addukuran', [PageController::class, 'viewAdminAddUkuran']);
+    Route::post('/addukuran', [AdminController::class, 'addUkuran'])->name('Useraddukuran');
+    Route::get('/editukuran/{id}', [PageController::class, 'viewAdminEditUkuran'])->name('viewEditUkuran');
+    Route::post('/editukuran/{id}', [AdminController::class, 'EditUkuran'])->name('AdminEditukuran');
 
 
-Route::get('/admineditukuran/{id}', [PageController::class, 'viewAdminEditUser'])->name('viewEditUser');
-Route::post('/admineditukuran/{id}', [AdminController::class, 'EditUser'])->name('UserEditAdmin');
+    Route::get('/kategori', [PageController::class, 'viewAdminKategori']);
+    Route::get('/addkategori', [PageController::class, 'viewAdminAddKategori']);
+    Route::post('/addkategori', [AdminController::class, 'addKategori'])->name('addKategori');
+
+    Route::get('/supplier', [PageController::class, 'viewAdminSupplier']);
+    Route::get('/addsupplier', [PageController::class, 'viewAdminAddSupplier']);
+    Route::post('/addsupplier', [AdminController::class, 'addSupplier'])->name('addSupplier');
 
 
-Route::get('/adminproduct', [PageController::class, 'viewAdminProduct']);
-Route::get('/adminaddproduct', [PageController::class, 'viewAdminAddProduct']);
 
-Route::get('/adminuser', [PageController::class, 'viewAdminUser']);
-Route::get('/adminadduser', [PageController::class, 'viewAdminAddUser']);
-Route::post('/adminadduser',[AdminController::class, 'addUser'])->name('Useraddadmin');
+    Route::get('/retur', [PageController::class, 'viewAdminRetur']);
+    
+
+
+    Route::get('/product', [PageController::class, 'viewAdminProduct']);
+    Route::get('/addproduct', [PageController::class, 'viewAdminAddProduct']);
+    Route::post('/addproduct', [AdminController::class, 'addSepatu'])->name('addSepatu');
+
+    Route::get('/user', [PageController::class, 'viewAdminUser']);
+    Route::get('/adduser', [PageController::class, 'viewAdminAddUser'])->name('viewEditUser');
+    Route::post('/adduser',[AdminController::class, 'addUser'])->name('Useraddadmin');
+});
+
+
 
 Route::get('/login', [PageController::class, 'viewLogin']);
 Route::get('/register', [PageController::class, 'viewRegister']);

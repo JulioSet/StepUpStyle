@@ -9,35 +9,38 @@
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Master Product</h3>
-                <a  href="/adminaddproduct" class="btn btn-primary ml-auto mb-1">Add</a>
+                <a  href="/admin/addproduct" class="btn btn-primary ml-auto mb-1">Add</a>
             </div>
-            <table class="table table-bordered">
+            <table id="myTable" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nama Sepatu</th>
-                        <th>Harga</th>
-                        <th>Warna</th>
+                        <th>No</th>
                         <th>Gambar</th>
-                        <th>Brand</th>
+                        <th>Nama Sepatu</th>
+                        <th>Nama Supplier</th>
                         <th>Kategori</th>
                         <th>Ukuran</th>
+                        <th>Stock</th>
+                        <th>Harga</th>
+                        <th>Warna</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($listuser as $item)
-                        
-                    
+                    @foreach ($listproduk as $item)
                     <tr>
-                        <th>{{$item->user_id}}</th>
-                        <th>{{$item->user_name}}</th>
-                        <th>{{$item->user_email}}</th>
-                        <th>{{$item->user_profile}}</th>
-                        <th>{{$item->user_role}}</th>
+                        <th>{{$loop->iteration}}</th>
+                        <th><img src="{{ Storage::url("photo/$item->sepatu_pict") }}" alt="" width="100%" ></th>
+                        <th>{{$item->sepatu_name}}</th>
+                        <th>{{$item->supplier->supplier_name}}</th>
+                        <th>{{$item->kategori->kategori_nama}}</th>
+                        <th>{{$item->ukuran->ukuran_sepatu_nama}}</th>
+                        <th>{{$item->sepatu_stock}}</th>
+                        <th>{{$item->sepatu_price}}</th>
+                        <th>{{$item->sepatu_color}}</th>
                         <th><a  href="#" class="btn btn-success mr-1">Edit</a><a  href="#" class="btn btn-danger">Delete</a></th>
                     </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>

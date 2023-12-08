@@ -9,9 +9,9 @@
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Add Master Product</h3>
-                <a href="/adminproduct" class="btn btn-primary ml-auto mb-1">Back</a>
+                <a href="/admin/product" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
-            <form action="{{ route('Useraddadmin') }}" method="post"
+            <form action="{{ route('addSepatu') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
@@ -25,22 +25,22 @@
                     <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga">
                 </div>
     
-                <!-- Warna -->
                 <div class="mb-3">
-                    <label for="warna" class="form-label">Warna</label>
-                    <input type="text" class="form-control" id="warna" name="warna" placeholder="Masukkan Warna">
+                    <label for="stock" class="form-label">Stock</label>
+                    <input type="text" class="form-control" id="stock" name="stock" placeholder="Masukkan Harga">
                 </div>
+
     
                 <!-- Gambar -->
                 <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>
-                    <input type="file" class="form-control" id="gambar" name="gambar">
+                    <input type="file" class="form-control" id="gambar" name="foto[]">
                 </div>
     
                 <!-- Ukuran -->
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
-                    <select class="form-select" id="ukuran" name="ukuran">
+                    <select class="form-control" id="ukuran" name="ukuran">
                         <option value="39">39</option>
                         <option value="40">40</option>
                         <option value="41">41</option>
@@ -50,8 +50,8 @@
     
                 <!-- Warna (Combobox) -->
                 <div class="mb-3">
-                    <label for="warnaCombobox" class="form-label">Warna</label>
-                    <select class="form-select" id="warnaCombobox" name="warnaCombobox">
+                    <label for="warna" class="form-label">Warna</label>
+                    <select class="form-control" id="warna" name="warna">
                         <option value="Merah">Merah</option>
                         <option value="Biru">Biru</option>
                         <option value="Hijau">Hijau</option>
@@ -62,14 +62,25 @@
                 <!-- Brand -->
                 <div class="mb-3">
                     <label for="brand" class="form-label">Brand</label>
-                    <select class="form-select" id="brand" name="brand">
-                        <option value="Nike">Nike</option>
-                        <option value="Adidas">Adidas</option>
-                        <option value="Puma">Puma</option>
+                    <select class="form-control" id="brand" name="brand">
+
+                        @foreach ($listsupplier as $item)
+                        <option value="{{$item->supplier_name}}">{{$item->supplier_name}}</option>
+                        @endforeach
                         <!-- Tambahkan opsi brand lainnya sesuai kebutuhan -->
                     </select>
                 </div>
-    
+                
+                <div class="mb-3">
+                    <label for="kategori" class="form-label">Kategori</label>
+                    <select class="form-control" id="kategori" name="kategori">
+
+                        @foreach ($listkategori as $item)
+                        <option value="{{$item->kategori_nama}}">{{$item->kategori_nama}}</option>
+                        @endforeach
+                        <!-- Tambahkan opsi brand lainnya sesuai kebutuhan -->
+                    </select>
+                </div>
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

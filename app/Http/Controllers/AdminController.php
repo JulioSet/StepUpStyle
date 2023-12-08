@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\kategori;
+use App\Models\sepatu;
+use App\Models\supplier;
 use App\Models\ukuran;
 use App\Models\user;
 use Illuminate\Http\Request;
@@ -41,7 +44,7 @@ class AdminController extends Controller
         $user->user_role="admin";
         $user->save();
 
-        return redirect("/adminuser");
+        return redirect("/admin/user");
     }
 
 
@@ -74,7 +77,7 @@ class AdminController extends Controller
         $user->user_role=$role;
         $user->save();
 
-        return redirect("/adminuser");
+        return redirect("/admin/user");
     }
 
 
@@ -88,10 +91,9 @@ class AdminController extends Controller
 
         $ukuran= new ukuran();
         $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
-        $ukuran->ukuran_sepatu_stock = $request->input('stock');
         $ukuran->save();
 
-        return redirect("/adminukuran");
+        return redirect("/admin/ukuran");
     }
 
 
@@ -99,9 +101,86 @@ class AdminController extends Controller
 
         $ukuran= ukuran::find($request->id);
         $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
-        $ukuran->ukuran_sepatu_stock = $request->input('stock');
         $ukuran->save();
 
-        return redirect("/adminukuran");
+        return redirect("/admin/ukuran");
+    }
+
+
+  //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                           SUPPLIER
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    public function addSupplier (Request $request){
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        foreach ($request->foto as $photo) {
+            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+            $namaFolderPhoto = "photo/";
+
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+        }
+
+    
+        $supplier= new supplier();
+        $supplier->supplier_name= $request->input('nama_supplier');
+        $supplier->supplier_contact=$request->input('supplier_contact');
+        $supplier->supplier_office=$request->input('supplier_office');
+        $supplier->supplier_logo=$namaFilePhoto;
+        $supplier->save();
+    
+        return redirect("/admin/supplier");
+    }
+
+
+  //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                           KATEGORI
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    public function addKategori (Request $request){
+        $kategori= new kategori();
+        $kategori->kategori_nama= $request->input('nama_kategori');
+        $kategori->save();
+    
+        return redirect("/admin/kategori");
+    }
+
+
+  //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                           SEPATU
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    public function addSepatu (Request $request){
+
+        $kategori = Kategori::where('kategori_nama', $request->input('kategori'))->first();
+        $supplier = supplier::where('supplier_name',$request->input('brand'))->first();
+        $ukuran = ukuran::where('ukuran_sepatu_nama',29)->first();
+
+        $kategoriID=$kategori->kategori_id;
+        $supplierID=$supplier->supplier_id;
+        $ukuranID=$ukuran->ukuran_sepatu_id;
+
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        foreach ($request->foto as $photo) {
+            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+            $namaFolderPhoto = "photo/";
+
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+        }
+
+        $sepatu= new sepatu();
+        $sepatu->sepatu_supplier_id= $supplierID;
+        $sepatu->sepatu_kategori_id= $kategoriID;
+        $sepatu->sepatu_ukuran_id= $ukuranID;
+        $sepatu->sepatu_pict= $namaFilePhoto;
+        $sepatu->sepatu_name=$request->input('namaSepatu');
+        $sepatu->sepatu_stock=$request->input('stock');
+        $sepatu->sepatu_price=$request->input('harga');
+        $sepatu->sepatu_color=$request->input('warna');
+        $sepatu->save();
+    
+        return redirect("/admin/product");
     }
 }
