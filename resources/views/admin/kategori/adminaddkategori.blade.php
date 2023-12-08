@@ -8,21 +8,17 @@
 
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
-                <h3>Add Master User</h3>
-                <a href="/admin/ukuran" class="btn btn-primary ml-auto mb-1">Back</a>
+                <h3>Add Master Supplier</h3>
+                <a href="/admin/supplier" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
-            <form action="{{ route('Useraddukuran') }}" method="post"
+            <form action="{{ route('addKategori') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label for="ukuran" class="form-label">Ukuran</label>
-                    <input type="number" class="form-control" id="ukuran" name="ukuran"
-                        placeholder="ukuran">
+                    <label for="nama_kategori" class="form-label">Nama Kategori</label>
+                    <input type="text" class="form-control" id="nama_kategori" name="nama_kategori">
                 </div>
-
-                
-
-                <!-- Tombol Submit -->
+        
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

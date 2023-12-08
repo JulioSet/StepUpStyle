@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Admin Panel</title>
-
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+  
+    
     <!-- AdminLTE CSS from CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 </head>
@@ -52,7 +58,7 @@
         
                     <!-- Master User Menu Item -->
                     <li class="nav-item">
-                        <a href="/adminuser" class="nav-link">
+                        <a href="/admin/user" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Master User
@@ -62,7 +68,7 @@
         
                     <!-- Master Supplier Menu Item -->
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/admin/supplier" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
                             <p>
                                 Master Supplier
@@ -71,7 +77,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="/adminproduct" class="nav-link">
+                        <a href="/admin/product" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
                             <p>
                                 Master Product
@@ -80,14 +86,30 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="/adminukuran" class="nav-link">
+                        <a href="/admin/ukuran" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
                             <p>
                                 Master Ukuran
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/admin/retur" class="nav-link">
+                            <i class="nav-icon fas fa-truck"></i>
+                            <p>
+                                Master Retur
+                            </p>
+                        </a>
+                    </li>
                     
+                    <li class="nav-item">
+                        <a href="/admin/kategori" class="nav-link">
+                            <i class="nav-icon fas fa-truck"></i>
+                            <p>
+                                Master Kategori
+                            </p>
+                        </a>
+                    </li>
                     <!-- Add more menu items as needed -->
         
                 </ul>
@@ -121,5 +143,12 @@
 
     <!-- Tambahkan JS AdminLTE -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    <script>
+
+    	
+    let table = new DataTable('#myTable');
+    </script>
 </body>
 </html>
