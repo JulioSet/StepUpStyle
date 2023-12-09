@@ -72,7 +72,8 @@ Route::get('/cart', [PageController::class, 'viewCart']);
 Route::post('/search', [PageController::class, 'search']);
 
 
-// user login, register & logout
+// user login, register, logout, profile edit
 Route::post('login', [UserController::class, 'login'])->name('user-login');
 Route::post('register', [UserController::class, 'register'])->name('user-register');
 Route::get('logout', [UserController::class, 'logout'])->name('user-logout');
+Route::post('profile', [UserController::class, 'editProfile'])->name('user-edit');
