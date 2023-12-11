@@ -23,20 +23,18 @@
     @endphp
 
     <section class="login_box_area section_gap">
-		<div class="container">
-			<div class="row">
-
-				<div class="col-lg-6" style="height:70vh">
+		<div class="container" >
+			<div class="row" >            
+				<div class="col-lg-6" style="height:145vh; margin:auto" >
 					<div class="login_form_inner">
-						<h3>INI BUAT PROFILE PICT USER</h3>
-					</div>
-				</div>
-
-				<div class="col-lg-6" style="height:110vh">
-					<div class="login_form_inner">
-						<h3>Profile</h3>
-						<form class="row login_form" action="{{ route('user-register') }}" method="post" id="register">
-							@csrf
+                        <h3>Profile</h3>
+                        <form class="row login_form" action="{{ route('user-edit') }}" method="post" id="profile" enctype="multipart/form-data">
+                        @csrf
+                            <div class="col-md-12 form-group">
+                                <img src="{{ Storage::url("photo/$userLoggedIn[profile]") }}" alt="" style="width:7vw; height:15vh; border-radius:100%;">
+                                <br><input type="file" name="profile_picture[]" id="">
+                                <span style="color: red;">{{ $errors->first('profile_picture') }}</span>
+							</div>	
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="name" name="name" value="{{ $userLoggedIn['name'] }}" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'">
 								<br><span style="color: red;">{{ $errors->first('name') }}</span>
@@ -45,12 +43,16 @@
 								<input type="email" class="form-control" id="email" name="email" value="{{ $userLoggedIn['email'] }}" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
 								<br><span style="color: red;">{{ $errors->first('email') }}</span>
 							</div>
+                            <div class="col-md-12 form-group">
+                                <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+                                <br><span style="color: red;">{{ $errors->first('old_password') }}</span>
+                            </div>
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<input type="password" class="form-control" id="password" name="password" placeholder="New Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'New Password'">
 								<br><span style="color: red;">{{ $errors->first('password') }}</span>
 							</div>
-							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Old Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'">
+                            <div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'">
 								<br><span style="color: red;">{{ $errors->first('password_confirmation') }}</span>
 							</div>
 
@@ -61,6 +63,11 @@
 						@if (Session::has('msg'))
 							<div style="color: red">
 								<span>{{ Session::get('msg'); }}</span>
+							</div>
+						@endif
+                        @if (Session::has('msgSuccess'))
+							<div style="color: green">
+								<span>{{ Session::get('msgSuccess'); }}</span>
 							</div>
 						@endif
 					</div>

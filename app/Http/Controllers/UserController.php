@@ -7,6 +7,7 @@ use App\Models\user;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -36,7 +37,8 @@ class UserController extends Controller
             DB::table('user')->insert([
                 'user_name' => $name,
                 'user_email' => $email,
-                'user_password' => $hashPassword
+                'user_password' => $hashPassword,
+                'user_profile' => 'basic_profile_picture.jpg'
             ]);
     
             return redirect('/login')->with('msg', 'Registration succeed!');
@@ -91,5 +93,153 @@ class UserController extends Controller
             Session::forget('remember_me');
         }
         return redirect()->route('home');
+    }
+
+    public function editProfile(Request $request) 
+    {
+        $listUser = user::all();
+        
+        $userLog = Session::get('userLoggedIn');
+
+        $id = $userLog['id'];
+
+        $cekPassword = $request->old_password;
+
+        if ($cekPassword != '') {
+            
+            if(Hash::check($cekPassword, $userLog['password']) == true) {           
+                $usernameChange = $request->name;
+                $emailChange = $request->email;
+                $passwordChange = $request->password;
+                $profileChange = $request->profile_picture;
+        
+                if ($emailChange == $userLog['email']) {
+                    if ($profileChange != '') {
+                        $rules = [
+                            'name' => ["required", "min:1"],
+                            'email' => 'required',
+                            'password' => 'confirmed',
+                            'old_password' => 'required',
+                            'profile_picture' => 'required',
+                            'profile_picture.*' => "mimes:gif,jpg,jpeg,png"
+                        ];
+                    }
+                    else {
+                        $rules = [
+                            'name' => ["required", "min:1"],
+                            'email' => 'required',
+                            'password' => 'confirmed',
+                            'old_password' => 'required',
+                        ];
+                    }
+                }
+                else {
+                    $cekUser = DB::table('user')->where("user_email", "=", $emailChange)->first();
+    
+                    if ($cekUser == null) {
+                        if ($profileChange != '') {
+                            $rules = [
+                                'name' => ["required", "min:1"],
+                                'email' => 'required',
+                                'password' => 'confirmed',
+                                'old_password' => 'required',
+                                'profile_picture' => 'required',
+                                'profile_picture.*' => "mimes:gif,jpg,jpeg,png"
+                            ];
+                        }
+                        else {
+                            $rules = [
+                                'name' => ["required", "min:1"],
+                                'email' => 'required',
+                                'password' => 'confirmed',
+                                'old_password' => 'required',
+                            ];
+                        }
+                    }
+                    else{
+                        return redirect()->back()->with('msg', 'Email already registered!');
+                    }
+                }
+        
+                $messages = [
+                    "required" => "Please fill this field",
+                    "confirmed" => "Confirm Password does not match",
+                    "mimes" => "Photo must be either in gif, png, jpg or jpeg!"
+                ];
+                $request->validate($rules, $messages);
+        
+                if ($passwordChange == '') {
+                    if ($profileChange == '') {
+                        $user = [
+                            "id" => $userLog['id'],
+                            "name" => $request->name,
+                            "email" => $request->email,
+                            "password" => $userLog['password'],
+                            "profile" => $userLog['profile'],
+                            "role" => $userLog['role']
+                        ];                
+                    }else {
+                        $namaFolderPhoto = ""; $namaFilePhoto = "";
+                        foreach ($request->file("profile_picture") as $photo) {
+                            $namaFilePhoto  = 'profileuser'.$id.".".$photo->getClientOriginalExtension();
+                            $namaFolderPhoto = "photo/";
+                
+                            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+                        }
+    
+                        $user = [
+                            "id" => $userLog['id'],
+                            "name" => $request->name,
+                            "email" => $request->email,
+                            "password" => $userLog['password'],
+                            "profile" => $namaFilePhoto,
+                            "role" => $userLog['role']
+                        ];     
+                    }
+                }else {
+                    if ($profileChange == '') {
+                        $user = [
+                            "id" => $userLog['id'],
+                            "name" => $request->name,
+                            "email" => $request->email,
+                            "password" => Hash::make($request->password),
+                            "profile" => $userLog['profile'],
+                            "role" => $userLog['role']
+                        ];           
+                    }else {
+                        $namaFolderPhoto = ""; $namaFilePhoto = "";
+                        foreach ($request->file("profile_picture") as $photo) {
+                            $namaFilePhoto  = 'profileuser'.$id.".".$photo->getClientOriginalExtension();
+                            $namaFolderPhoto = "photo/";
+                
+                            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+                        }
+    
+                        $user = [
+                            "id" => $userLog['id'],
+                            "name" => $request->name,
+                            "email" => $request->email,
+                            "password" => Hash::make($request->password),
+                            "profile" => $namaFilePhoto,
+                            "role" => $userLog['role']
+                        ];   
+                    }
+                }
+    
+                DB::table('user')->where('user_id', '=', $id)->update([
+                    'user_name' => $user['name'],
+                    'user_email' => $user['email'],
+                    'user_password' => $user['password'],
+                    'user_profile' => $user['profile']
+                ]);
+    
+                
+                Session::put('userLoggedIn', $user);
+        
+                return redirect()->route('user-edit')->with('msgSuccess', 'Edit succeed!');
+            }
+        }else {
+            return redirect()->back()->with('msg', 'Input your password to save changes!');
+        }
     }
 }
