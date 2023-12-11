@@ -26,16 +26,6 @@ class AdminController extends Controller
         $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
         }
 
-        $role="customer";
-        if ($request->input('admin')) {
-            $role="admin";
-        }
-        elseif ($request->input('customer')) 
-        {
-            $role="customer";
-        }
-        
-
         $user= new user();
         $user->user_name = $request->input('nama');
         $user->user_email = $request->input('email');
@@ -59,23 +49,20 @@ class AdminController extends Controller
         $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
         }
 
-        $role="customer";
-        if ($request->input('admin')) {
-            $role="admin";
-        }
-        elseif ($request->input('customer')) 
-        {
-            $role="customer";
-        }
-        
-
         $user= user::find($request->id);
         $user->user_name = $request->input('nama');
         $user->user_email = $request->input('email');
         $user->user_password= $request->input('password');
         $user->user_profile= $namaFilePhoto;
-        $user->user_role=$role;
         $user->save();
+
+        return redirect("/admin/user");
+    }
+
+    public function editUserStatus ($id){
+
+
+
 
         return redirect("/admin/user");
     }
@@ -87,7 +74,7 @@ class AdminController extends Controller
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public function addUkuran (Request $request){
-        
+
 
         $ukuran= new ukuran();
         $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
@@ -121,14 +108,14 @@ class AdminController extends Controller
         $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
         }
 
-    
+
         $supplier= new supplier();
         $supplier->supplier_name= $request->input('nama_supplier');
         $supplier->supplier_contact=$request->input('supplier_contact');
         $supplier->supplier_office=$request->input('supplier_office');
         $supplier->supplier_logo=$namaFilePhoto;
         $supplier->save();
-    
+
         return redirect("/admin/supplier");
     }
 
@@ -142,7 +129,7 @@ class AdminController extends Controller
         $kategori= new kategori();
         $kategori->kategori_nama= $request->input('nama_kategori');
         $kategori->save();
-    
+
         return redirect("/admin/kategori");
     }
 
@@ -180,7 +167,7 @@ class AdminController extends Controller
         $sepatu->sepatu_price=$request->input('harga');
         $sepatu->sepatu_color=$request->input('warna');
         $sepatu->save();
-    
+
         return redirect("/admin/product");
     }
 }

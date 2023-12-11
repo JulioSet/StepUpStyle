@@ -21,6 +21,8 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
+
+
     Route::get('/ukuran', [PageController::class, 'viewAdminUkuran']);
     Route::get('/addukuran', [PageController::class, 'viewAdminAddUkuran']);
     Route::post('/addukuran', [AdminController::class, 'addUkuran'])->name('Useraddukuran');
@@ -39,7 +41,7 @@ Route::prefix('admin')->group(function () {
 
 
     Route::get('/retur', [PageController::class, 'viewAdminRetur']);
-    
+
 
 
     Route::get('/product', [PageController::class, 'viewAdminProduct']);
@@ -49,6 +51,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/user', [PageController::class, 'viewAdminUser']);
     Route::get('/adduser', [PageController::class, 'viewAdminAddUser'])->name('viewEditUser');
     Route::post('/adduser',[AdminController::class, 'addUser'])->name('Useraddadmin');
+    Route::get('/user-lock',[AdminController::class, 'editUserStatus'])->name('user-lock');
 });
 
 

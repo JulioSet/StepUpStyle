@@ -15,6 +15,6 @@ class ukuran extends Model
 
     public function sepatu()
     {
-        return $this->hasMany(Sepatu::class, 'sepatu_ukuran_id');
+        return $this->belongsTo(Sepatu::class, 'sepatu_ukuran_id');
     }
 }

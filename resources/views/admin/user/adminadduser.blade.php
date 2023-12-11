@@ -37,26 +37,12 @@
                 <!-- Upload Foto -->
                 <div class="mb-3">
                     <label for="foto" class="form-label">Upload Foto</label><br>
-                    <input type="file" class="" id="foto" name="foto[]">
-                </div>
-
-                <div class="d-flex mb-3">
-                    <div class="form-check mr-5">
-                        <input class="form-check-input" type="radio" value="admin"
-                            id="adminradio" name="admin">
-                        <label class="form-check-label" for="adminradio">
-                            Admin
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" value="user"
-                            id="userradio" name="customer">
-                        <label class="form-check-label" for="userradio">
-                            User
-                        </label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="foto" name="foto[]">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>
                 </div>
+
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

@@ -12,28 +12,31 @@
                 <a href="/admin/supplier" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
             <form action="{{ route('addSupplier') }}" method="post"
-                enctype="multipart/form-data">
+                enctype="multipart/form-data" class="dropzone">
                 @csrf
                 <div class="mb-3">
                     <label for="nama_supplier" class="form-label">Nama Supplier</label>
                     <input type="text" class="form-control" id="nama_supplier" name="nama_supplier">
                 </div>
-        
+
                 <div class="mb-3">
                     <label for="supplier_contact" class="form-label">Supplier Contact</label>
                     <input type="text" class="form-control" id="supplier_contact" name="supplier_contact">
                 </div>
-        
+
                 <div class="mb-3">
                     <label for="supplier_office" class="form-label">Supplier Office</label>
                     <input type="text" class="form-control" id="supplier_office" name="supplier_office">
                 </div>
-        
+
                 <div class="mb-3">
                     <label for="logo" class="form-label">Logo</label>
-                    <input type="file" class="form-control" id="logo" name="foto[]">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="logo" name="foto[]">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
                 </div>
-        
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

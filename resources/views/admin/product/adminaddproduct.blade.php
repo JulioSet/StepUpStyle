@@ -18,25 +18,28 @@
                     <label for="namaSepatu" class="form-label">Nama Sepatu</label>
                     <input type="text" class="form-control" id="namaSepatu" name="namaSepatu" placeholder="Masukkan Nama Sepatu">
                 </div>
-    
+
                 <!-- Harga -->
                 <div class="mb-3">
                     <label for="harga" class="form-label">Harga</label>
                     <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga">
                 </div>
-    
+
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock</label>
                     <input type="text" class="form-control" id="stock" name="stock" placeholder="Masukkan Harga">
                 </div>
 
-    
+
                 <!-- Gambar -->
                 <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>
-                    <input type="file" class="form-control" id="gambar" name="foto[]">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="gambar" name="foto[]">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
                 </div>
-    
+
                 <!-- Ukuran -->
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
@@ -47,7 +50,7 @@
                         <!-- Tambahkan opsi ukuran lainnya sesuai kebutuhan -->
                     </select>
                 </div>
-    
+
                 <!-- Warna (Combobox) -->
                 <div class="mb-3">
                     <label for="warna" class="form-label">Warna</label>
@@ -58,7 +61,7 @@
                         <!-- Tambahkan opsi warna lainnya sesuai kebutuhan -->
                     </select>
                 </div>
-    
+
                 <!-- Brand -->
                 <div class="mb-3">
                     <label for="brand" class="form-label">Brand</label>
@@ -70,7 +73,7 @@
                         <!-- Tambahkan opsi brand lainnya sesuai kebutuhan -->
                     </select>
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="kategori" class="form-label">Kategori</label>
                     <select class="form-control" id="kategori" name="kategori">

@@ -40,44 +40,6 @@
                     <input type="file" class="" id="foto" name="foto[]">
                 </div>
 
-                @if ($IdUser->user_role=="customer")
-                <div class="d-flex mb-3">
-                    <div class="form-check mr-5">
-                        <input class="form-check-input" type="radio" value="admin"
-                            id="adminradio" name="admin">
-                        <label class="form-check-label" for="adminradio">
-                            Admin
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" value="user"
-                            id="userradio" name="customer" checked>
-                        <label class="form-check-label" for="userradio">
-                            User
-                        </label>
-                    </div>
-                </div>
-                @else
-                <div class="d-flex mb-3">
-                    <div class="form-check mr-5">
-                        <input class="form-check-input" type="radio" value="admin"
-                            id="adminradio" name="admin" checked>
-                        <label class="form-check-label" for="adminradio">
-                            Admin
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" value="user"
-                            id="userradio" name="customer" >
-                        <label class="form-check-label" for="userradio">
-                            User
-                        </label>
-                    </div>
-                </div>
-                @endif
-                
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

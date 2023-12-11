@@ -4,29 +4,50 @@
 <div class="col-md-12 mt-2">
 
     <div class="card container-fluid">
-        
+
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
-                <h3>Master User</h3>
-                <a  href="/admin/adduser" class="btn btn-primary ml-auto mb-1">Add</a>
+                <h3>Master Retur</h3>
             </div>
             <table id="myTable" class="table table-bordered">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Kategori</th>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>From</th>
+                        <th>Email</th>
+                        <th>Reason</th>
+                        <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($listretur as $item)
-                        
-                    
                     <tr>
-                        <th>{{$loop->iteration}}</th>
-                        <th>{{$item->kategori_nama}}</th>
-                        {{-- <th>{{$item->user_role}}</th> --}}
-                        <th><a href=" " class="btn btn-success mr-1">Edit</a><a  href="#" class="btn btn-danger">Delete</a></th>
+                        <td>{{$loop->iteration}}</td>
+                        <td><img src="{{ Storage::url("photo/$item->retur_foto") }}" alt="" width="350px"></td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->sepatu->sepatu_name }}</td>
+                        <td>{{ $item->user->user_name }}</td>
+                        <td>{{ $item->user->user_email }}</td>
+                        <td>{{ $item->retur_reason }}</td>
+                        <td>
+                            @if($item->retur_status == 10) {{-- Canceled --}}
+                            <a href="#" class="btn btn-danger">Canceled</a>
+                            @else
+                                @if($item->retur_status == 0) {{-- Pending --}}
+                                <a href="#" class="btn btn-danger mr-1">Reject</a>
+                                <a href="#" class="btn btn-success">Accept</a>
+                                @else
+                                    @if ($item->retur_status == -1) {{-- Rejected --}}
+                                    <a href="#" class="btn btn-danger">Rejected</a>
+                                    @else {{-- Accepted --}}
+                                    <a href="#" class="btn btn-danger">Cancel</a>
+                                    @endif
+                                @endif
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

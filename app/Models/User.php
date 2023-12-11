@@ -12,4 +12,9 @@ class user extends Model
     protected $primaryKey = "user_id";
     public $incrementing = true;
     public $timestamps = true;
+
+    public function retur()
+    {
+        return $this->hasMany(retur::class, 'retur_id');
+    }
 }
