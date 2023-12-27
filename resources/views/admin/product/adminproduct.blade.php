@@ -36,7 +36,7 @@
                         <td>{{$item->kategori->kategori_nama}}</td>
                         <td>{{$item->ukuran->ukuran_sepatu_nama}}</td>
                         <td>{{$item->sepatu_stock}}</td>
-                        <td>{{$item->sepatu_price}}</td>
+                        <td>{{formatCurrencyIDR($item->sepatu_price)}}</td>
                         <td>{{$item->sepatu_color}}</td>
                         <td>
                             <div class="d-flex">
