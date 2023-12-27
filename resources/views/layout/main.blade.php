@@ -36,9 +36,7 @@
 <body>
     @include('layout.header')
 
-    {{-- <div class="bg-lightgrey container rounded justify-center p-4 zero" style="margin: 10px 6vw; min-height: 81vh"> --}}
     @yield('content')
-    {{-- </div> --}}
 
     @include('layout.footer')
 
