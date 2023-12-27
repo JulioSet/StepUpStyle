@@ -21,39 +21,40 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
-
-
+    // UKURAN
     Route::get('/ukuran', [PageController::class, 'viewAdminUkuran']);
     Route::get('/addukuran', [PageController::class, 'viewAdminAddUkuran']);
     Route::post('/addukuran', [AdminController::class, 'addUkuran'])->name('Useraddukuran');
     Route::get('/editukuran/{id}', [PageController::class, 'viewAdminEditUkuran'])->name('viewEditUkuran');
     Route::post('/editukuran/{id}', [AdminController::class, 'EditUkuran'])->name('AdminEditukuran');
 
-
+    // KATEGIRI
     Route::get('/kategori', [PageController::class, 'viewAdminKategori']);
     Route::get('/addkategori', [PageController::class, 'viewAdminAddKategori']);
     Route::post('/addkategori', [AdminController::class, 'addKategori'])->name('addKategori');
 
+    // SUPPLIER
     Route::get('/supplier', [PageController::class, 'viewAdminSupplier']);
     Route::get('/addsupplier', [PageController::class, 'viewAdminAddSupplier']);
     Route::post('/addsupplier', [AdminController::class, 'addSupplier'])->name('addSupplier');
 
-
-
+    // RETUR
     Route::get('/retur', [PageController::class, 'viewAdminRetur']);
+    Route::get('/retur/reject/{id}', [AdminController::class, 'rejectRetur']);
+    Route::get('/retur/accept/{id}', [AdminController::class, 'acceptRetur']);
+    Route::get('/retur/cancel/{id}', [AdminController::class, 'cancelRetur']);
 
-
-
+    // PRODUCT
     Route::get('/product', [PageController::class, 'viewAdminProduct']);
     Route::get('/addproduct', [PageController::class, 'viewAdminAddProduct']);
     Route::post('/addproduct', [AdminController::class, 'addSepatu'])->name('addSepatu');
 
+    // USER
     Route::get('/user', [PageController::class, 'viewAdminUser']);
     Route::get('/adduser', [PageController::class, 'viewAdminAddUser'])->name('viewEditUser');
     Route::post('/adduser',[AdminController::class, 'addUser'])->name('Useraddadmin');
     Route::get('/user-lock',[AdminController::class, 'editUserStatus'])->name('user-lock');
 });
-
 
 
 Route::get('/login', [PageController::class, 'viewLogin']);

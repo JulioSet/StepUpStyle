@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\kategori;
+use App\Models\retur;
 use App\Models\sepatu;
 use App\Models\supplier;
 use App\Models\ukuran;
@@ -169,5 +170,36 @@ class AdminController extends Controller
         $sepatu->save();
 
         return redirect("/admin/product");
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                           RETUR
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public function acceptRetur($id)
+    {
+        $retur = retur::find($id);
+        $retur->retur_status = 1;
+        $retur->save();
+
+        return redirect("/admin/retur");
+    }
+
+    public function rejectRetur($id)
+    {
+        $retur = retur::find($id);
+        $retur->retur_status = -1;
+        $retur->save();
+
+        return redirect("/admin/retur");
+    }
+
+    public function cancelRetur($id)
+    {
+        $retur = retur::find($id);
+        $retur->retur_status = 10;
+        $retur->save();
+
+        return redirect("/admin/retur");
     }
 }
