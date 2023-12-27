@@ -1,4 +1,5 @@
 @php
+    $currentPath = request()->path();
     $userCekLog = Session::get('userLoggedIn');
 @endphp
 <header class="header_area sticky-header">
@@ -15,8 +16,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto">
-                        <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-                        <li class="nav-item submenu dropdown">
+                        <li class="nav-item {{ ($currentPath == '/') ? 'active' : '' }}"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item {{ (Str::contains($currentPath, 'products')) ? 'active' : '' }} submenu dropdown">
                             <a href="/products" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item"><a class="nav-link" href=" {{url('/products')}} ">All Products</a></li>
@@ -32,7 +33,7 @@
                                 <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
                             </ul>
                         </li> --}}
-                        <li class="nav-item">
+                        <li class="nav-item {{ ($currentPath == '/contact') ? 'active' : '' }}">
                             <a class="nav-link" href="/contact">Contact</a>
                         </li>
                     </ul>
@@ -46,7 +47,7 @@
                         @if ($userCekLog == null)
                         <li class="nav-item">
                             <a href="/login" class="enter"><span class="lnr lnr-enter"></span></a>
-                        </li> 
+                        </li>
                         @endif
                     </ul>
                     @if ($userCekLog != null)
