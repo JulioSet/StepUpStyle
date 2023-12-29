@@ -30,16 +30,21 @@ Route::prefix('admin')->group(function () {
     Route::post('/addukuran', [AdminController::class, 'addUkuran'])->name('Useraddukuran');
     Route::get('/editukuran/{id}', [PageController::class, 'viewAdminEditUkuran'])->name('viewEditUkuran');
     Route::post('/editukuran/{id}', [AdminController::class, 'EditUkuran'])->name('AdminEditukuran');
+    Route::get('/ukuran/unavailable/{id}', [AdminController::class, 'unavailableUkuran']);
+    Route::get('/ukuran/available/{id}', [AdminController::class, 'availableUkuran']);
 
     // KATEGIRI
     Route::get('/kategori', [PageController::class, 'viewAdminKategori']);
     Route::get('/addkategori', [PageController::class, 'viewAdminAddKategori']);
     Route::post('/addkategori', [AdminController::class, 'addKategori'])->name('addKategori');
+    Route::get('/kategori/unavailable/{id}', [AdminController::class, 'unavailableKategori']);
+    Route::get('/kategori/available/{id}', [AdminController::class, 'availableKategori']);
 
     // SUPPLIER
     Route::get('/supplier', [PageController::class, 'viewAdminSupplier']);
     Route::get('/addsupplier', [PageController::class, 'viewAdminAddSupplier']);
     Route::post('/addsupplier', [AdminController::class, 'addSupplier'])->name('addSupplier');
+    Route::get('/supplier/delete/{id}', [AdminController::class, 'deleteSupplier']);
 
     // RETUR
     Route::get('/retur', [PageController::class, 'viewAdminRetur']);
@@ -51,6 +56,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/product', [PageController::class, 'viewAdminProduct']);
     Route::get('/addproduct', [PageController::class, 'viewAdminAddProduct']);
     Route::post('/addproduct', [AdminController::class, 'addSepatu'])->name('addSepatu');
+    Route::get('/product/delete/{id}', [AdminController::class, 'deleteSepatu']);
 
     // USER
     Route::get('/user', [PageController::class, 'viewAdminUser']);

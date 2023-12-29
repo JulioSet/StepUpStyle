@@ -87,7 +87,7 @@ class PageController extends Controller
         return view('admin.user.adminadduser');
     }
     function viewAdminProduct(){
-        return view('admin.product.adminproduct',['listproduk'=>sepatu::withTrashed()->get()]);
+        return view('admin.product.adminproduct',['listproduk'=>sepatu::all()]);
     }
     function viewAdminAddProduct(){
         return view('admin.product.adminaddproduct' ,['listkategori'=>kategori::all(), 'listsupplier'=>supplier::all()]);
@@ -123,7 +123,7 @@ class PageController extends Controller
 
     function viewAdminSupplier(){
 
-        return view('admin.supplier.adminsupplier',['listsupplier'=>supplier::withTrashed()->get()]);
+        return view('admin.supplier.adminsupplier',['listsupplier'=>supplier::all()]);
     }
     function viewAdminAddSupplier(){
 

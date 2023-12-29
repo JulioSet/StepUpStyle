@@ -91,6 +91,20 @@ class AdminController extends Controller
         return redirect("/admin/ukuran");
     }
 
+    public function unavailableUkuran($id)
+    {
+        $ukuran = ukuran::find($id);
+        $ukuran->delete();
+        return redirect('/admin/ukuran');
+    }
+
+    public function availableUkuran($id)
+    {
+        $ukuran = ukuran::withTrashed()->find($id);
+        $ukuran->restore();
+        return redirect('/admin/ukuran');
+    }
+
 
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                           SUPPLIER
@@ -116,6 +130,13 @@ class AdminController extends Controller
         return redirect("/admin/supplier");
     }
 
+    public function deleteSupplier($id)
+    {
+        $supplier = supplier::find($id);
+        $supplier->delete();
+        return redirect('/admin/supplier');
+    }
+
 
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                           KATEGORI
@@ -130,6 +151,19 @@ class AdminController extends Controller
         return redirect("/admin/kategori");
     }
 
+    public function unavailableKategori($id)
+    {
+        $kategori = kategori::find($id);
+        $kategori->delete();
+        return redirect('/admin/kategori');
+    }
+
+    public function availableKategori($id)
+    {
+        $kategori = kategori::withTrashed()->find($id);
+        $kategori->restore();
+        return redirect('/admin/kategori');
+    }
 
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                           SEPATU
@@ -165,6 +199,13 @@ class AdminController extends Controller
         $sepatu->save();
 
         return redirect("/admin/product");
+    }
+
+    public function deleteSepatu($id)
+    {
+        $sepatu = sepatu::find($id);
+        $sepatu->delete();
+        return redirect('/admin/product');
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------

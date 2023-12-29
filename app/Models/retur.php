@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class retur extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     protected $table = "retur";
     protected $primaryKey = "retur_id";
     public $incrementing = true;
