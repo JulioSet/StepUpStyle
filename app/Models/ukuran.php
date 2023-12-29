@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ukuran extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $table = "ukuran";
     protected $primaryKey = "ukuran_sepatu_id";
     public $incrementing = true;

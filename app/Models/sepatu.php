@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class sepatu extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $table = "sepatu";
     protected $primaryKey = "sepatu_id";
     public $incrementing = true;
