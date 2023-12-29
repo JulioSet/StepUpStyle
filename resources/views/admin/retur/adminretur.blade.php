@@ -16,7 +16,6 @@
                         <th>Photo</th>
                         <th>Name</th>
                         <th>From</th>
-                        <th>Email</th>
                         <th>Reason</th>
                         <th>Date</th>
                         <th>Action</th>
@@ -26,15 +25,14 @@
                     @foreach ($listretur as $item)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td><img src="{{ Storage::url("photo/$item->retur_foto") }}" alt="" width="350px"></td>
+                        <td><img src="{{ Storage::url("photo/$item->retur_foto") }}" alt="" width="250px"></td>
                         <td>{{ $item->sepatu->sepatu_name }}</td>
-                        <td>{{ $item->user->user_name }}</td>
                         <td>{{ $item->user->user_email }}</td>
                         <td>{{ $item->retur_reason }}</td>
-                        <td>{{ $item->created_at }}</td>
+                        <td>{{ $item->created_at->format('d M Y') }}</td>
                         <td>
                             @if($item->retur_status == 10) {{-- Canceled --}}
-                            <a href="#" class="btn btn-danger">Canceled</a>
+                            <button class="btn btn-danger">Canceled</button>
                             @else
                                 @if($item->retur_status == 0) {{-- Pending --}}
                                 <div class="d-flex">
@@ -43,7 +41,7 @@
                                 </div>
                                 @else
                                     @if ($item->retur_status == -1) {{-- Rejected --}}
-                                    <a href="#" class="btn btn-danger">Rejected</a>
+                                    <button class="btn btn-danger">Rejected</button>
                                     @else {{-- Accepted --}}
                                     <a href="/admin/retur/cancel/{{ $item->retur_id }}" class="btn btn-danger">Cancel</a>
                                     @endif

@@ -46,7 +46,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Home Menu Item -->
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="/admin" class="nav-link">
                             <i class="nav-icon fas fa-home"></i>
                             <p>
                                 Notification
