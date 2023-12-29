@@ -87,7 +87,7 @@ class PageController extends Controller
         return view('admin.user.adminadduser');
     }
     function viewAdminProduct(){
-        return view('admin.product.adminproduct',['listproduk'=>sepatu::all()]);
+        return view('admin.product.adminproduct',['listproduk'=>sepatu::withTrashed()->get()]);
     }
     function viewAdminAddProduct(){
         return view('admin.product.adminaddproduct' ,['listkategori'=>kategori::all(), 'listsupplier'=>supplier::all()]);
@@ -96,8 +96,7 @@ class PageController extends Controller
 
 
     function viewAdminUkuran(){
-
-        return view('admin.ukuran.adminukuran',['listukuran'=>ukuran::all()]);
+        return view('admin.ukuran.adminukuran',['listukuran'=>ukuran::withTrashed()->get()]);
     }
     function viewAdminAddUkuran(){
         return view('admin.ukuran.adminaddukuran');
@@ -113,7 +112,7 @@ class PageController extends Controller
 
     function viewAdminKategori(){
 
-        return view('admin.kategori.adminkategori',['listkategori'=>kategori::all()]);
+        return view('admin.kategori.adminkategori',['listkategori'=>kategori::withTrashed()->get()]);
     }
     function viewAdminAddKategori(){
 
@@ -124,7 +123,7 @@ class PageController extends Controller
 
     function viewAdminSupplier(){
 
-        return view('admin.supplier.adminsupplier',['listsupplier'=>supplier::all()]);
+        return view('admin.supplier.adminsupplier',['listsupplier'=>supplier::withTrashed()->get()]);
     }
     function viewAdminAddSupplier(){
 
