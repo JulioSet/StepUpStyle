@@ -81,7 +81,7 @@ class PageController extends Controller
 
 
     function viewAdminUser() {
-        return view('admin.user.adminuser',['listuser'=>user::all()]);
+        return view('admin.user.adminuser',['listuser'=>user::withTrashed()->get()]);
     }
     function viewAdminAddUser(){
         return view('admin.user.adminadduser');

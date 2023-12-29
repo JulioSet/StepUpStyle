@@ -65,7 +65,7 @@ class AdminController extends Controller
     }
 
     public function unbanUser ($id){
-        $user = user::find($id);
+        $user = user::withTrashed()->find($id);
         $user->restore();
         return redirect("/admin/user");
     }
