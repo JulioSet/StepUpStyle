@@ -40,8 +40,6 @@ class AdminController extends Controller
 
 
     public function EditUser (Request $request){
-
-
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         foreach ($request->foto as $photo) {
             $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
@@ -60,23 +58,23 @@ class AdminController extends Controller
         return redirect("/admin/user");
     }
 
-    public function editUserStatus ($id){
-
-
-
-
+    public function banUser ($id){
+        $user = user::find($id);
+        $user->delete();
         return redirect("/admin/user");
     }
 
-
+    public function unbanUser ($id){
+        $user = user::find($id);
+        $user->restore();
+        return redirect("/admin/user");
+    }
 
      //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                           UKURAN
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public function addUkuran (Request $request){
-
-
         $ukuran= new ukuran();
         $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
         $ukuran->save();
@@ -86,7 +84,6 @@ class AdminController extends Controller
 
 
     public function EditUkuran (Request $request){
-
         $ukuran= ukuran::find($request->id);
         $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
         $ukuran->save();
@@ -108,7 +105,6 @@ class AdminController extends Controller
 
         $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
         }
-
 
         $supplier= new supplier();
         $supplier->supplier_name= $request->input('nama_supplier');
@@ -141,7 +137,6 @@ class AdminController extends Controller
 
 
     public function addSepatu (Request $request){
-
         $kategori = Kategori::where('kategori_nama', $request->input('kategori'))->first();
         $supplier = supplier::where('supplier_name',$request->input('brand'))->first();
         $ukuran = ukuran::where('ukuran_sepatu_nama',29)->first();

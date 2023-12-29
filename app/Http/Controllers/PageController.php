@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\kategori;
+use App\Models\notifikasi;
 use App\Models\retur;
 use App\Models\sepatu;
 use App\Models\supplier;
 use App\Models\ukuran;
 use App\Models\user;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 // Mengatur perpindahan halaman
 class PageController extends Controller
 {
-    //user
+    // USER
 
     public function viewHome(){
         //pengecekan Auth User
@@ -61,24 +63,35 @@ class PageController extends Controller
     }
 
 
-    // admin
+    // ADMIN
+
+    public function viewAdminNotif()
+    {
+        $list = notifikasi::all();
+        $modified = array();
+        foreach ($list as $notif) {
+            $modified[] = [
+                'content' => $notif->notifikasi_content,
+                'diff' => Carbon::parse($notif->created_at)->diffForHumans()
+            ];
+        }
+        return view('admin.notifikasi.adminnotif', ['listnotif'=>$modified]);
+    }
+
+
 
     function viewAdminUser() {
         return view('admin.user.adminuser',['listuser'=>user::all()]);
     }
-
     function viewAdminAddUser(){
         return view('admin.user.adminadduser');
     }
-
     function viewAdminProduct(){
         return view('admin.product.adminproduct',['listproduk'=>sepatu::all()]);
     }
-
     function viewAdminAddProduct(){
         return view('admin.product.adminaddproduct' ,['listkategori'=>kategori::all(), 'listsupplier'=>supplier::all()]);
     }
-
 
 
 
@@ -86,19 +99,15 @@ class PageController extends Controller
 
         return view('admin.ukuran.adminukuran',['listukuran'=>ukuran::all()]);
     }
-
     function viewAdminAddUkuran(){
         return view('admin.ukuran.adminaddukuran');
     }
-
     function viewAdminEditUkuran(Request $request){
         return view('admin.ukuran.admineditukuran',['IdUkuran'=>ukuran::find($request->id)]);
     }
-
     function viewAdminEditUser(Request $request){
         return view('admin.user.adminedituser',['IdUser'=>user::find($request->id)]);
     }
-
 
 
 
@@ -110,8 +119,6 @@ class PageController extends Controller
 
         return view('admin.kategori.adminaddkategori');
     }
-    
-
 
 
 
@@ -119,15 +126,15 @@ class PageController extends Controller
 
         return view('admin.supplier.adminsupplier',['listsupplier'=>supplier::all()]);
     }
-
     function viewAdminAddSupplier(){
 
         return view('admin.supplier.adminaddsupplier');
     }
 
+
+
     function viewAdminRetur(){
 
         return view('admin.retur.adminretur',['listretur'=>retur::all()]);
     }
-    
 }

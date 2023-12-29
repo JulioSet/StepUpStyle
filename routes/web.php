@@ -21,6 +21,9 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
+    // NOTIFIKASI
+    Route::get('/', [PageController::class, 'viewAdminNotif']);
+
     // UKURAN
     Route::get('/ukuran', [PageController::class, 'viewAdminUkuran']);
     Route::get('/addukuran', [PageController::class, 'viewAdminAddUkuran']);
@@ -53,7 +56,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/user', [PageController::class, 'viewAdminUser']);
     Route::get('/adduser', [PageController::class, 'viewAdminAddUser'])->name('viewEditUser');
     Route::post('/adduser',[AdminController::class, 'addUser'])->name('Useraddadmin');
-    Route::get('/user-lock',[AdminController::class, 'editUserStatus'])->name('user-lock');
+    Route::get('/user/ban/{id}',[AdminController::class, 'banUser']);
+    Route::get('/user/unban/{id}',[AdminController::class, 'unbanUser']);
 });
 
 
