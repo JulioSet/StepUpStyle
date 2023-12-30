@@ -28,8 +28,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/ukuran', [PageController::class, 'viewAdminUkuran']);
     Route::get('/addukuran', [PageController::class, 'viewAdminAddUkuran']);
     Route::post('/addukuran', [AdminController::class, 'addUkuran'])->name('Useraddukuran');
-    Route::get('/editukuran/{id}', [PageController::class, 'viewAdminEditUkuran'])->name('viewEditUkuran');
-    Route::post('/editukuran/{id}', [AdminController::class, 'EditUkuran'])->name('AdminEditukuran');
+    Route::get('/ukuran/edit/{id}', [PageController::class, 'viewAdminEditUkuran'])->name('viewEditUkuran');
+    Route::post('/ukuran/edit/{id}', [AdminController::class, 'EditUkuran'])->name('AdminEditukuran');
     Route::get('/ukuran/unavailable/{id}', [AdminController::class, 'unavailableUkuran']);
     Route::get('/ukuran/available/{id}', [AdminController::class, 'availableUkuran']);
 
@@ -37,6 +37,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/kategori', [PageController::class, 'viewAdminKategori']);
     Route::get('/addkategori', [PageController::class, 'viewAdminAddKategori']);
     Route::post('/addkategori', [AdminController::class, 'addKategori'])->name('addKategori');
+    Route::get('/kategori/edit/{id}', [PageController::class, 'viewAdminEditKategori'])->name('viewEditKategori');
+    Route::post('/kategori/edit/{id}', [AdminController::class, 'EditKategori'])->name('AdminEditkategori');
     Route::get('/kategori/unavailable/{id}', [AdminController::class, 'unavailableKategori']);
     Route::get('/kategori/available/{id}', [AdminController::class, 'availableKategori']);
 
@@ -44,6 +46,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/supplier', [PageController::class, 'viewAdminSupplier']);
     Route::get('/addsupplier', [PageController::class, 'viewAdminAddSupplier']);
     Route::post('/addsupplier', [AdminController::class, 'addSupplier'])->name('addSupplier');
+    Route::get('/supplier/edit/{id}', [PageController::class, 'viewAdminEditSupplier'])->name('viewEditSupplier');
+    Route::post('/supplier/edit/{id}', [AdminController::class, 'EditSupplier'])->name('AdminEditsupplier');
     Route::get('/supplier/delete/{id}', [AdminController::class, 'deleteSupplier']);
 
     // RETUR
