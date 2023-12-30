@@ -118,7 +118,9 @@ class PageController extends Controller
 
         return view('admin.kategori.adminaddkategori');
     }
-
+    function viewAdminEditKategori(Request $request){
+        return view('admin.kategori.admineditkategori',['IdKategori'=>kategori::find($request->id)]);
+    }
 
 
     function viewAdminSupplier(){
@@ -129,7 +131,9 @@ class PageController extends Controller
 
         return view('admin.supplier.adminaddsupplier');
     }
-
+    function viewAdminEditSupplier(Request $request){
+        return view('admin.supplier.admineditsupplier',['IdSupplier'=>supplier::find($request->id)]);
+    }
 
 
     function viewAdminRetur(){
