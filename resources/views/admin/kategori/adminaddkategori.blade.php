@@ -8,8 +8,8 @@
 
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
-                <h3>Add Master Supplier</h3>
-                <a href="/admin/supplier" class="btn btn-primary ml-auto mb-1">Back</a>
+                <h3>Add Master Kategori</h3>
+                <a href="/admin/kategori" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
             <form action="{{ route('addKategori') }}" method="post"
                 enctype="multipart/form-data">
@@ -18,7 +18,7 @@
                     <label for="nama_kategori" class="form-label">Nama Kategori</label>
                     <input type="text" class="form-control" id="nama_kategori" name="nama_kategori">
                 </div>
-        
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

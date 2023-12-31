@@ -8,8 +8,8 @@
 
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
-                <h3>Edit Master Supplier</h3>
-                <a href="/admin/supplier" class="btn btn-primary ml-auto mb-1">Back</a>
+                <h3>Edit Master Kategori</h3>
+                <a href="/admin/kategori" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
             <form action="{{ route('AdminEditkategori',$IdKategori->kategori_id) }}" method="post">
                 @csrf
