@@ -130,6 +130,25 @@ class AdminController extends Controller
         return redirect("/admin/supplier");
     }
 
+    public function EditSupplier (Request $request){
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        foreach ($request->foto as $photo) {
+            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+            $namaFolderPhoto = "photo/";
+
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+        }
+
+
+        $supplier= supplier::find($request->id);
+        $supplier->supplier_name= $request->input('nama_supplier');
+        $supplier->supplier_contact=$request->input('supplier_contact');
+        $supplier->supplier_office=$request->input('supplier_office');
+        $supplier->supplier_logo=$namaFilePhoto;
+        $supplier->save();
+
+        return redirect("/admin/supplier");
+    }
     public function deleteSupplier($id)
     {
         $supplier = supplier::find($id);
@@ -145,6 +164,14 @@ class AdminController extends Controller
 
     public function addKategori (Request $request){
         $kategori= new kategori();
+        $kategori->kategori_nama= $request->input('nama_kategori');
+        $kategori->save();
+
+        return redirect("/admin/kategori");
+    }
+
+    public function EditKategori (Request $request){
+        $kategori= kategori::find($request->id);
         $kategori->kategori_nama= $request->input('nama_kategori');
         $kategori->save();
 
