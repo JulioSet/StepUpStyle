@@ -111,7 +111,7 @@ class PageController extends Controller
         return view('admin.product.adminproduct',['listproduk'=>sepatu::all()]);
     }
     function viewAdminAddProduct(){
-        return view('admin.product.adminaddproduct' ,['listkategori'=>kategori::all(), 'listsupplier'=>supplier::all()]);
+        return view('admin.product.adminaddproduct' ,['listkategori'=>kategori::all(), 'listsupplier'=>supplier::all(), 'listukuran'=>ukuran::all()]);
     }
 
 

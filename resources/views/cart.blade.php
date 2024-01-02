@@ -1,5 +1,9 @@
 @extends('layout.main')
-
+@php
+	use App\Models\sepatu;
+	// $userLoggedIn = Session::get('userLoggedIn');
+	// $listSepatu = sepatu::All();
+@endphp
 @section('content')
 
     <!-- Start Banner Area -->
@@ -26,10 +30,14 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Product</th>
+                                <th class="flex-fill">Product</th>
+                                <th class="col-2">Price</th>
+                                <th class="col-2">Quantity</th>
+                                <th class="col-2">Total</th>
+                                {{-- <th scope="col">Product</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
+                                <th scope="col">Total</th> --}}
                             </tr>
                         </thead>
                         {{-- @dd($cartSepatu) --}}
@@ -38,21 +46,24 @@
                                 $subtotalProducts = 0;
                             @endphp
                             @forelse ($cartSepatu as $c)
+                                @php
+                                    $sepatu = sepatu::find($c['id']);
+                                @endphp
                                 <tr>
                                     <td>
                                         <div class="media">
-                                            <div class="d-flex">
+                                            <div class="d-flex col-4">
                                                 {{-- <img src="{{$c->pict}}" alt=""> --}}
-                                                <img src="img/product/p1.jpg" alt="">
+                                                <img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
                                             </div>
                                             <div class="media-body">
-                                                <h3>{{ $c['nama'] }}</h3>
-                                                <h4>Size : {{ $c['size'] }}</h4>
+                                                <h4>{{ $sepatu->sepatu_name }}</h4>
+                                                <h4>Size : {{ $sepatu->ukuran->ukuran_sepatu_nama }}</h4>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <h5>Rp {{ $c['price'] }}</h5>
+                                        <h5>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</h5>
                                     </td>
                                     <td>
                                         <div class="product_count">
@@ -69,10 +80,10 @@
                                     </td>
                                     <td>
                                         @php
-                                            $total = $c['price'] * $c['qty'];
+                                            $total = $sepatu->sepatu_price * $c['qty'];
                                             $subtotalProducts += $total;
                                         @endphp
-                                        <h5>Rp {{ $total }}</h5>
+                                        <h5>{{ formatCurrencyIDR($total) }}</h5>
                                     </td>
                                 </tr>
                             @empty
@@ -164,9 +175,9 @@
                                     <h5>$720.00</h5>
                                 </td>
                             </tr> --}}
-                            <tr class="bottom_button">
+                            {{-- <tr class="bottom_button">
                                 <td>
-                                    {{-- <a class="gray_btn" href="#">Update Cart</a> --}}
+                                    <a class="gray_btn" href="#">Update Cart</a>
                                 </td>
                                 <td>
 
@@ -181,7 +192,7 @@
                                         <a class="gray_btn" href="#">Close Coupon</a>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td>
 
@@ -190,10 +201,10 @@
 
                                 </td>
                                 <td>
-                                    <h5>Subtotal</h5>
+                                    <h4>Subtotal</h4>
                                 </td>
                                 <td>
-                                    <h5>Rp {{ $subtotalProducts }}</h5>
+                                    <h4>{{ formatCurrencyIDR($subtotalProducts) }}</h4>
                                 </td>
                             </tr>
                             {{-- <tr class="shipping_area">
@@ -231,18 +242,10 @@
                                 </td>
                             </tr> --}}
                             <tr class="out_button_area">
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
+                                <td colspan="4"></td>
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
-                                        <a class="gray_btn" href="#">Continue Shopping</a>
+                                        <a class="gray_btn" href="/products">Continue Shopping</a>
                                         <a class="primary-btn" href="#">Proceed to checkout</a>
                                     </div>
                                 </td>

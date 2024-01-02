@@ -63,7 +63,7 @@
 						<!-- single product -->
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
-								<img class="img-fluid" src="img/product/p1.jpg" alt="">
+								<img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
 								<div class="product-details">
 									<h6>{{ $sepatu->sepatu_name }}</h6>
 									<div class="price">
@@ -76,8 +76,8 @@
 											<p class="hover-text">add to bag</p>
 										</a>
 										<a href="" class="social-info">
-											<span class="lnr lnr-move"></span>
-											<p class="hover-text">view more</p>
+											<span class="ti-money"></span>
+											<p class="hover-text">checkout</p>
 										</a>
 									</div>
 								</div>

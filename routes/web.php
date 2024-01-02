@@ -89,6 +89,7 @@ Route::get('/category', [PageController::class, 'viewCategory']);
 
 Route::get('/home', [PageController::class, 'viewHome'])->name('home');
 Route::get('/contact', [PageController::class, 'viewContact']);
+
 Route::prefix('products')->group(function () {
     Route::get('/', [PageController::class, 'viewAllProducts']);
     Route::get('/new-arrival', [PageController::class, 'viewNewArrival']);

@@ -10,31 +10,26 @@ use Illuminate\Support\Facades\Cookie;
 class CartController extends Controller
 {
     public function addToCart($id){
-        $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
+        $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? json_decode(Cookie::get(Cookie::make('cartSepatu', null, 1209600)), true); //cookie 14 hari
 
         foreach ($cartSepatu as $c){
-            if ($c->id == $id){
-                $c->qty += 1;
+            if ($c['id'] == $id){
+                return $this->addQty($id);
             }
-            Cookie::queue('cartSepatu', json_encode($cartSepatu));
-            return redirect('/cart');
         }
 
         $selected = sepatu::find($id);
 
         $sepatu = [
             "id" => $selected->sepatu_id,
-            "pict" => $selected->sepatu_pict,
-            "nama" => $selected->sepatu_name,
-            "size" => $selected->ukuran->ukuran_sepatu_nama,
-            "price" => $selected->sepatu_price,
+            // "pict" => $selected->sepatu_pict,
+            // "nama" => $selected->sepatu_name,
+            // "size" => $selected->ukuran->ukuran_sepatu_nama,
+            // "price" => $selected->sepatu_price,
             "qty" => 1
         ];
 
-        //PUSH Sepatu
         array_push($cartSepatu, $sepatu);
-
-        //REPLACE COOKIE
         Cookie::queue('cartSepatu', json_encode($cartSepatu));
         return redirect('/cart');
     }
@@ -57,15 +52,18 @@ class CartController extends Controller
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
         $updatedCart = [];
 
-        foreach ($cartSepatu as $c){
-            if ($c['id'] == $id && $c['qty'] > 1){
-                $c['qty'] -= 1;
-                array_push($updatedCart, $c);
+        for ($i=0 ; $i < count($cartSepatu) ; $i++) {
+            if ($cartSepatu[$i]['id'] == $id && $cartSepatu[$i]['qty'] > 0) {
+                $cartSepatu[$i]['qty'] -= 1;
+                if ($cartSepatu[$i]['qty'] == 0){
+                    array_splice($cartSepatu, $i, 1);
+                    Cookie::queue('cartSepatu', json_encode($cartSepatu));
+                    return redirect('/cart');
+                }
             }
-            if ($c['qty'] == 0){
-                unset($c);
-            }
+            array_push($updatedCart, $cartSepatu[$i]);
         }
+
         Cookie::queue('cartSepatu', json_encode($updatedCart));
         return redirect('/cart');
     }

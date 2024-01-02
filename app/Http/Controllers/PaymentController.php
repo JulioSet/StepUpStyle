@@ -46,6 +46,7 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             // Handle any errors that occur during token generation
             return redirect()->route('payment.error');
+
         }
 
         return view('payment.payment-page', compact('snapToken'));

@@ -200,7 +200,7 @@ class AdminController extends Controller
     public function addSepatu (Request $request){
         $kategori = Kategori::where('kategori_nama', $request->input('kategori'))->first();
         $supplier = supplier::where('supplier_name',$request->input('brand'))->first();
-        $ukuran = ukuran::where('ukuran_sepatu_nama',29)->first();
+        $ukuran = ukuran::where('ukuran_sepatu_nama',$request->input('ukuran'))->first();
 
         $kategoriID=$kategori->kategori_id;
         $supplierID=$supplier->supplier_id;

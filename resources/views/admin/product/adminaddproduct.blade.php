@@ -43,9 +43,9 @@
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
                     <select class="form-control" id="ukuran" name="ukuran">
-                        <option value="39">39</option>
-                        <option value="40">40</option>
-                        <option value="41">41</option>
+                        @foreach ($listukuran as $item)
+                            <option value="{{$item->ukuran_sepatu_nama}}">{{$item->ukuran_sepatu_nama}}</option>
+                        @endforeach
                         <!-- Tambahkan opsi ukuran lainnya sesuai kebutuhan -->
                     </select>
                 </div>
@@ -54,9 +54,12 @@
                 <div class="mb-3">
                     <label for="warna" class="form-label">Warna</label>
                     <select class="form-control" id="warna" name="warna">
+                        <option value="Hitam">Hitam</option>
+                        <option value="Putih">Putih</option>
                         <option value="Merah">Merah</option>
                         <option value="Biru">Biru</option>
                         <option value="Hijau">Hijau</option>
+                        <option value="Kuning">Kuning</option>
                         <!-- Tambahkan opsi warna lainnya sesuai kebutuhan -->
                     </select>
                 </div>
