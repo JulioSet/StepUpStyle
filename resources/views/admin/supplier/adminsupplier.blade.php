@@ -8,7 +8,7 @@
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Master Supplier</h3>
-                <a  href="/admin/addsupplier" class="btn btn-primary ml-auto mb-1">Add</a>
+                <a  href="/admin/supplier/add" class="btn btn-primary ml-auto mb-1">Add</a>
             </div>
             <table id="myTable" class="table table-bordered">
                 <thead>
