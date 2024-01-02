@@ -1,7 +1,7 @@
 @extends('layout.main')
 
-@php 
-	use App\Models\sepatu;	
+@php
+	use App\Models\sepatu;
 	$userLoggedIn = Session::get('userLoggedIn');
 	$listSepatu = sepatu::All();
 @endphp
@@ -12,11 +12,11 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Shop All Products</h1>
+					<h1>{{ $page }}</h1>
 					<nav class="d-flex align-items-center">
 						<a href="/home">Home<span class="lnr lnr-arrow-right"></span></a>
 						<a href="/products">Shop<span class="lnr lnr-arrow-right"></span></a>
-						<a href="/products">All Products</a>
+						<a href="/products">{{ $page }}</a>
 					</nav>
 				</div>
 			</div>
@@ -71,7 +71,7 @@
 										<h6 class="l-through">Rp{{ $sepatu->sepatu_price }}</h6>
 									</div>
 									<div class="prd-bottom">
-										<a href="" class="social-info">
+										<a href="/cart/add/{{$sepatu->sepatu_id}}" class="social-info">
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>
 										</a>

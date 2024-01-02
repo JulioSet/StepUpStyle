@@ -32,8 +32,55 @@
                                 <th scope="col">Total</th>
                             </tr>
                         </thead>
+                        {{-- @dd($cartSepatu) --}}
                         <tbody>
-                            <tr>
+                            @php
+                                $subtotalProducts = 0;
+                            @endphp
+                            @forelse ($cartSepatu as $c)
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                {{-- <img src="{{$c->pict}}" alt=""> --}}
+                                                <img src="img/product/p1.jpg" alt="">
+                                            </div>
+                                            <div class="media-body">
+                                                <h3>{{ $c['nama'] }}</h3>
+                                                <h4>Size : {{ $c['size'] }}</h4>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Rp {{ $c['price'] }}</h5>
+                                    </td>
+                                    <td>
+                                        <div class="product_count">
+                                            {{-- @dump($c['id']) --}}
+                                            <input type="text" name="qty" id="sst" maxlength="12" value="{{ $c['qty'] }}" title="Quantity:"
+                                                class="input-text qty">
+                                            <button class="increase items-count" type="button"><a href="/cart/up/{{$c['id']}}"><i class="lnr lnr-chevron-up"></i></a></button>
+                                            <button class="reduced items-count" type="button"><a href="/cart/down/{{$c['id']}}"><i class="lnr lnr-chevron-down"></i></a></button>
+                                            {{-- <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                                class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                            class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button> --}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @php
+                                            $total = $c['price'] * $c['qty'];
+                                            $subtotalProducts += $total;
+                                        @endphp
+                                        <h5>Rp {{ $total }}</h5>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4">Your cart is empty!</td>
+                                </tr>
+                            @endforelse
+                            {{-- <tr>
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
@@ -116,10 +163,10 @@
                                 <td>
                                     <h5>$720.00</h5>
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr class="bottom_button">
                                 <td>
-                                    <a class="gray_btn" href="#">Update Cart</a>
+                                    {{-- <a class="gray_btn" href="#">Update Cart</a> --}}
                                 </td>
                                 <td>
 
@@ -146,10 +193,10 @@
                                     <h5>Subtotal</h5>
                                 </td>
                                 <td>
-                                    <h5>$2160.00</h5>
+                                    <h5>Rp {{ $subtotalProducts }}</h5>
                                 </td>
                             </tr>
-                            <tr class="shipping_area">
+                            {{-- <tr class="shipping_area">
                                 <td>
 
                                 </td>
@@ -182,7 +229,7 @@
                                         <a class="gray_btn" href="#">Update Details</a>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr class="out_button_area">
                                 <td>
 

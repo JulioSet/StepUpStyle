@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    if (Session::get('userLoggedIn') == null) {
+        return redirect('/login');
+    }
+    return redirect('/home');
 });
 
 Route::get('/payment', [PaymentController::class, 'index']);
@@ -90,7 +95,14 @@ Route::prefix('products')->group(function () {
     Route::get('/best-seller', [PageController::class, 'viewBestSeller']);
     Route::get('/flash-sale', [PageController::class, 'viewFlashSale']);
 });
-Route::get('/cart', [PageController::class, 'viewCart']);
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [PageController::class, 'viewCart']);
+    Route::get('/add/{id}', [CartController::class, 'addToCart']);
+    Route::get('/up/{id}', [CartController::class, 'addQty']);
+    Route::get('/down/{id}', [CartController::class, 'substractQty']);
+});
+
 Route::post('/search', [PageController::class, 'search']);
 
 

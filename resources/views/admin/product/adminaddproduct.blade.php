@@ -11,8 +11,7 @@
                 <h3>Add Master Product</h3>
                 <a href="/admin/product" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
-            <form action="{{ route('addSepatu') }}" method="post"
-                enctype="multipart/form-data">
+            <form action="{{ route('addSepatu') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="namaSepatu" class="form-label">Nama Sepatu</label>

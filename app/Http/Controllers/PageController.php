@@ -11,6 +11,7 @@ use App\Models\ukuran;
 use App\Models\user;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 // Mengatur perpindahan halaman
 class PageController extends Controller
@@ -39,12 +40,32 @@ class PageController extends Controller
 
     public function viewAllProducts(){
         //select DB
-        return view('products');
+        $page = "All Products";
+        return view('products', compact('page'));
     }
 
     public function viewNewArrival(){
         //select DB
-        return view('products');
+        $page = "New Arrival";
+        return view('products', compact('page'));
+    }
+
+    public function viewBestSeller(){
+        //select DB
+        $page = "Best Seller";
+        return view('products', compact('page'));
+    }
+
+    public function viewFlashSale(){
+        //select DB
+        $page = "Flash Sale";
+        return view('products', compact('page'));
+    }
+
+    public function viewCart(){
+        //pengecekan Auth User
+        $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
+        return view('cart', compact('cartSepatu'));
     }
 
     public function viewOrders(){
