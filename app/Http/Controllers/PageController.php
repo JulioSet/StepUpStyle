@@ -107,11 +107,21 @@ class PageController extends Controller
     function viewAdminAddUser(){
         return view('admin.user.adminadduser');
     }
+    function viewAdminEditUser(Request $request){
+        return view('admin.user.adminedituser',['IdUser'=>user::find($request->id)]);
+    }
+
+
+
     function viewAdminProduct(){
         return view('admin.product.adminproduct',['listproduk'=>sepatu::all()]);
     }
     function viewAdminAddProduct(){
-        return view('admin.product.adminaddproduct' ,['listkategori'=>kategori::all(), 'listsupplier'=>supplier::all()]);
+        return view('admin.product.adminaddproduct' ,['listkategori'=>kategori::all(), 'listsupplier'=>supplier::all(), 'listukuran'=>ukuran::all()]);
+    }
+
+    function viewAdminEditProduct(Request $request){
+        return view('admin.product.admineditproduct' ,['IdProduct'=>sepatu::find($request->id),'listkategori'=>kategori::all(), 'listsupplier'=>supplier::all(), 'listukuran'=>ukuran::all()]);
     }
 
 
@@ -125,9 +135,7 @@ class PageController extends Controller
     function viewAdminEditUkuran(Request $request){
         return view('admin.ukuran.admineditukuran',['IdUkuran'=>ukuran::find($request->id)]);
     }
-    function viewAdminEditUser(Request $request){
-        return view('admin.user.adminedituser',['IdUser'=>user::find($request->id)]);
-    }
+    
 
 
 

@@ -228,6 +228,38 @@ class AdminController extends Controller
         return redirect("/admin/product");
     }
 
+    
+
+    public function EditSepatu (Request $request){
+        $kategori = Kategori::where('kategori_nama', $request->input('kategori'))->first();
+        $supplier = supplier::where('supplier_name',$request->input('brand'))->first();
+        $ukuran = ukuran::where('ukuran_sepatu_nama',29)->first();
+
+        $kategoriID=$kategori->kategori_id;
+        $supplierID=$supplier->supplier_id;
+        $ukuranID=$ukuran->ukuran_sepatu_id;
+
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        foreach ($request->foto as $photo) {
+            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+            $namaFolderPhoto = "photo/";
+
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+        }
+
+        $sepatu= sepatu::find($request->id);
+        $sepatu->sepatu_supplier_id= $supplierID;
+        $sepatu->sepatu_kategori_id= $kategoriID;
+        $sepatu->sepatu_ukuran_id= $ukuranID;
+        $sepatu->sepatu_pict= $namaFilePhoto;
+        $sepatu->sepatu_name=$request->input('namaSepatu');
+        $sepatu->sepatu_stock=$request->input('stock');
+        $sepatu->sepatu_price=$request->input('harga');
+        $sepatu->sepatu_color=$request->input('warna');
+        $sepatu->save();
+
+        return redirect("/admin/product");
+    }
     public function deleteSepatu($id)
     {
         $sepatu = sepatu::find($id);

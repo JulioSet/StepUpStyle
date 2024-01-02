@@ -8,10 +8,10 @@
 
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
-                <h3>Add Master User</h3>
+                <h3>Edit Master User</h3>
                 <a href="/admin/user" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
-            <form action="{{ route('UserEditAdmin',$IdUser->user_id) }}" method="post"
+            <form action="{{ route('AdminEditUser',$IdUser->user_id) }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
