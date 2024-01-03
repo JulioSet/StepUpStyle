@@ -1,4 +1,4 @@
-@php 
+@php
     use App\Models\kategori;
     use App\Models\supplier;
     use App\Models\ukuran;

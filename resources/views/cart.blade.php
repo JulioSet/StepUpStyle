@@ -245,7 +245,7 @@
                                 <td colspan="4"></td>
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
-                                        <a class="gray_btn" href="/products">Continue Shopping</a>
+                                        <a class="gray_btn" style="padding: 0px 13px" href="/products">Continue Shopping</a>
                                         <a class="primary-btn" href="#">Proceed to checkout</a>
                                     </div>
                                 </td>

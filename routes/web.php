@@ -72,6 +72,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/accept/{id}', [AdminController::class, 'acceptRetur']);
         Route::get('/cancel/{id}', [AdminController::class, 'cancelRetur']);
     });
+
     Route::prefix('product')->group(function () {
     // PRODUCT
         Route::get('/', [PageController::class, 'viewAdminProduct']);
@@ -119,6 +120,9 @@ Route::prefix('cart')->group(function () {
     Route::get('/up/{id}', [CartController::class, 'addQty']);
     Route::get('/down/{id}', [CartController::class, 'substractQty']);
 });
+
+Route::get('/checkout', [PageController::class, 'viewCheckout']); // nampilin halaman payment
+Route::post('/checkout', [PageController::class, 'viewCheckout']);
 
 Route::post('/search', [PageController::class, 'search']);
 
