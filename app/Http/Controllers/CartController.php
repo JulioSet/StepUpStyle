@@ -9,8 +9,13 @@ use Illuminate\Support\Facades\Cookie;
 
 class CartController extends Controller
 {
-    public function addToCart($id){
-        $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? json_decode(Cookie::get(Cookie::make('cartSepatu', null, 1209600)), true); //cookie 14 hari
+    public function addToCart($id){ //non retur
+        $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
+
+        if ($cartSepatu === null) {
+            $cartSepatu = [];
+            Cookie::queue('cartSepatu', json_encode($cartSepatu), 1209600);
+        }
 
         foreach ($cartSepatu as $c){
             if ($c['id'] == $id){
@@ -19,7 +24,6 @@ class CartController extends Controller
         }
 
         $selected = sepatu::find($id);
-
         $sepatu = [
             "id" => $selected->sepatu_id,
             // "pict" => $selected->sepatu_pict,

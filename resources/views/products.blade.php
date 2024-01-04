@@ -71,11 +71,11 @@
 										<h6 class="l-through">{{ formatCurrencyIDR($sepatu->sepatu_price) }}</h6>
 									</div>
 									<div class="prd-bottom">
-										<a href="/cart/add/{{$sepatu->sepatu_id}}" class="social-info">
+										<a href="{{ route('add-to-cart', $sepatu->sepatu_id) }}" class="social-info">
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>
 										</a>
-										<a href="/checkout" class="social-info">
+										<a href="{{ route('checkout-product', $sepatu->sepatu_id) }}" class="social-info">
 											<span class="ti-money"></span>
 											<p class="hover-text">checkout</p>
 										</a>
