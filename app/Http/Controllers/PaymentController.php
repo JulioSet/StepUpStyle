@@ -153,6 +153,10 @@ class PaymentController extends Controller
         return view('checkout-confirmation',  compact('transaction'));
     }
 
+    public function details(htrans $transaction){
+        return view('checkout-confirmation',  compact('transaction'));
+    }
+
     public function cancel(htrans $transaction){
         // Cookie::queue(Cookie::forget('cartSepatu'));
 

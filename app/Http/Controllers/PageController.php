@@ -84,7 +84,9 @@ class PageController extends Controller
 
     public function viewOrders(){
         //pengecekan Auth User
-        return view('tracking');
+        $userLoggedIn = Session::get('userLoggedIn');
+        $orders = user::find($userLoggedIn['id'])->orders;
+        return view('history', compact('orders'));
     }
 
     public function viewProfile(){

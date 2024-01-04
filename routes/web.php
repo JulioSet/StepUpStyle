@@ -129,6 +129,7 @@ Route::prefix('checkout')->group(function () {
     Route::get('/{transaction}', [PaymentController::class, 'checkout'])->name("checkout");
     Route::get('/success/{transaction}', [PaymentController::class, 'success'])->name("checkout-success");
     Route::get('/cancel/{transaction}', [PaymentController::class, 'cancel'])->name("checkout-cancel");
+    Route::get('/details/{transaction}', [PaymentController::class, 'details'])->name("checkout-details");
 });
 
 

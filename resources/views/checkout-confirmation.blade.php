@@ -7,10 +7,11 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Confirmation</h1>
+					<h1>Order Details</h1>
 					<nav class="d-flex align-items-center">
-						<a href="/home">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="/confirmation">Payment Success</a>
+						<a href="/home">Home <span class="lnr lnr-arrow-right"></span></a>
+						<a href="/orders">Orders <span class="lnr lnr-arrow-right"></a>
+						<a href="">Status</a>
 					</nav>
 				</div>
 			</div>
@@ -22,19 +23,19 @@
 	<section class="order_details section_gap">
 		<div class="container">
             @if ($transaction->htrans_penjualan_status == 0)
-			    <h2 class="title_confirmation">Your order has been cancelled.</h2>
+			    <h2 class="title_confirmation text-danger">Your order has been cancelled.</h2>
             @elseif ($transaction->htrans_penjualan_status == 1)
-			    <h2 class="title_confirmation">Waiting for payment.</h2>
+			    <h2 class="title_confirmation text-warning">Waiting for payment.</h2>
                 <div class="d-flex justify-content-center m-3">
-                    <button type="button" class="btn px-2 grey_btn" id="cancel-button">
+                    <button type="button" class="genric-btn danger circle mx-3" style="font-size: 1rem" id="cancel-button">
                         Cancel
                     </button>
-                    <button type="button" class="btn px-2 primary-btn" id="pay-button">
+                    <button type="button" class="genric-btn primary circle mx-3" style="font-size: 1rem" id="pay-button">
                         Payment
                     </button>
                 </div>
             @elseif ($transaction->htrans_penjualan_status == 2)
-			    <h2 class="title_confirmation">Thank you. Your order has been processed and to be picked up at our store</h2>
+			    <h2 class="title_confirmation text-info">Thank you. Your order has been processed and to be picked up at our store</h2>
             @elseif ($transaction->htrans_penjualan_status == 3)
 			    <h2 class="title_confirmation">Your order has been picked up.</h2>
             @endif
@@ -79,8 +80,6 @@
                             @foreach ($listProducts as $p)
                                 <tr>
                                     <td class="align-middle">
-                                        {{-- @dump($listProducts->get()) --}}
-
                                         <h5>{{ $p->sepatu->sepatu_name }}</h5>
                                         <p>{{ $p->sepatu->ukuran->ukuran_sepatu_nama }}</p>
                                     </td>
