@@ -12,6 +12,7 @@ use App\Models\user;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 // Mengatur perpindahan halaman
 class PageController extends Controller
@@ -92,9 +93,24 @@ class PageController extends Controller
         return view('cart', compact('cartSepatu'));
     }
 
+    // public function viewCheckout(){
+    //     //pengecekan Auth User
+    //     $userLoggedIn = Session::get('userLoggedIn');
+    //     $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
+    //     return view('checkout', compact('cartSepatu', 'userLoggedIn'));
+    // }
+
+    // public function viewCart(){
+    //     //pengecekan Auth User
+    //     $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
+    //     return view('cart', compact('cartSepatu'));
+    // }
+
     public function viewOrders(){
         //pengecekan Auth User
-        return view('tracking');
+        $userLoggedIn = Session::get('userLoggedIn');
+        $orders = user::find($userLoggedIn['id'])->orders()->orderBy('created_at', 'DESC')->get();
+        return view('history', compact('orders'));
     }
 
     public function viewProfile(){

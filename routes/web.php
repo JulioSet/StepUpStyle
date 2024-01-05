@@ -119,13 +119,23 @@ Route::prefix('products')->group(function () {
 
 Route::prefix('cart')->group(function () {
     Route::get('/', [PageController::class, 'viewCart']);
-    Route::get('/add/{id}', [CartController::class, 'addToCart']);
-    Route::get('/up/{id}', [CartController::class, 'addQty']);
-    Route::get('/down/{id}', [CartController::class, 'substractQty']);
+    Route::get('/add/{id}', [CartController::class, 'addToCart'])->name("add-to-cart");
+    Route::get('/up/{id}', [CartController::class, 'addQty'])->name("increase-cart-qty");
+    Route::get('/down/{id}', [CartController::class, 'substractQty'])->name("reduced-cart-qty");
 });
 
-Route::get('/checkout', [PageController::class, 'viewCheckout']); // nampilin halaman payment
-Route::post('/checkout', [PageController::class, 'viewCheckout']);
+// Route::get('/checkout', [PageController::class, 'viewCheckout']); // nampilin halaman payment
+// Route::post('/checkout', [PageController::class, 'viewCheckout']);
+Route::prefix('checkout')->group(function () {
+    Route::post('/', [PaymentController::class, 'process'])->name("checkout-process");
+    Route::get('/product/{id}', [PaymentController::class, 'directProcess'])->name('checkout-product');
+    Route::get('/{transaction}', [PaymentController::class, 'checkout'])->name("checkout");
+    Route::get('/success/{transaction}', [PaymentController::class, 'success'])->name("checkout-success");
+    Route::get('/cancel/{transaction}', [PaymentController::class, 'cancel'])->name("checkout-cancel");
+    Route::get('/details/{transaction}', [PaymentController::class, 'details'])->name("checkout-details");
+});
+
+
 
 Route::post('/search', [PageController::class, 'search']);
 

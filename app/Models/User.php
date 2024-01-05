@@ -19,4 +19,9 @@ class user extends Model
     {
         return $this->hasMany(retur::class, 'retur_id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(htrans::class, 'fk_customer', 'user_id');
+    }
 }
