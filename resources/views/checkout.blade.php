@@ -17,8 +17,8 @@
                 <div class="col-first">
                     <h1>Checkout</h1>
                     <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="single-product.html">Checkout</a>
+                        <a href="/home">Home <span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">Checkout</a>
                     </nav>
                 </div>
             </div>
@@ -136,15 +136,13 @@
                     window.location.href = '{{ route('checkout-success', $transaction->htrans_penjualan_id) }}';
                 },
 
-                // onPending: function(result){
-                //     /* You may add your own js here, this is just example */
-                //     document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                // },
-
-                // onError: function(result){
-                //     /* You may add your own js here, this is just example */
-                //     document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                // }
+                onPending: function(result){
+                    /* You may add your own js here, this is just example */
+                    document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                },
+                onError: function(result){
+                    window.location.href = '{{ route('checkout-cancel', $transaction->htrans_penjualan_id) }}';
+                }
             });
         };
 

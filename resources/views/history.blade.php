@@ -68,14 +68,14 @@
                                         @elseif ($item->htrans_penjualan_status == 2)
                                             <a href="{{ route('checkout-details', $item->htrans_penjualan_id) }}" class="genric-btn radius small info py-2" style="font-size: 1em; line-height: 15px">Waiting for Pick Up</a>
                                         @elseif ($item->htrans_penjualan_status == 3)
-                                            <a href="{{ route('checkout-details', $item->htrans_penjualan_id) }}" class="genric-btn radius small success py-2" style="font-size: 1em; line-height: 15px">Success</a>
+                                            <a href="{{ route('checkout-details', $item->htrans_penjualan_id) }}" class="genric-btn radius small btn-success py-2" style="font-size: 1em; line-height: 15px">Success</a>
                                         @endif
                                     </td>
 
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4">Your cart is empty!</td>
+                                    <td colspan="5" class="text-center">You don't have any orders yet</td>
                                 </tr>
                             @endforelse
 

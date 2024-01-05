@@ -80,8 +80,19 @@
                             @foreach ($listProducts as $p)
                                 <tr>
                                     <td class="align-middle">
-                                        <h5>{{ $p->sepatu->sepatu_name }}</h5>
-                                        <p>{{ $p->sepatu->ukuran->ukuran_sepatu_nama }}</p>
+                                        <div class="d-flex">
+                                            <div class="flex-fill align-middle">
+                                                <h5">{{ $p->sepatu->sepatu_name }}</h5>
+                                                <p">{{ $p->sepatu->ukuran->ukuran_sepatu_nama }}</p>
+                                            </div>
+                                            @if ($transaction->htrans_penjualan_status == 3)
+                                            <div class="col-3">
+                                                <a href="{{ route('form-retur')}}" class="genric-btn info radius py-1" style="line-height: 15px" id="pay-button">
+                                                    Apply Return Product
+                                                </a>
+                                            </div>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td class="align-middle">
                                         <h5>{{ $p->dtrans_penjualan_qty}}</h5>

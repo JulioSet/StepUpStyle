@@ -66,10 +66,15 @@ class PaymentController extends Controller
     //     return response(['status' => 'OK']);
     // }
 
-    // ================= CART CHECKOUT (DARI HALAMAN PRODUCT) =================
-    public function process()
+    // ================= CART CHECKOUT (DARI CART) =================
+    public function process($product=null)
     {
         $cart = json_decode(Cookie::get('cartSepatu'), true); //cookie 14 hari
+
+        if ($cart == null) {
+            $cart = $product;
+        }
+
         $user = Session::get('userLoggedIn');
         $htrans_penjualan_id = rand(10000,99999);
         $totalProducts = 0;
@@ -91,7 +96,10 @@ class PaymentController extends Controller
                 'dtrans_penjualan_price' => $sepatu->sepatu_price,
                 'dtrans_penjualan_subtotal' => $subtotal
             ]);
+            $sepatu->sepatu_stock -= $c['qty'];
+            $sepatu->save();
             $totalProducts += $subtotal;
+            // dd($subtotal);
         }
 
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
@@ -119,30 +127,60 @@ class PaymentController extends Controller
         return redirect()->route('checkout', $htrans_penjualan_id);
     }
 
-    public function checkout(htrans $transaction)
+    // ================= DIRECT CHECKOUT (DARI HALAMAN PRODUCT) =================
+    public function directProcess($id)
+    {
+        $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
+
+        if ($cartSepatu!=null) {
+            $cartSepatu = [];
+            Cookie::queue('cartSepatu', json_encode($cartSepatu), 1209600);
+        }
+
+        $sepatu = [
+            "id" => $id,
+            "qty" => 1
+        ];
+
+        array_push($cartSepatu, $sepatu);
+
+        Cookie::queue('cartSepatu', json_encode($cartSepatu));
+        return $this->process($cartSepatu);
+    }
+
+    public function checkout(htrans $transaction, $product=null)
     {
         $userLoggedIn = Session::get('userLoggedIn');
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
         $cart = [];
         Cookie::queue('cartSepatu', json_encode($cart), 1209600);
+        if ($product != null) {
+            $cartSepatu = $product;
+        }
         return view('checkout', compact('transaction', 'cartSepatu', 'userLoggedIn'));
     }
 
     // ================= DIRECT CHECKOUT (DARI HALAMAN PRODUCT) =================
-    public function directProcess(Request $request, $id)
-    {
-        $cart = [];
+    // public function directProcess(Request $request, $id)
+    // {
+    //     $cart = json_decode(Cookie::get('cartSepatu'), true);
+    //     if ($cart != null) {
+    //         Cookie::queue(Cookie::forget('cartSepatu'));
+    //         $cart = [];
+    //     }
 
-        $selected = sepatu::find($id);
-        $sepatu = [
-            "id" => $selected->sepatu_id,
-            "qty" => 1
-        ];
-        array_push($cart, $sepatu);
-        Cookie::queue('cartSepatu', json_encode($cart), 1209600);
+    //     $selected = sepatu::find($id);
+    //     $sepatu = [
+    //         "id" => $selected->sepatu_id,
+    //         "qty" => 1
+    //     ];
+    //     $cart= array($sepatu);
+    //     dump($cart);
 
-        return $this->process();
-    }
+    //     Cookie::queue('cartSepatu', json_encode($cart), 1209600);
+
+    //     return $this->process($cart);
+    // }
 
     public function success(htrans $transaction){
         // Cookie::queue(Cookie::forget('cartSepatu'));
