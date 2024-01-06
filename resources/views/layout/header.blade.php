@@ -23,7 +23,7 @@
                                 <li class="nav-item"><a class="nav-link" href=" {{url('/products')}} ">All Products</a></li>
                                 <li class="nav-item"><a class="nav-link" href=" {{url('/products/new-arrival')}} ">New Arrival</a></li>
                                 <li class="nav-item"><a class="nav-link" href=" {{url('/products/best-seller')}} ">Best Seller</a></li>
-                                <li class="nav-item"><a class="nav-link" href=" {{url('/products/flash-sale')}} ">Flash Sale</a></li>
+                                <li class="nav-item"><a class="nav-link" href=" {{url('/products/flashsale')}} ">Flash Sale</a></li>
                             </ul>
                         </li>
                         {{-- <li class="nav-item submenu dropdown">

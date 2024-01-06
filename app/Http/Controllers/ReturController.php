@@ -15,7 +15,7 @@ class ReturController extends Controller
     public function retur(Request $req){
         $tempRetur = json_decode(Cookie::get('tempRetur'), true);
         $dtrans = dtrans::find($tempRetur['dtrans_penjualan_id']);
-        // $user = Session::get('userLoggedIn');
+        $user = Session::get('userLoggedIn');
 
         $req->validate(
             [
@@ -37,6 +37,8 @@ class ReturController extends Controller
 
         $retur = retur::create([
             'fk_dtrans' => $dtrans->dtrans_penjualan_id,
+            'fk_customer' => $user['id'],
+            'fk_sepatu' => $dtrans->fk_sepatu,
             'retur_reason' => $req->reason,
             'retur_qty' => $req->qty,
             'retur_foto' => $namaFilePhoto,
@@ -44,7 +46,8 @@ class ReturController extends Controller
             'retur_status' => 2,
         ]);
 
-        return route('checkout-details', ['transaction'=>$dtrans->fk_htrans_penjualan]);
+        return redirect('/orders');
+        // return redirect('checkout-details', ['transaction'=>$dtrans->fk_htrans_penjualan]);
     }
 
     public function detailsRetur($retur_id){

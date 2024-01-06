@@ -111,7 +111,7 @@
                                                             Return Requested
                                                         </a>
                                                     @elseif ($retur->retur_status == 9)
-                                                        <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn primary radius py-1" style="line-height: 12px" id="pay-button">
+                                                        <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">
                                                             Return Cancelled
                                                         </a>
                                                     @endif
