@@ -19,12 +19,30 @@ class AdminController extends Controller
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Admin Nge ADD USER
     public function addUser (Request $request){
-        $namaFolderPhoto = ""; $namaFilePhoto = "";
-        foreach ($request->foto as $photo) {
-            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-            $namaFolderPhoto = "photo/";
 
-        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+        $rules = [
+            'nama' => ["required", "min:1",'unique:user,user_name'],
+            'password' => 'required',
+            // 'password_confirmation' => 'required',
+            'email' => ["required", "email"]
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "confirmed" => "Confirm Password does not match",
+            "unique" => "The Username has already been taken"
+        ];
+
+        $request->validate($rules, $messages);
+
+        
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        if ($request->foto!=null) {
+            foreach ($request->foto as $photo) {
+                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+                $namaFolderPhoto = "photo/";
+    
+            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            }
         }
 
         $user= new user();
@@ -40,12 +58,29 @@ class AdminController extends Controller
 
 
     public function EditUser (Request $request){
-        $namaFolderPhoto = ""; $namaFilePhoto = "";
-        foreach ($request->foto as $photo) {
-            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-            $namaFolderPhoto = "photo/";
 
-        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+        $rules = [
+            'nama' => ["required", "min:1",'unique:user,user_name'],
+            'password' => 'required',
+            // 'password_confirmation' => 'required',
+            'email' => ["required", "email"]
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "confirmed" => "Confirm Password does not match",
+            "unique" => "The Username has already been taken"
+        ];
+
+        $request->validate($rules, $messages);
+
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        if ($request->foto!=null) {
+            foreach ($request->foto as $photo) {
+                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+                $namaFolderPhoto = "photo/";
+    
+            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            }
         }
 
         $user= user::find($request->id);
@@ -75,6 +110,17 @@ class AdminController extends Controller
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public function addUkuran (Request $request){
+        $rules = [
+            'ukuran' => ["required", "numeric","integer"],
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "numeric" => "Value Must Number",
+            "integer" => "Value Must Number"
+        ];
+
+        $request->validate($rules, $messages);
+
         $ukuran= new ukuran();
         $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
         $ukuran->save();
@@ -84,6 +130,17 @@ class AdminController extends Controller
 
 
     public function EditUkuran (Request $request){
+        $rules = [
+            'ukuran' => ["required", "numeric","integer"],
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "numeric" => "Value Must Integer",
+            "integer" => "Value Must Integer"
+        ];
+
+        $request->validate($rules, $messages);
+
         $ukuran= ukuran::find($request->id);
         $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
         $ukuran->save();
@@ -112,6 +169,18 @@ class AdminController extends Controller
 
 
     public function addSupplier (Request $request){
+        $rules = [
+            'nama_supplier' => ["required", "min:1",'unique:supplier,supplier_name'],
+            'supplier_contact' => 'required',
+            'supplier_office' => 'required',
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken"
+        ];
+
+        $request->validate($rules, $messages);
+        
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         foreach ($request->foto as $photo) {
             $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
@@ -131,13 +200,27 @@ class AdminController extends Controller
     }
 
     public function EditSupplier (Request $request){
+        $rules = [
+            'nama_supplier' => ["required", "min:1",'unique:supplier,supplier_name'],
+            'supplier_contact' => 'required',
+            'supplier_office' => 'required',
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken"
+        ];
+
+        $request->validate($rules, $messages);
+        
         $namaFolderPhoto = ""; $namaFilePhoto = "";
+        
         foreach ($request->foto as $photo) {
             $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
             $namaFolderPhoto = "photo/";
 
         $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
         }
+        
 
 
         $supplier= supplier::find($request->id);
@@ -163,6 +246,16 @@ class AdminController extends Controller
 
 
     public function addKategori (Request $request){
+        $rules = [
+            'nama_kategori' => ["required", "min:1",'unique:kategori,kategori_nama'],
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken"
+        ];
+
+        $request->validate($rules, $messages);
+
         $kategori= new kategori();
         $kategori->kategori_nama= $request->input('nama_kategori');
         $kategori->save();
@@ -171,6 +264,16 @@ class AdminController extends Controller
     }
 
     public function EditKategori (Request $request){
+        $rules = [
+            'nama_kategori' => ["required", "min:1",'unique:kategori,kategori_nama'],
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken"
+        ];
+
+        $request->validate($rules, $messages);
+        
         $kategori= kategori::find($request->id);
         $kategori->kategori_nama= $request->input('nama_kategori');
         $kategori->save();

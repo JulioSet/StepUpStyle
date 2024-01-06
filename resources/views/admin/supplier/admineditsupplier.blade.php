@@ -17,16 +17,19 @@
                 <div class="mb-3">
                     <label for="nama_supplier" class="form-label">Nama Supplier</label>
                     <input type="text" class="form-control" id="nama_supplier" name="nama_supplier" value="{{$IdSupplier->supplier_name}}">
+                    <span style="color: red;">{{ $errors->first('nama_supplier') }}</span>
                 </div>
 
                 <div class="mb-3">
                     <label for="supplier_contact" class="form-label">Supplier Contact</label>
                     <input type="text" class="form-control" id="supplier_contact" name="supplier_contact" value="{{$IdSupplier->supplier_contact}}">
+                    <span style="color: red;">{{ $errors->first('supplier_contact') }}</span>
                 </div>
 
                 <div class="mb-3">
                     <label for="supplier_office" class="form-label">Supplier Office</label>
                     <input type="text" class="form-control" id="supplier_office" name="supplier_office" value="{{$IdSupplier->supplier_office}}">
+                    <span style="color: red;">{{ $errors->first('supplier_office') }}</span>
                 </div>
 
                 <div class="mb-3">

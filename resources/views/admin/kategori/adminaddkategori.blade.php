@@ -16,7 +16,8 @@
                 @csrf
                 <div class="mb-3">
                     <label for="nama_kategori" class="form-label">Nama Kategori</label>
-                    <input type="text" class="form-control" id="nama_kategori" name="nama_kategori">
+                    <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" placeholder="Nama Kategori">
+                    <span style="color: red;">{{ $errors->first('nama_kategori') }}</span>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

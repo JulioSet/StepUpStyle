@@ -18,13 +18,15 @@
                     <label for="nama" class="form-label">Nama</label>
                     <input type="text" class="form-control" id="nama" name="nama" value="{{$IdUser->user_name}}"
                         placeholder="Masukkan Nama">
+                        <span style="color: red;">{{ $errors->first('nama') }}</span>
                 </div>
 
                 <!-- Email -->
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{$IdUser->user_email}}"
+                    <input type="text" class="form-control" id="email" name="email" value="{{$IdUser->user_email}}"
                         placeholder="Masukkan Email">
+                    <span style="color: red;">{{ $errors->first('email') }}</span>
                 </div>
 
                 <!-- Password -->
@@ -32,6 +34,7 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" value="{{$IdUser->user_password}}"
                         placeholder="Masukkan Password">
+                    <span style="color: red;">{{ $errors->first('password') }}</span>
                 </div>
 
                 <!-- Upload Foto -->

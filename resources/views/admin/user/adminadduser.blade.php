@@ -18,13 +18,15 @@
                     <label for="nama" class="form-label">Nama</label>
                     <input type="text" class="form-control" id="nama" name="nama"
                         placeholder="Masukkan Nama">
+                    <span style="color: red;">{{ $errors->first('nama') }}</span>
                 </div>
 
                 <!-- Email -->
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email"
+                    <input type="text" class="form-control" id="email" name="email"
                         placeholder="Masukkan Email">
+                    <span style="color: red;">{{ $errors->first('email') }}</span>
                 </div>
 
                 <!-- Password -->
@@ -32,6 +34,7 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password"
                         placeholder="Masukkan Password">
+                    <span style="color: red;">{{ $errors->first('password') }}</span>
                 </div>
 
                 <!-- Upload Foto -->
@@ -41,6 +44,7 @@
                         <input type="file" class="custom-file-input" id="foto" name="foto[]">
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>
+                    <span style="color: red;">{{ $errors->first('foto') }}</span>
                 </div>
 
                 <!-- Tombol Submit -->
