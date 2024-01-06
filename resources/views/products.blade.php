@@ -61,28 +61,34 @@
 					<div class="row">
 						@forelse ($listSepatu as $key=>$sepatu)
 						<!-- single product -->
-						<div class="col-lg-4 col-md-6">
-							<div class="single-product">
-								<img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
-								<div class="product-details">
-									<h6>{{ $sepatu->sepatu_name }}</h6>
-									<div class="price">
-										<h6>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</h6>
-										<h6 class="l-through">{{ formatCurrencyIDR($sepatu->sepatu_price) }}</h6>
-									</div>
-									<div class="prd-bottom">
-										<a href="{{ route('add-to-cart', $sepatu->sepatu_id) }}" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to bag</p>
-										</a>
-										<a href="{{ route('checkout-product', $sepatu->sepatu_id) }}" class="social-info">
-											<span class="ti-money"></span>
-											<p class="hover-text">checkout</p>
-										</a>
+
+							@if($sepatu->deleted_at == null)
+								<a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
+								<div class="col-lg-4 col-md-6">
+									<div class="single-product">
+										<img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
+										<div class="product-details">
+											<h6>{{ $sepatu->sepatu_name }}</h6>
+											<div class="price">
+												<h6>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</h6>
+												<h6 class="l-through">{{ formatCurrencyIDR($sepatu->sepatu_price + 50000) }}</h6>
+											</div>
+											<div class="prd-bottom">
+												<a href="{{ route('add-to-cart', $sepatu->sepatu_id) }}" class="social-info">
+													<span class="ti-bag"></span>
+													<p class="hover-text">add to bag</p>
+												</a>
+												<a href="{{ route('checkout-product', $sepatu->sepatu_id) }}" class="social-info">
+													<span class="ti-money"></span>
+													<p class="hover-text">checkout</p>
+												</a>
+											</div>
+										</div>
+
 									</div>
 								</div>
-							</div>
-						</div>
+								</a>
+							@endif
 						@empty
 							<h1 style="margin:auto">No Products Yet</h1>
 						@endforelse

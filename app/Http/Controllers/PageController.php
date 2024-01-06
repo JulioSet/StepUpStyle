@@ -47,6 +47,30 @@ class PageController extends Controller
         return view('products', compact('page'));
     }
 
+    public function viewDetailProduct(Request $request){
+        //select DB
+        $page = "Detail Products";
+        $listSepatu = sepatu::all();
+        $id = $request->id;
+        foreach ($listSepatu as $key => $f) {
+            if ($f->sepatu_id == $id) {
+                $sepatu = [
+                    "id" => $f->sepatu_id,
+                    "supplier" => $f->sepatu_supplier_id,
+                    "kategori" => $f->sepatu_kategori_id,
+                    "ukuran" => $f->sepatu_ukuran_id,
+                    "picture" => $f->sepatu_pict,
+                    "name" => $f->sepatu_name,
+                    "stock" => $f->sepatu_stock,
+                    "price" => $f->sepatu_price,
+                    "color" => $f->sepatu_color,
+                ];
+            }
+        }
+        
+        return view('productDetail', ["sepatu" => $sepatu]);
+    }
+
     public function viewNewArrival(){
         //select DB
         $page = "New Arrival";
