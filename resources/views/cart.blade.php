@@ -47,7 +47,6 @@
                                     <td>
                                         <div class="media">
                                             <div class="d-flex col-4">
-                                                {{-- <img src="{{$c->pict}}" alt=""> --}}
                                                 <img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
                                             </div>
                                             <div class="media-body">
@@ -61,13 +60,10 @@
                                     </td>
                                     <td>
                                         <div class="product_count">
-                                            {{-- @dump($c['id']) --}}
                                             <input type="text" name="qty" id="sst" maxlength="12" value="{{ $c['qty'] }}" title="Quantity:"
                                                 class="input-text qty">
                                             <button class="increase items-count" type="button"><a href="{{ route('increase-cart-qty', $c['id']) }}"><i class="lnr lnr-chevron-up"></i></a></button>
                                             <button class="reduced items-count" type="button"><a href="{{ route('reduced-cart-qty', $c['id']) }}"><i class="lnr lnr-chevron-down"></i></a></button>
-                                            {{-- <button class="increase items-count" type="button"><a href="/cart/up/{{$c['id']}}"><i class="lnr lnr-chevron-up"></i></a></button>
-                                            <button class="reduced items-count" type="button"><a href="/cart/down/{{$c['id']}}"><i class="lnr lnr-chevron-down"></i></a></button> --}}
                                         </div>
                                     </td>
                                     <td>

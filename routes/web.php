@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReturController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -132,6 +133,15 @@ Route::prefix('checkout')->group(function () {
     Route::get('/details/{transaction}', [PaymentController::class, 'details'])->name("checkout-details");
 });
 
+Route::prefix('retur')->group(function () {
+    Route::get('/apply/{dtrans_id}', [PageController::class, 'viewFormRetur'])->name('form-retur');
+    Route::get('/cancel/{retur_id}', [ReturController::class, 'cancelRetur'])->name('cancel-retur');
+    Route::get('/details/{retur_id}', [ReturController::class, 'detailsRetur'])->name('details-retur');
+    Route::post('/submit', [ReturController::class, 'retur'])->name('submit-retur');
+    // Route::get('/reduced', [ReturController::class, 'reducedQty'])->name('reduced-retur-qty');
+});
+
+// Route::get('/retur/apply/{htrans_id}/{sepatu_id}', [PageController::class, 'viewFormRetur'])->name('form-retur');
 
 
 Route::post('/search', [PageController::class, 'search']);

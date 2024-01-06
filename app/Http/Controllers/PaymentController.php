@@ -160,31 +160,7 @@ class PaymentController extends Controller
         return view('checkout', compact('transaction', 'cartSepatu', 'userLoggedIn'));
     }
 
-    // ================= DIRECT CHECKOUT (DARI HALAMAN PRODUCT) =================
-    // public function directProcess(Request $request, $id)
-    // {
-    //     $cart = json_decode(Cookie::get('cartSepatu'), true);
-    //     if ($cart != null) {
-    //         Cookie::queue(Cookie::forget('cartSepatu'));
-    //         $cart = [];
-    //     }
-
-    //     $selected = sepatu::find($id);
-    //     $sepatu = [
-    //         "id" => $selected->sepatu_id,
-    //         "qty" => 1
-    //     ];
-    //     $cart= array($sepatu);
-    //     dump($cart);
-
-    //     Cookie::queue('cartSepatu', json_encode($cart), 1209600);
-
-    //     return $this->process($cart);
-    // }
-
     public function success(htrans $transaction){
-        // Cookie::queue(Cookie::forget('cartSepatu'));
-
         $transaction->htrans_penjualan_status = 2;
         $transaction->save();
 
@@ -196,8 +172,6 @@ class PaymentController extends Controller
     }
 
     public function cancel(htrans $transaction){
-        // Cookie::queue(Cookie::forget('cartSepatu'));
-
         $transaction->htrans_penjualan_status = 0;
         $transaction->save();
 

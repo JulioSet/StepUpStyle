@@ -10,16 +10,19 @@ class retur extends Model
     use HasFactory;
     protected $table = "retur";
     protected $primaryKey = "retur_id";
+    protected $fillable = [
+        'fk_dtrans',
+        'retur_reason',
+        'retur_qty',
+        'retur_foto',
+        'retur_price',
+        'retur_status'
+    ];
     public $incrementing = true;
     public $timestamps = true;
 
-    public function user()
+    public function dtrans()
     {
-        return $this->belongsTo(user::class, 'fk_customer');
-    }
-
-    public function sepatu()
-    {
-        return $this->belongsTo(sepatu::class, 'fk_sepatu');
+        return $this->belongsTo(dtrans::class, 'fk_dtrans');
     }
 }

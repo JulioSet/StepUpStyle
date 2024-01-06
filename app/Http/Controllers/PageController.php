@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\dtrans;
+use App\Models\htrans;
 use App\Models\kategori;
 use App\Models\notifikasi;
 use App\Models\retur;
@@ -76,11 +78,15 @@ class PageController extends Controller
     //     return view('checkout', compact('cartSepatu', 'userLoggedIn'));
     // }
 
-    // public function viewCart(){
-    //     //pengecekan Auth User
-    //     $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
-    //     return view('cart', compact('cartSepatu'));
-    // }
+    public function viewFormRetur($dtrans_id){
+        //pengecekan Auth User
+        $userLoggedIn = Session::get('userLoggedIn');
+        $product = dtrans::find($dtrans_id);
+        Cookie::queue('tempRetur', json_encode($product), 1209600);
+        $tempRetur = json_decode(Cookie::get('tempRetur'), true);
+
+        return view('retur-form', compact('userLoggedIn', 'product', 'tempRetur'));
+    }
 
     public function viewOrders(){
         //pengecekan Auth User
