@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReturController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -110,16 +111,17 @@ Route::get('/contact', [PageController::class, 'viewContact']);
 Route::prefix('products')->group(function () {
     Route::get('/', [PageController::class, 'viewAllProducts']);
     Route::get('/{id}', [PageController::class, 'viewDetailProduct'])->name('product-detail');
+    Route::get('/retur/{id}', [PageController::class, 'viewDetailRetur'])->name('product-retur');
     Route::get('/new-arrival', [PageController::class, 'viewNewArrival']);
     Route::get('/best-seller', [PageController::class, 'viewBestSeller']);
-    Route::get('/flash-sale', [PageController::class, 'viewFlashSale']);
+    Route::get('/flashsale', [PageController::class, 'viewFlashSale']);
     Route::get('/brand/{id}', [PageController::class, 'viewBrandProducts']);
     Route::get('/category/{id}', [PageController::class, 'viewCategoryProducts']);
 });
 
 Route::prefix('cart')->group(function () {
     Route::get('/', [PageController::class, 'viewCart']);
-    Route::get('/add/{id}', [CartController::class, 'addToCart'])->name("add-to-cart");
+    Route::get('/add/{id}/{qty?}', [CartController::class, 'addToCart'])->name("add-to-cart");
     Route::get('/up/{id}', [CartController::class, 'addQty'])->name("increase-cart-qty");
     Route::get('/down/{id}', [CartController::class, 'substractQty'])->name("reduced-cart-qty");
 });
@@ -133,9 +135,17 @@ Route::prefix('checkout')->group(function () {
     Route::get('/success/{transaction}', [PaymentController::class, 'success'])->name("checkout-success");
     Route::get('/cancel/{transaction}', [PaymentController::class, 'cancel'])->name("checkout-cancel");
     Route::get('/details/{transaction}', [PaymentController::class, 'details'])->name("checkout-details");
+
+    Route::get('/retur/{retur_id}', [PaymentController::class, 'directProcess2'])->name("checkout-product-retur");
+
 });
 
-
+Route::prefix('retur')->group(function () {
+    Route::get('/apply/{dtrans_id}', [PageController::class, 'viewFormRetur'])->name('form-retur');
+    Route::get('/cancel/{retur_id}', [ReturController::class, 'cancelRetur'])->name('cancel-retur');
+    Route::get('/details/{retur_id}', [ReturController::class, 'detailsRetur'])->name('details-retur');
+    Route::post('/submit', [ReturController::class, 'retur'])->name('submit-retur');
+});
 
 Route::post('/search', [PageController::class, 'search']);
 

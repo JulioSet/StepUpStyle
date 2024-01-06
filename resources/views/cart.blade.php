@@ -11,8 +11,8 @@
                 <div class="col-first">
                     <h1>Shopping Cart</h1>
                     <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="category.html">Cart</a>
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">Cart</a>
                     </nav>
                 </div>
             </div>
@@ -47,7 +47,6 @@
                                     <td>
                                         <div class="media">
                                             <div class="d-flex col-4">
-                                                {{-- <img src="{{$c->pict}}" alt=""> --}}
                                                 <img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
                                             </div>
                                             <div class="media-body">
@@ -61,13 +60,10 @@
                                     </td>
                                     <td>
                                         <div class="product_count">
-                                            {{-- @dump($c['id']) --}}
                                             <input type="text" name="qty" id="sst" maxlength="12" value="{{ $c['qty'] }}" title="Quantity:"
                                                 class="input-text qty">
                                             <button class="increase items-count" type="button"><a href="{{ route('increase-cart-qty', $c['id']) }}"><i class="lnr lnr-chevron-up"></i></a></button>
                                             <button class="reduced items-count" type="button"><a href="{{ route('reduced-cart-qty', $c['id']) }}"><i class="lnr lnr-chevron-down"></i></a></button>
-                                            {{-- <button class="increase items-count" type="button"><a href="/cart/up/{{$c['id']}}"><i class="lnr lnr-chevron-up"></i></a></button>
-                                            <button class="reduced items-count" type="button"><a href="/cart/down/{{$c['id']}}"><i class="lnr lnr-chevron-down"></i></a></button> --}}
                                         </div>
                                     </td>
                                     <td>
@@ -105,7 +101,6 @@
                                                 <button class="btn primary-btn">Checkout</button>
                                             @else
                                                 <button class="btn primary-btn" disabled>Checkout</button>
-
                                             @endif
                                         </div>
                                     </form>

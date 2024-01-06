@@ -29,7 +29,7 @@ class CartController extends Controller
             // "pict" => $selected->sepatu_pict,
             // "nama" => $selected->sepatu_name,
             // "size" => $selected->ukuran->ukuran_sepatu_nama,
-            // "price" => $selected->sepatu_price,
+            // "price" => $selected->sepatu_price,  
             "qty" => 1
         ];
 

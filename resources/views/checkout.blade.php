@@ -111,7 +111,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn px-2 grey_btn" id="cancel-button">
+                                <button type="button" class="btn px-2 gray_btn" id="cancel-button">
                                     Cancel
                                 </button>
                                 <button type="button" class="btn px-2 primary-btn" id="pay-button">

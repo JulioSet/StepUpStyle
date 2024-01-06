@@ -1,5 +1,7 @@
 @extends('layout.main')
-
+@php
+	use App\Models\retur;
+@endphp
 @section('content')
 
 	<!-- Start Banner Area -->
@@ -35,7 +37,7 @@
                     </button>
                 </div>
             @elseif ($transaction->htrans_penjualan_status == 2)
-			    <h2 class="title_confirmation text-info">Thank you. Your order has been processed and to be picked up at our store</h2>
+			    <h2 class="title_confirmation text-info">Thank you. Your order has been processed and ready to be picked up at our store</h2>
             @elseif ($transaction->htrans_penjualan_status == 3)
 			    <h2 class="title_confirmation">Your order has been picked up.</h2>
             @endif
@@ -67,9 +69,9 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th scope="col">Product</th>
-								<th scope="col">Quantity</th>
-								<th scope="col">Total</th>
+								<th scope="col" class="">Product</th>
+								<th scope="col" class="text-center">Quantity</th>
+								<th scope="col" class="">Total</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -79,23 +81,47 @@
 
                             @foreach ($listProducts as $p)
                                 <tr>
-                                    <td class="align-middle">
-                                        <div class="d-flex">
+                                    <td class="align-middle d-flex">
+                                        {{-- <div class="d-flex"> --}}
                                             <div class="flex-fill align-middle">
-                                                <h5">{{ $p->sepatu->sepatu_name }}</h5>
-                                                <p">{{ $p->sepatu->ukuran->ukuran_sepatu_nama }}</p>
+                                                <h5>{{ $p->sepatu->sepatu_name }}</h5>
+                                                <p>{{ $p->sepatu->ukuran->ukuran_sepatu_nama }}</p>
                                             </div>
                                             @if ($transaction->htrans_penjualan_status == 3)
-                                            <div class="col-3">
-                                                <a href="{{ route('form-retur')}}" class="genric-btn info radius py-1" style="line-height: 15px" id="pay-button">
-                                                    Apply Return Product
-                                                </a>
+                                            <div class="col-4 text-center">
+                                                @if ($p->dtrans_penjualan_retur == null)
+                                                    <a href="{{ route('form-retur', $p->dtrans_penjualan_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">
+                                                        Request a Return
+                                                    </a>
+                                                @else
+                                                    @php
+                                                        $retur = retur::where('fk_dtrans', '=', $p->dtrans_penjualan_id)->first();
+                                                    @endphp
+
+                                                    @if ($retur->retur_status == 0)
+                                                        <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn danger radius py-1" style="line-height: 12px" id="pay-button">
+                                                            Return Request Rejected
+                                                        </a>
+                                                    @elseif ($retur->retur_status == 1)
+                                                        <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn success radius py-1" style="line-height: 12px" id="pay-button">
+                                                            Return Request Accepted
+                                                        </a>
+                                                    @elseif ($retur->retur_status == 2)
+                                                        <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn primary radius py-1" style="line-height: 12px" id="pay-button">
+                                                            Return Requested
+                                                        </a>
+                                                    @elseif ($retur->retur_status == 9)
+                                                        <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">
+                                                            Return Cancelled
+                                                        </a>
+                                                    @endif
+                                                @endif
                                             </div>
                                             @endif
-                                        </div>
+                                        {{-- </div> --}}
                                     </td>
                                     <td class="align-middle">
-                                        <h5>{{ $p->dtrans_penjualan_qty}}</h5>
+                                        <h5 class="text-center">{{ $p->dtrans_penjualan_qty }}</h5>
                                     </td>
                                     <td class="align-middle">
                                         <h5> {{ formatCurrencyIDR( $p->dtrans_penjualan_subtotal) }} </h5>
@@ -108,7 +134,7 @@
 									<h2 class="text-right">TOTAL</h2>
 								</td>
 								<td class="align-middle">
-									<h2>{{ formatCurrencyIDR( $transaction->htrans_penjualan_total) }}</h2>
+									<h2>{{ formatCurrencyIDR($transaction->htrans_penjualan_total) }}</h2>
 								</td>
 							</tr>
 							{{-- <tr>

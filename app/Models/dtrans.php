@@ -9,6 +9,7 @@ class dtrans extends Model
 {
     use HasFactory;
     protected $table = "dtrans_penjualan";
+    protected $primaryKey = "dtrans_penjualan_id";
     protected $fillable = [
         'fk_sepatu',
         'fk_htrans_penjualan',
@@ -17,7 +18,7 @@ class dtrans extends Model
         'dtrans_penjualan_price',
         'dtrans_penjualan_subtotal',
     ];
-    // public $incrementing = true;
+    public $incrementing = true;
     public $timestamps = false;
 
     public function htrans()

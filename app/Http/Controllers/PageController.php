@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\dtrans;
+use App\Models\htrans;
 use App\Models\kategori;
 use App\Models\notifikasi;
 use App\Models\retur;
@@ -50,6 +52,7 @@ class PageController extends Controller
         $page = "Detail Products";
         $listSepatu = sepatu::all();
         $id = $request->id;
+        $sepatu = [];
         foreach ($listSepatu as $key => $f) {
             if ($f->sepatu_id == $id) {
                 $sepatu = [
@@ -65,8 +68,29 @@ class PageController extends Controller
                 ];
             }
         }
-        
+
         return view('productDetail', ["sepatu" => $sepatu]);
+    }
+
+    public function viewDetailRetur(Request $request, $id){
+        //select DB
+        $retur = retur::find($id);
+        // dd($retur);
+        $stock = retur::where('fk_sepatu','=',$retur->fk_sepatu)
+                        ->where('retur_status','=',1)->count();
+        $sepatu = [
+            "id" => $retur->fk_sepatu,
+            "supplier" => $retur->sepatu->sepatu_supplier_id,
+            "kategori" => $retur->sepatu->sepatu_kategori_id,
+            "ukuran" => $retur->sepatu->sepatu_ukuran_id,
+            "picture" => $retur->retur_pict,
+            "name" => $retur->sepatu->sepatu_name,
+            "stock" => $stock,
+            "price" => $retur->sepatu,
+            "color" => $retur->sepatu->sepatu_color,
+        ];
+
+        return view('product-retur-detail', ["sepatu" => $sepatu]);
     }
 
     public function viewNewArrival(){
@@ -82,9 +106,9 @@ class PageController extends Controller
     }
 
     public function viewFlashSale(){
-        //select DB
-        $page = "Flash Sale";
-        return view('products', compact('page'));
+        $userLoggedIn = Session::get('userLoggedIn');
+	    $listSepatu = retur::where('retur_status','=',1);
+        return view('products-flashsale', compact('listSepatu'));
     }
 
     public function viewCart(){
@@ -100,11 +124,15 @@ class PageController extends Controller
     //     return view('checkout', compact('cartSepatu', 'userLoggedIn'));
     // }
 
-    // public function viewCart(){
-    //     //pengecekan Auth User
-    //     $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
-    //     return view('cart', compact('cartSepatu'));
-    // }
+    public function viewFormRetur($dtrans_id){
+        //pengecekan Auth User
+        $userLoggedIn = Session::get('userLoggedIn');
+        $product = dtrans::find($dtrans_id);
+        Cookie::queue('tempRetur', json_encode($product), 1209600);
+        $tempRetur = json_decode(Cookie::get('tempRetur'), true);
+
+        return view('retur-form', compact('userLoggedIn', 'product', 'tempRetur'));
+    }
 
     public function viewOrders(){
         //pengecekan Auth User
