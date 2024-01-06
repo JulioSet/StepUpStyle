@@ -16,8 +16,9 @@
                 @csrf
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
-                    <input type="number" class="form-control" id="ukuran" name="ukuran"
+                    <input type="text" class="form-control" id="ukuran" name="ukuran"
                         placeholder="ukuran">
+                        <span style="color: red;">{{ $errors->first('ukuran') }}</span>
                 </div>
 
                 

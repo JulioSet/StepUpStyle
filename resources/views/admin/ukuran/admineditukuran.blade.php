@@ -16,8 +16,9 @@
                 @csrf
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
-                    <input type="number" class="form-control" id="ukuran" name="ukuran" value="{{$IdUkuran->ukuran_sepatu_nama}}"
+                    <input type="text" class="form-control" id="ukuran" name="ukuran" value="{{$IdUkuran->ukuran_sepatu_nama}}"
                         placeholder="ukuran">
+                        <span style="color: red;">{{ $errors->first('ukuran') }}</span>
                 </div>
 
                 <!-- Tombol Submit -->

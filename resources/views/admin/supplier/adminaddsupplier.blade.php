@@ -16,17 +16,20 @@
                 @csrf
                 <div class="mb-3">
                     <label for="nama_supplier" class="form-label">Nama Supplier</label>
-                    <input type="text" class="form-control" id="nama_supplier" name="nama_supplier">
+                    <input type="text" class="form-control" id="nama_supplier" name="nama_supplier" placeholder="Nama Supplier">
+                    <span style="color: red;">{{ $errors->first('nama_supplier') }}</span>
                 </div>
 
                 <div class="mb-3">
                     <label for="supplier_contact" class="form-label">Supplier Contact</label>
-                    <input type="text" class="form-control" id="supplier_contact" name="supplier_contact">
+                    <input type="text" class="form-control" id="supplier_contact" name="supplier_contact" placeholder="Contact Supplier">
+                    <span style="color: red;">{{ $errors->first('supplier_contact') }}</span>
                 </div>
 
                 <div class="mb-3">
                     <label for="supplier_office" class="form-label">Supplier Office</label>
-                    <input type="text" class="form-control" id="supplier_office" name="supplier_office">
+                    <input type="text" class="form-control" id="supplier_office" name="supplier_office" placeholder="Office Supplier">
+                    <span style="color: red;">{{ $errors->first('supplier_office') }}</span>
                 </div>
 
                 <div class="mb-3">
