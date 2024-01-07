@@ -46,7 +46,7 @@
                         <td>{{$loop->iteration}}</td>
                         <td>{{$item->htrans_penjualan_id}}</td>
                         <td>{{$item->customer->user_name}}</td>
-                        <td>{{$item->created_at}}</td>
+                        <td>{{$item->created_at->format('d M y')}}</td>
                         <td>{{formatCurrencyIDR($item->htrans_penjualan_total)}}</td> 
 
                         <td class="align-middle">

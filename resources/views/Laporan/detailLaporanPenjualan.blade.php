@@ -10,6 +10,13 @@
                 <a  href="/laporan/penjualan" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
             </form>
+            <div class="detail-info">
+                @foreach ($listhtrans as $item)
+                <h5 class="p-2">ID                  : {{$item->htrans_penjualan_id}}</h5>
+                <h5 class="p-2">Customer            : {{$item->customer->user_name}}</h5>
+                <h5 class="p-2">Transaction Date    : {{$item->created_at->format('d M y')}}</h5>
+                @endforeach
+            </div>
             <table id="myTable" class="table table-bordered">
                 <thead>
                     <tr >

@@ -243,10 +243,15 @@ class PageController extends Controller
 
 
     function viewLaporanPenjualan(){
-        return view('laporan.laporanpenjualan',['listhtrans'=>htrans::all()]);
+        return view('laporan.laporanpenjualan',['listhtrans' => htrans::where('htrans_penjualan_status', 2)->get()]);
     }
     function viewDetailLaporanPenjualan(Request $request){
 
-        return view('laporan.detailLaporanPenjualan',["listdtrans"=>dtrans::where('fk_htrans_penjualan', $request->id)->get()]);
+        return view('laporan.detailLaporanPenjualan',["listdtrans"=>dtrans::where('fk_htrans_penjualan', $request->id)->get(),"listhtrans"=>htrans::where('htrans_penjualan_id',$request->id)->get()]);
+    }
+
+
+    function viewLaporanRetur(){
+        return view('laporan.laporanretur',['listretur'=>retur::all()]);
     }
 }
