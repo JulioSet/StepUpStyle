@@ -31,5 +31,9 @@ class dtrans extends Model
         return $this->belongsTo(sepatu::class, 'fk_sepatu', 'sepatu_id');
     }
 
+    public function ukuran()
+    {
+        return $this->belongsTo(Ukuran::class, 'fk_ukuran_sepatu','ukuran_sepatu_id');
+    }
 
 }
