@@ -2,8 +2,9 @@
 
 @php
 	use App\Models\sepatu;
-	$userLoggedIn = Session::get('userLoggedIn');
+	$userLoggedIn = Session::get('userLoggedIn');	
 	$listSepatu = sepatu::All();
+	$page = 'Category';
 @endphp
 
 @section('content')
@@ -59,9 +60,8 @@
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
-						@forelse ($listSepatu as $key=>$sepatu)
+						@forelse ($listCategory as $key=>$sepatu)
 						<!-- single product -->
-
 							@if($sepatu->deleted_at == null && $sepatu->sepatu_stock > 0)
 								<a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
 								<div class="col-lg-4 col-md-6">

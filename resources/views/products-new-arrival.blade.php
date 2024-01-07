@@ -3,7 +3,9 @@
 @php
 	use App\Models\sepatu;
 	$userLoggedIn = Session::get('userLoggedIn');
-	$listSepatu = sepatu::All();
+	
+
+	$listSepatu = sepatu::orderBy('created_at', 'DESC')->get();
 @endphp
 
 @section('content')

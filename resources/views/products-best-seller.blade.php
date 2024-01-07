@@ -3,6 +3,9 @@
 @php
 	use App\Models\sepatu;
 	$userLoggedIn = Session::get('userLoggedIn');
+
+	$page = 'Best Seller';
+
 	$listSepatu = sepatu::All();
 @endphp
 
@@ -59,10 +62,10 @@
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
-						@forelse ($listSepatu as $key=>$sepatu)
-						<!-- single product -->
+						@forelse($bestSeller as $key=>$best) 
+							@foreach ($listSepatu as $key=>$sepatu)
 
-							@if($sepatu->deleted_at == null && $sepatu->sepatu_stock > 0)
+							@if($sepatu->deleted_at == null && $sepatu->sepatu_id == $best->fk_sepatu&& $sepatu->sepatu_stock > 0)
 								<a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
 								<div class="col-lg-4 col-md-6">
 									<div class="single-product">
@@ -88,7 +91,8 @@
 									</div>
 								</div>
 								</a>
-							@endif
+								@endif
+							@endforeach
 						@empty
 							<h1 style="margin:auto">No Products Yet</h1>
 						@endforelse
