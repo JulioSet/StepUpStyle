@@ -19,7 +19,6 @@ class retur extends Model
         'retur_foto',
         'retur_price',
         'retur_status',
-        'retur_stock'
     ];
     public $incrementing = true;
     public $timestamps = true;

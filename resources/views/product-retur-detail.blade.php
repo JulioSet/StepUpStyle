@@ -59,13 +59,17 @@
 	<div class="product_image_area">
 		<div class="container">
 			<div class="row s_product_inner">
-				<div class="col-lg-6">
-					<img src="{{ Storage::url(" retur/$sepatu[picture]") }} }}" class="img-fluid"  alt="" style="width:50vw; height:50vh" >
+				<div class="col-lg-6 mt-5">
+                    <img class="object-fit-cover img-fluid" src="{{ Storage::url("retur/$retur->retur_foto") }}" style="width:40vw; height:50vh" alt="">
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
 						<h3>{{ $sepatu['name'] }}</h3>
-						<h2>Rp {{ $sepatu['price'] }}</h2>
+                        <div class="d-flex align-bottom">
+                            <h2>{{ formatCurrencyIDR($retur->retur_price) }}</h2>
+                            <h6 class="pl-1" style="text-decoration: line-through">{{ formatCurrencyIDR($sepatu['price']) }}</h6>
+                        </div>
+						{{-- <h2>{{ formatCurrencyIDR($retur->retur_price) }} <small class="text-decoration-line-through" style="text-decoration: line-through">{{ formatCurrencyIDR($sepatu['price']) }}</small></h2> --}}
 						<ul class="list">
 							<li><a class="active" href="category/{{$sepatu['kategori']}}"><span>Category</span> : {{ $kategori }}</a></li>
 							<li><a class="active" href="brand/{{$sepatu['supplier']}}"><span>Brand</span> : {{ $brand }}</a></li>
@@ -78,7 +82,7 @@
                         </p>
 						<div class="card_area d-flex align-items-center">
                             {{-- <a class="icon_btn" href="{{ route('add-to-cart', ['id'=>$sepatu['id']]) }}"><i class="ti-bag"></i></a> --}}
-							<a class="primary-btn" href="{{ route('checkout-product-retur', $sepatu->retur_id) }}"><i class="ti-money"></i>Checkout</a>
+							<a class="primary-btn" href="{{ route('checkout-product-retur', $retur->retur_id) }}"><i class="ti-money"></i>Checkout</a>
 						</div>
 					</div>
 				</div>
