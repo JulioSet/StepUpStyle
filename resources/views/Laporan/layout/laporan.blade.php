@@ -48,7 +48,7 @@
 
                     <!-- Master User Menu Item -->
                     <li class="nav-item">
-                        <a href="/admin/user" class="nav-link">
+                        <a href="/laporan/penjualan" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Laporan Penjualan
@@ -58,7 +58,7 @@
 
                     <!-- Master Supplier Menu Item -->
                     <li class="nav-item">
-                        <a href="/admin/supplier" class="nav-link">
+                        <a href="/laporan/product" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
                             <p>
                                 Laporan Product
@@ -67,7 +67,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="/admin/product" class="nav-link">
+                        <a href="/laporan/retur" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
                             <p>
                                 Laporan Retur
