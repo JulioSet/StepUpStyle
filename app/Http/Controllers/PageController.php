@@ -237,4 +237,13 @@ class PageController extends Controller
 
         return view('admin.retur.adminretur',['listretur'=>retur::all()]);
     }
+
+
+    function viewLaporanPenjualan(){
+        return view('laporan.laporanpenjualan',['listhtrans'=>htrans::all()]);
+    }
+    function viewDetailLaporanPenjualan(Request $request){
+
+        return view('laporan.detailLaporanPenjualan',["listdtrans"=>dtrans::where('fk_htrans_penjualan', $request->id)->get()]);
+    }
 }

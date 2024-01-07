@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\laporanController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReturController;
@@ -29,6 +30,19 @@ Route::get('/', function () {
 
 Route::get('/payment', [PaymentController::class, 'index']);
 Route::post('/payment/notification', [PaymentController::class, 'notification']);
+
+Route::prefix('laporan')->group(function () {
+    Route::prefix('penjualan')->group(function () {
+        Route::get('/', [PageController::class, 'viewLaporanPenjualan']);
+        Route::post('/', [laporanController::class, 'filterLaporan'])->name("filter");
+        Route::get('/detail/{id}', [PageController::class, 'viewDetailLaporanPenjualan'])->name("detail");
+    });
+
+    Route::prefix('retur')->group(function () {
+        Route::get('/', [PageController::class, 'viewLaporanRetur']);
+    });
+});
+
 
 Route::prefix('admin')->group(function () {
     // NOTIFIKASI

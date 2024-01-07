@@ -29,4 +29,6 @@ class htrans extends Model
     {
         return $this->belongsTo(user::class, 'fk_customer', 'user_id');
     }
+
+    
 }
