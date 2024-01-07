@@ -34,12 +34,13 @@ Route::post('/payment/notification', [PaymentController::class, 'notification'])
 Route::prefix('laporan')->group(function () {
     Route::prefix('penjualan')->group(function () {
         Route::get('/', [PageController::class, 'viewLaporanPenjualan']);
-        Route::post('/', [laporanController::class, 'filterLaporan'])->name("filter");
+        Route::post('/', [laporanController::class, 'filterLaporanPenjualan'])->name("filter");
         Route::get('/detail/{id}', [PageController::class, 'viewDetailLaporanPenjualan'])->name("detail");
     });
 
     Route::prefix('retur')->group(function () {
         Route::get('/', [PageController::class, 'viewLaporanRetur']);
+        Route::post('/', [laporanController::class, 'filterLaporanRetur'])->name("filterR");
     });
 });
 
