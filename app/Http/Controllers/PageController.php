@@ -110,7 +110,13 @@ class PageController extends Controller
     public function viewBestSeller(){
         //select DB
         $page = "Best Seller";
-        return view('products', compact('page'));
+
+        $bestSeller = dtrans::select('fk_sepatu')
+        ->groupBy('fk_sepatu')
+        ->orderByRaw('COUNT(*) DESC')
+        ->get();
+
+        return view('products-best-seller', compact('bestSeller'));
     }
 
     public function viewBrandProducts(Request $request){
