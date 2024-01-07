@@ -124,11 +124,11 @@ Route::get('/contact', [PageController::class, 'viewContact']);
 
 Route::prefix('products')->group(function () {
     Route::get('/', [PageController::class, 'viewAllProducts']);
-    Route::get('/{id}', [PageController::class, 'viewDetailProduct'])->name('product-detail');
     Route::get('/new-arrival', [PageController::class, 'viewNewArrival']);
     Route::get('/best-seller', [PageController::class, 'viewBestSeller']);
+    Route::get('/{id}', [PageController::class, 'viewDetailProduct'])->name('product-detail');
     Route::get('/brand/{id}', [PageController::class, 'viewBrandProducts']);
-    Route::get('/category/{id}', [PageController::class, 'viewCategoryProducts']);
+    Route::get('/category/{id}', [PageController::class, 'viewCategoryProducts'])->name('product-category');
     // Route::get('/flashsale', [PageController::class, 'viewFlashSale'])->name('flashsale');
     // Route::get('/flashsale/{id}', [PageController::class, 'viewDetailRetur'])->name('product-retur');
 });

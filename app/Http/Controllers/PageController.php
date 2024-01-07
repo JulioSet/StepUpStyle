@@ -93,18 +93,32 @@ class PageController extends Controller
         return view('productDetail', ["sepatu" => $sepatu]);
     }
 
-
-
     public function viewNewArrival(){
         //select DB
         $page = "New Arrival";
-        return view('products', compact('page'));
+        return view('products-new-arrival', compact('page'));
+    }
+
+    public function viewCategoryProducts(Request $request){
+        //select DB
+        $page = "Category";
+        $id = $request->id;
+        $listCategory = sepatu::where('sepatu_kategori_id','=',$id)->get();
+        return view('products-category', compact('listCategory'));
     }
 
     public function viewBestSeller(){
         //select DB
         $page = "Best Seller";
         return view('products', compact('page'));
+    }
+
+    public function viewBrandProducts(Request $request){
+        //select DB
+        $page = "Brand";
+        $id = $request->id;
+        $listBrand = sepatu::where('sepatu_supplier_id','=',$id)->get();
+        return view('products-brand', compact('listBrand'));
     }
 
     public function viewFlashSale(){
