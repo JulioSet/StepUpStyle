@@ -60,7 +60,7 @@
 		<div class="container">
 			<div class="row s_product_inner">
 				<div class="col-lg-6">
-					<img src="{{ Storage::url(" photo/$sepatu[picture]") }} }}" class="img-fluid"  alt="" style="width:50vw; height:50vh" >
+					<img src="{{ Storage::url("photo/$sepatu[picture]") }}" class="img-fluid"  alt="">
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">

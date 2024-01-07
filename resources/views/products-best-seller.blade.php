@@ -65,7 +65,7 @@
 						@forelse($bestSeller as $key=>$best) 
 							@foreach ($listSepatu as $key=>$sepatu)
 
-							@if($sepatu->deleted_at == null && $sepatu->sepatu_id == $best->fk_sepatu)
+							@if($sepatu->deleted_at == null && $sepatu->sepatu_id == $best->fk_sepatu&& $sepatu->sepatu_stock > 0)
 								<a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
 								<div class="col-lg-4 col-md-6">
 									<div class="single-product">
