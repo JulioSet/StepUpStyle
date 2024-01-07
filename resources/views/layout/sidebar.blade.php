@@ -13,8 +13,11 @@
         <div class="head">Browse Categories</div>
         <ul class="main-categories">
             @forelse ($listCategory as $key=>$category)
-                <li class="main-nav-list"><a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable"><span class="lnr lnr-arrow-right">
-                </span>{{ $category->kategori_nama }}</a>
+                <li class="main-nav-list">
+                    <a data-toggle="collapse" href="" aria-expanded="false" aria-controls="">
+                        <span class="lnr lnr-arrow-right"></span>
+                        <a href="{{ route('product-category', $category->kategori_id) }}">{{ $category->kategori_nama }}</a>
+                    </a>
                 </li>
             @empty
                 <li class="main-nav-list"><a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable"><span class="lnr lnr-arrow-right">
