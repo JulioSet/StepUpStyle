@@ -31,13 +31,13 @@
 				<!-- Start Best Seller -->
 				<section class="lattest-product-area pb-40 category-list">
 					<div class="row">
-						@forelse ($listSepatu as $key=>$sepatu)
+						@forelse ($listRetur as $retur)
 						<!-- single product -->
 							{{-- @if($sepatu->deleted_at == null) --}}
-								<a href="{{ route('product-retur', $sepatu->retur_id) }}">
+                            <a href="{{ route('product-retur', ['id'=>$retur->retur_id]) }}">
 								<div class="col-lg-4 col-md-6">
 									<div class="single-product">
-										<img class="img-fluid" src="{{ Storage::url("photo/$retur->retur_pict") }}" alt="">
+										<img class="img-fluid" src="{{ Storage::url("retur/$retur->retur_foto") }}" alt="">
 										<div class="product-details">
 											<h6>{{ $retur->sepatu->sepatu_name }}</h6>
 											<div class="price">
@@ -49,7 +49,7 @@
 													<span class="ti-bag"></span>
 													<p class="hover-text">add to bag</p>
 												</a> --}}
-												<a href="{{ route('checkout-product-retur', $sepatu->retur_id) }}" class="social-info">
+												<a href="{{ route('checkout-product-retur', $retur->retur_id) }}" class="social-info">
 													<span class="ti-money"></span>
 													<p class="hover-text">checkout</p>
 												</a>
@@ -57,7 +57,7 @@
 										</div>
 									</div>
 								</div>
-								</a>
+                            </a>
 							{{-- @endif --}}
 						@empty
 							<h1 style="margin:auto">No Products Yet</h1>

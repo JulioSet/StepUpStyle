@@ -47,6 +47,27 @@ class PageController extends Controller
         return view('products', compact('page'));
     }
 
+    public function viewDetailRetur(Request $request, $id){
+        //select DB
+        $retur = retur::find($id);
+        // dd($retur);
+        $stock = retur::where('fk_sepatu','=',$retur->fk_sepatu)
+                        ->where('retur_status','=',1)->count();
+        $sepatu = [
+            "id" => $retur->fk_sepatu,
+            "supplier" => $retur->sepatu->sepatu_supplier_id,
+            "kategori" => $retur->sepatu->sepatu_kategori_id,
+            "ukuran" => $retur->sepatu->sepatu_ukuran_id,
+            "picture" => $retur->retur_pict,
+            "name" => $retur->sepatu->sepatu_name,
+            "stock" => $stock,
+            "price" => $retur->sepatu->sepatu_price,
+            "color" => $retur->sepatu->sepatu_color,
+        ];
+
+        return view('product-retur-detail', ["sepatu" => $sepatu, "retur" => $retur]);
+    }
+
     public function viewDetailProduct(Request $request){
         //select DB
         $page = "Detail Products";
@@ -72,26 +93,7 @@ class PageController extends Controller
         return view('productDetail', ["sepatu" => $sepatu]);
     }
 
-    public function viewDetailRetur(Request $request, $id){
-        //select DB
-        $retur = retur::find($id);
-        // dd($retur);
-        $stock = retur::where('fk_sepatu','=',$retur->fk_sepatu)
-                        ->where('retur_status','=',1)->count();
-        $sepatu = [
-            "id" => $retur->fk_sepatu,
-            "supplier" => $retur->sepatu->sepatu_supplier_id,
-            "kategori" => $retur->sepatu->sepatu_kategori_id,
-            "ukuran" => $retur->sepatu->sepatu_ukuran_id,
-            "picture" => $retur->retur_pict,
-            "name" => $retur->sepatu->sepatu_name,
-            "stock" => $stock,
-            "price" => $retur->sepatu,
-            "color" => $retur->sepatu->sepatu_color,
-        ];
 
-        return view('product-retur-detail', ["sepatu" => $sepatu]);
-    }
 
     public function viewNewArrival(){
         //select DB
@@ -107,8 +109,9 @@ class PageController extends Controller
 
     public function viewFlashSale(){
         $userLoggedIn = Session::get('userLoggedIn');
-	    $listSepatu = retur::where('retur_status','=',1);
-        return view('products-flashsale', compact('listSepatu'));
+	    $listRetur = retur::where('retur_status','=',1)->get();
+        // dd($listRetur);
+        return view('products-flashsale', compact('listRetur'));
     }
 
     public function viewCart(){
