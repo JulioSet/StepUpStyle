@@ -127,6 +127,15 @@ class PageController extends Controller
         return view('products-brand', compact('listBrand'));
     }
 
+    public function viewSearchProducts(Request $request){
+        //select DB
+        $page = "Search";
+        $search = $request->search;
+        $listSearch = sepatu::where('sepatu_name',$request->search)
+        ->orWhere('sepatu_name','like',"%{$request->search}%")->get();;
+        return view('products-search', compact('listSearch'));
+    }
+
     public function viewFlashSale(){
         $userLoggedIn = Session::get('userLoggedIn');
 	    $listRetur = retur::where('retur_status','=',1)->get();
