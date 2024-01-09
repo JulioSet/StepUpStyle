@@ -46,6 +46,12 @@ Route::prefix('laporan')->group(function () {
 
 
 Route::prefix('admin')->group(function () {
+    Route::prefix('order')->group(function () {
+        Route::get('/', [PageController::class, 'viewAdminOrder']);
+        Route::get('/detail/{id}', [PageController::class, 'viewAdminDetailOrder'])->name('detail_order');
+        Route::get('/done/{id}', [AdminController::class, ''])->name('mark_as_done');
+    });
+
     // NOTIFIKASI
     Route::get('/', [PageController::class, 'viewAdminNotif']);
 
@@ -61,7 +67,7 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::prefix('kategori')->group(function () {
-    // KATEGIRI
+    // KATEGORI
         Route::get('/', [PageController::class, 'viewAdminKategori']);
         Route::get('/add', [PageController::class, 'viewAdminAddKategori']);
         Route::post('/add', [AdminController::class, 'addKategori'])->name('addKategori');

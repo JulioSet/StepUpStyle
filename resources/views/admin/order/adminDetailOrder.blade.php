@@ -6,20 +6,41 @@
 
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
-                <h3>Detail Laporan Penjualan</h3>
-                <a  href="/laporan/penjualan" class="btn btn-primary ml-auto mb-1">Back</a>
+                <h3>Detail Order</h3>
+                <a  href="/admin/order" class="btn btn-primary ml-auto mb-1">Back</a>
             </div>
             </form>
             <div class="detail-info">
                 @foreach ($listhtrans as $item)
-                <h5 class="p-2">ID                  : {{$item->htrans_penjualan_id}}</h5>
-                <h5 class="p-2">Customer            : {{$item->customer->user_name}}</h5>
-                <h5 class="p-2">Transaction Date    : {{$item->created_at->format('d M y')}}</h5>
+                <div class="row">
+                    <div class="col-2">
+                        <h5 class="p-2">ID</h5>
+                    </div>
+                    <div class="col-10">
+                        <h5 class="p-2">: {{$item->htrans_penjualan_id}}</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <h5 class="p-2">Customer</h5>
+                    </div>
+                    <div class="col-10">
+                        <h5 class="p-2">: {{$item->customer->user_name}}</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <h5 class="p-2">Transaction Date</h5>
+                    </div>
+                    <div class="col-10">
+                        <h5 class="p-2">: {{$item->created_at->format('d M Y')}}</h5>
+                    </div>
+                </div>
                 @endforeach
             </div>
             <table class="table table-bordered">
                 <thead>
-                    <tr >
+                    <tr>
                         <th>No</th>
                         <th>Nama Sepatu</th>
                         <th>Ukuran</th>
