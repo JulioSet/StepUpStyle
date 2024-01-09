@@ -124,6 +124,7 @@ class PageController extends Controller
         $page = "Brand";
         $id = $request->id;
         $listBrand = sepatu::where('sepatu_supplier_id','=',$id)->get();
+        
         return view('products-brand', compact('listBrand'));
     }
 
@@ -132,14 +133,44 @@ class PageController extends Controller
         $page = "Search";
         $search = $request->search;
         $listSearch = sepatu::where('sepatu_name',$request->search)
-        ->orWhere('sepatu_name','like',"%{$request->search}%")->get();;
+        ->orWhere('sepatu_name','like',"%{$request->search}%")
+        ->get();;
+        
         return view('products-search', compact('listSearch'));
+    }
+
+    public function viewFilteredProducts(Request $request){
+        //select DB
+        $page = "Filter";
+        $filterBrand = $request->input('brand', []);
+        $filterSize = $request->input('size', []);
+
+        if ($filterBrand && $filterSize) {
+            $listFilter = sepatu::whereIn('sepatu_supplier_id', $filterBrand)
+            ->whereIn('sepatu_ukuran_id', $filterSize)
+            ->where('deleted_at', null)
+            ->where('sepatu_stock','>',0)
+            ->get();   
+        }elseif ($filterBrand && !$filterSize) {
+            $listFilter = sepatu::whereIn('sepatu_supplier_id', $filterBrand)
+            ->where('deleted_at', null)
+            ->where('sepatu_stock','>',0)
+            ->get(); 
+        }elseif (!$filterBrand && $filterSize) {
+            $listFilter = sepatu::whereIn('sepatu_ukuran_id', $filterSize)
+            ->where('deleted_at', null)
+            ->where('sepatu_stock','>',0)
+            ->get(); 
+        }
+
+        return view('products-filter', compact('listFilter'));
     }
 
     public function viewFlashSale(){
         $userLoggedIn = Session::get('userLoggedIn');
 	    $listRetur = retur::where('retur_status','=',1)->get();
         // dd($listRetur);
+
         return view('products-flashsale', compact('listRetur'));
     }
 

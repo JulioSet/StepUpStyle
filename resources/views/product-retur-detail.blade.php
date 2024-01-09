@@ -8,31 +8,31 @@
 	$userLoggedIn = Session::get('userLoggedIn');
 	$listSepatu = sepatu::All();
 	$listUkuran = ukuran::All();
-    $listCategory = kategori::all();
-    $listBrand = supplier::all();
+	$listCategory = kategori::all();
+	$listBrand = supplier::all();
 
-    $kategori = '' ;
-    $ukuran = '' ;
-    $brand = '' ;
+	$kategori = '' ;
+	$ukuran = '' ;
+	$brand = '' ;
 
 
-    foreach($listCategory as $key) {
-        if ($key->kategori_id == $sepatu['kategori']) {
-            $kategori = $key->kategori_nama;
-        }
-    }
+	foreach($listCategory as $key) {
+		if ($key->kategori_id == $sepatu['kategori']) {
+			$kategori = $key->kategori_nama;
+		}
+	}
 
-    foreach($listUkuran as $key) {
-        if ($key->ukuran_sepatu_id == $sepatu['ukuran']) {
-            $ukuran = $key->ukuran_sepatu_nama;
-        }
-    }
+	foreach($listUkuran as $key) {
+		if ($key->ukuran_sepatu_id == $sepatu['ukuran']) {
+			$ukuran = $key->ukuran_sepatu_nama;
+		}
+	}
 
-    foreach($listBrand as $key) {
-        if ($key->supplier_id == $sepatu['supplier']) {
-            $brand = $key->supplier_name;
-        }
-    }
+	foreach($listBrand as $key) {
+		if ($key->supplier_id == $sepatu['supplier']) {
+			$brand = $key->supplier_name;
+		}
+	}
 
 @endphp
 
@@ -60,14 +60,14 @@
 		<div class="container">
 			<div class="row s_product_inner">
 				<div class="col-lg-6 mt-5">
-                    <img class="object-fit-cover img-fluid" src="{{ Storage::url("retur/$retur->retur_foto") }}" style="width:40vw; height:50vh" alt="">
+						<img class="object-fit-cover img-fluid" src="{{ Storage::url("retur/$retur->retur_foto") }}" style="width:40vw; height:50vh" alt="">
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
 						<h3>{{ $sepatu['name'] }}</h3>
                         <div class="d-flex align-bottom">
-                            <h2>{{ formatCurrencyIDR($retur->retur_price) }}</h2>
-                            <h6 class="pl-1" style="text-decoration: line-through">{{ formatCurrencyIDR($sepatu['price']) }}</h6>
+									<h2>{{ formatCurrencyIDR($retur->retur_price) }}</h2>
+									<h6 class="pl-1" style="text-decoration: line-through">{{ formatCurrencyIDR($sepatu['price']) }}</h6>
                         </div>
 						{{-- <h2>{{ formatCurrencyIDR($retur->retur_price) }} <small class="text-decoration-line-through" style="text-decoration: line-through">{{ formatCurrencyIDR($sepatu['price']) }}</small></h2> --}}
 						<ul class="list">
@@ -75,14 +75,14 @@
 							<li><a class="active" href="brand/{{$sepatu['supplier']}}"><span>Brand</span> : {{ $brand }}</a></li>
 						</ul>
 						<p>
-                            {{ $sepatu['name'] }} <br>
-                            Size : {{ $ukuran }} <br>
-                            Color : {{ $sepatu['color'] }} <br>
-                            Stock : {{ $sepatu['stock'] }}
-                        </p>
+							{{ $sepatu['name'] }} <br>
+							Size : {{ $ukuran }} <br>
+							Color : {{ $sepatu['color'] }} <br>
+							Stock : {{ $sepatu['stock'] }}
+						</p>
 						<div class="card_area d-flex align-items-center">
-                            {{-- <a class="icon_btn" href="{{ route('add-to-cart', ['id'=>$sepatu['id']]) }}"><i class="ti-bag"></i></a> --}}
-							<a class="primary-btn" href="{{ route('checkout-product-retur', $retur->retur_id) }}"><i class="ti-money"></i>Checkout</a>
+							{{-- <a class="icon_btn" href="{{ route('add-to-cart', ['id'=>$sepatu['id']]) }}"><i class="ti-bag"></i></a> --}}
+							<a class="primary-btn" href="{{ route('checkout-product-retur',) }}"><i class="ti-money"></i>Checkout</a>
 						</div>
 					</div>
 				</div>

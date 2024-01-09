@@ -88,7 +88,7 @@
                                 </table>
                             </div>
 
-                            @if ($retur->retur_status == 9)
+                            @if ($retur->retur_status >= 9 || $retur->retur_status == 1)
                                 <div class="d-flex justify-content-end">
                                     <a href="/orders" class="btn px-5 btn-dark">Back</a>
                                 </div>

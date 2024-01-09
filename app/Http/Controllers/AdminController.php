@@ -34,13 +34,13 @@ class AdminController extends Controller
 
         $request->validate($rules, $messages);
 
-        
+
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         if ($request->foto!=null) {
             foreach ($request->foto as $photo) {
                 $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
                 $namaFolderPhoto = "photo/";
-    
+
             $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
             }
         }
@@ -78,7 +78,7 @@ class AdminController extends Controller
             foreach ($request->foto as $photo) {
                 $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
                 $namaFolderPhoto = "photo/";
-    
+
             $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
             }
         }
@@ -180,7 +180,7 @@ class AdminController extends Controller
         ];
 
         $request->validate($rules, $messages);
-        
+
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         foreach ($request->foto as $photo) {
             $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
@@ -211,16 +211,16 @@ class AdminController extends Controller
         ];
 
         $request->validate($rules, $messages);
-        
+
         $namaFolderPhoto = ""; $namaFilePhoto = "";
-        
+
         foreach ($request->foto as $photo) {
             $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
             $namaFolderPhoto = "photo/";
 
         $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
         }
-        
+
 
 
         $supplier= supplier::find($request->id);
@@ -273,7 +273,7 @@ class AdminController extends Controller
         ];
 
         $request->validate($rules, $messages);
-        
+
         $kategori= kategori::find($request->id);
         $kategori->kategori_nama= $request->input('nama_kategori');
         $kategori->save();
@@ -331,7 +331,7 @@ class AdminController extends Controller
         return redirect("/admin/product");
     }
 
-    
+
 
     public function EditSepatu (Request $request){
         $kategori = Kategori::where('kategori_nama', $request->input('kategori'))->first();
@@ -386,18 +386,18 @@ class AdminController extends Controller
     public function rejectRetur($id)
     {
         $retur = retur::find($id);
-        $retur->retur_status = -1;
+        $retur->retur_status = 0;
         $retur->save();
 
         return redirect("/admin/retur");
     }
 
-    public function cancelRetur($id)
-    {
-        $retur = retur::find($id);
-        $retur->retur_status = 10;
-        $retur->save();
+    // public function cancelRetur($id)
+    // {
+    //     $retur = retur::find($id);
+    //     $retur->retur_status = 9;
+    //     $retur->save();
 
-        return redirect("/admin/retur");
-    }
+    //     return redirect("/admin/retur");
+    // }
 }

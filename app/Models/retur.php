@@ -31,4 +31,10 @@ class retur extends Model
     public function sepatu(){
         return $this->belongsTo(sepatu::class, 'fk_sepatu');
     }
+
+    public function user(){
+        return $this->belongsTo(user::class, 'fk_customer');
+    }
+
+
 }

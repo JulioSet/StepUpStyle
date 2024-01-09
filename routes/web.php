@@ -92,7 +92,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [PageController::class, 'viewAdminRetur']);
         Route::get('/reject/{id}', [AdminController::class, 'rejectRetur']);
         Route::get('/accept/{id}', [AdminController::class, 'acceptRetur']);
-        Route::get('/cancel/{id}', [AdminController::class, 'cancelRetur']);
+        // Route::get('/cancel/{id}', [AdminController::class, 'cancelRetur']);
     });
 
     Route::prefix('product')->group(function () {
@@ -174,6 +174,7 @@ Route::prefix('retur')->group(function () {
 });
 
 Route::get('/search', [PageController::class, 'viewSearchProducts'])->name('search');
+Route::get('/filter', [PageController::class, 'viewFilteredProducts'])->name('filter');
 
 
 // user login, register, logout, profile edit
