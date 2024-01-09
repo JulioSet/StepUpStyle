@@ -61,6 +61,7 @@ class UserController extends Controller
         $user = user::find($id);
         if ($user->verification == $hash) {
             $user->user_verification = 1;
+            $user->save();
         }
         return redirect('/login')->with('msg', 'Registration completed!');
     }
