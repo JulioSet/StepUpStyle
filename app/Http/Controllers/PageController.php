@@ -200,7 +200,6 @@ class PageController extends Controller
     }
 
 
-
     function viewAdminUser() {
         return view('admin.user.adminuser',['listuser'=>user::withTrashed()->get()]);
     }
@@ -212,18 +211,24 @@ class PageController extends Controller
     }
 
 
-
     function viewAdminProduct(){
         return view('admin.product.adminproduct',['listproduk'=>sepatu::all()]);
     }
     function viewAdminAddProduct(){
-        return view('admin.product.adminaddproduct' ,['listkategori'=>kategori::all(), 'listsupplier'=>supplier::all(), 'listukuran'=>ukuran::all()]);
+        return view('admin.product.adminaddproduct' ,[
+            'listkategori'=>kategori::all(),
+            'listsupplier'=>supplier::all(),
+            'listukuran'=>ukuran::all()
+        ]);
     }
-
     function viewAdminEditProduct(Request $request){
-        return view('admin.product.admineditproduct' ,['IdProduct'=>sepatu::find($request->id),'listkategori'=>kategori::all(), 'listsupplier'=>supplier::all(), 'listukuran'=>ukuran::all()]);
+        return view('admin.product.admineditproduct' ,[
+            'IdProduct'=>sepatu::find($request->id),
+            'listkategori'=>kategori::all(),
+            'listsupplier'=>supplier::all(),
+            'listukuran'=>ukuran::all()
+        ]);
     }
-
 
 
     function viewAdminUkuran(){
@@ -237,14 +242,10 @@ class PageController extends Controller
     }
 
 
-
-
     function viewAdminKategori(){
-
         return view('admin.kategori.adminkategori',['listkategori'=>kategori::withTrashed()->get()]);
     }
     function viewAdminAddKategori(){
-
         return view('admin.kategori.adminaddkategori');
     }
     function viewAdminEditKategori(Request $request){
@@ -253,11 +254,9 @@ class PageController extends Controller
 
 
     function viewAdminSupplier(){
-
         return view('admin.supplier.adminsupplier',['listsupplier'=>supplier::all()]);
     }
     function viewAdminAddSupplier(){
-
         return view('admin.supplier.adminaddsupplier');
     }
     function viewAdminEditSupplier(Request $request){
@@ -266,17 +265,32 @@ class PageController extends Controller
 
 
     function viewAdminRetur(){
-
         return view('admin.retur.adminretur',['listretur'=>retur::all()]);
     }
 
+
+    function viewAdminOrder()
+    {
+        return view('admin.order.adminorder', ['listorder'=>htrans::where('htrans_penjualan_status', 2)->get()]);
+    }
+    function viewAdminDetailOrder($id)
+    {
+        return view('admin.order.adminDetailOrder', [
+            "listdtrans"=>dtrans::where('fk_htrans_penjualan', $id)->get(),
+            "listhtrans"=>htrans::where('htrans_penjualan_id', $id)->get()
+        ]);
+    }
+
+    // OWNER
 
     function viewLaporanPenjualan(){
         return view('laporan.laporanpenjualan',['listhtrans' => htrans::where('htrans_penjualan_status', 2)->get()]);
     }
     function viewDetailLaporanPenjualan(Request $request){
-
-        return view('laporan.detailLaporanPenjualan',["listdtrans"=>dtrans::where('fk_htrans_penjualan', $request->id)->get(),"listhtrans"=>htrans::where('htrans_penjualan_id',$request->id)->get()]);
+        return view('laporan.detailLaporanPenjualan',[
+            "listdtrans"=>dtrans::where('fk_htrans_penjualan', $request->id)->get(),
+            "listhtrans"=>htrans::where('htrans_penjualan_id', $request->id)->get()
+        ]);
     }
 
 
