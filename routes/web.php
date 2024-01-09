@@ -46,10 +46,12 @@ Route::prefix('laporan')->group(function () {
 
 
 Route::prefix('admin')->group(function () {
+
     Route::prefix('order')->group(function () {
+    // ORDER
         Route::get('/', [PageController::class, 'viewAdminOrder']);
         Route::get('/detail/{id}', [PageController::class, 'viewAdminDetailOrder'])->name('detail_order');
-        Route::get('/done/{id}', [AdminController::class, ''])->name('mark_as_done');
+        Route::get('/done/{id}', [AdminController::class, 'markAsDoneOrder'])->name('mark_as_done');
     });
 
     // NOTIFIKASI

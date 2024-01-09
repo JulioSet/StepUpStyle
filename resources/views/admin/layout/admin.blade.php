@@ -60,7 +60,17 @@
                         <a href="/admin/user" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
-                                Master User
+                                Master Customer
+                            </p>
+                        </a>
+                    </li>
+
+                    <!-- Master Order Menu Item -->
+                    <li class="nav-item">
+                        <a href="/admin/order" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Master Order
                             </p>
                         </a>
                     </li>

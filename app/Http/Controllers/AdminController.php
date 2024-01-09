@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\htrans;
 use App\Models\kategori;
 use App\Models\retur;
 use App\Models\sepatu;
@@ -400,4 +401,16 @@ class AdminController extends Controller
 
     //     return redirect("/admin/retur");
     // }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                           ORDER
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public function markAsDoneOrder($id)
+    {
+        $order = htrans::find($id);
+        $order->htrans_penjualan_status = 3;
+        $order->save();
+        return redirect('admin/order');
+    }
 }

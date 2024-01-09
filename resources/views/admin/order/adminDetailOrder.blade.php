@@ -1,4 +1,4 @@
-@extends('laporan.layout.laporan')
+@extends('admin.layout.admin')
 @section('content')
 <div class="col-md-12 mt-2">
 
