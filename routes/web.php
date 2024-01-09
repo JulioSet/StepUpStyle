@@ -168,6 +168,7 @@ Route::prefix('retur')->group(function () {
 });
 
 Route::get('/search', [PageController::class, 'viewSearchProducts'])->name('search');
+Route::get('/filter', [PageController::class, 'viewFilteredProducts'])->name('filter');
 
 
 // user login, register, logout, profile edit

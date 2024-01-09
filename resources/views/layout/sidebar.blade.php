@@ -26,14 +26,18 @@
             @endforelse
         </ul>
     </div>
+    <form action="{{ route('filter') }}" method="get">
+    @csrf
     <div class="sidebar-filter mt-50">
         <div class="top-filter-head">Product Filters</div>
         <div class="common-filter">
             <div class="head">Brands</div>
-            <form action="#">
                 <ul>
                     @forelse ($listSupplier as $key=>$supplier)
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="{{$supplier->supplier_id}}" name="{{$supplier->supplier_name}}"><label for="{{$supplier->supplier_name}}">{{$supplier->supplier_name}}</label></li>
+                    <li class="filter-list">
+                        <input class="pixel-radio" type="checkbox"  name="brand[]" value="{{$supplier->supplier_id}}">
+                        <label for="{{$supplier->supplier_name}}">{{$supplier->supplier_name}}</label>
+                    </li>
                     @empty
 
                     @endforelse
@@ -42,15 +46,18 @@
         </div>
         <div class="common-filter">
             <div class="head">Size</div>
-            <form action="#">
                 <ul>
                     @forelse ($listUkuran as $key=>$ukuran)
-                    <li class="filter-list"><input class="pixel-radio" type="radio" id="{{ $ukuran->ukuran_sepatu_nama }}" name="{{ $ukuran->ukuran_sepatu_nama }}"><label for="{{ $ukuran->ukuran_sepatu_nama }}">{{ $ukuran->ukuran_sepatu_nama }}</label></li>
+                    <li class="filter-list">
+                        <input class="pixel-radio" type="checkbox" id="{{ $ukuran->ukuran_sepatu_id }}" name="size[]" value="{{ $ukuran->ukuran_sepatu_id }}">
+                        <label for="{{ $ukuran->ukuran_sepatu_nama }}">{{ $ukuran->ukuran_sepatu_nama }}</label>
+                    </li>
                     @empty
 
                     @endforelse
                 </ul>
-            </form>
-        </div>
+            </div>
+            <button class="primary-btn" type="submit" style="width:100%;text-align:center">Filter</a>
+        </form>
     </div>
 </div>
