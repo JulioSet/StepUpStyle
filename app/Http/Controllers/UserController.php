@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendMail;
 use Illuminate\Http\Request;
 use App\Models\user;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    public function register(Request $request) 
+    public function register(Request $request)
     {
         $email = $request->input('email');
         $password = $request->input('password');
@@ -19,7 +20,7 @@ class UserController extends Controller
 
         $cekUser = DB::table('user')->where("user_email", "=", $email)->first();
 
-        if ($cekUser == null) {   
+        if ($cekUser == null) {
             $rules = [
                 'name' => ["required", "min:1"],
                 'password' => 'required|confirmed',
@@ -33,22 +34,38 @@ class UserController extends Controller
             $request->validate($rules, $messages);
 
             $hashPassword = Hash::make($password);
+            $hashVerification = Hash::make($email);
 
             DB::table('user')->insert([
                 'user_name' => $name,
                 'user_email' => $email,
                 'user_password' => $hashPassword,
-                'user_profile' => 'basic_profile_picture.jpg'
+                'user_profile' => 'basic_profile_picture.jpg',
+                'verification' => $hashVerification
             ]);
-    
-            return redirect('/login')->with('msg', 'Registration succeed!');
+
+            $subject = "Email Confirmation";
+            $id = user::where('user_email', $email)->first()->user_id;
+
+            Mail::to($email)->send(new SendMail($name, $subject, $id, $hashVerification));
+
+            return redirect('/login')->with('msg', 'Verify your email!');
         }
         else{
             return redirect()->back()->with('msg', 'Email exist!');
         }
     }
 
-    public function login(Request $request) 
+    public function verifyEmail($id, $hash)
+    {
+        $user = user::find($id);
+        if ($user->verification == $hash) {
+            $user->user_verification = 1;
+        }
+        return redirect('/login')->with('msg', 'Registration completed!');
+    }
+
+    public function login(Request $request)
     {
         $email = $request->input('email');
         $password = $request->input('password');
@@ -57,11 +74,11 @@ class UserController extends Controller
 
         if ($cekUser != null) {
             $listUser = user::all();
-            
+
             foreach($listUser as $key) {
                 if ($key->user_email == $email) {
                     if(Hash::check($password, $key->user_password) == true) {
-         
+
                         $userLoggedIn = [
                             "id" => $key->user_id,
                             "name" => $key->user_name,
@@ -72,33 +89,33 @@ class UserController extends Controller
                         ];
 
                         Session::put('userLoggedIn', $userLoggedIn);
-                        
-                        return redirect()->route('home');  
+
+                        return redirect()->route('home');
                     }
                     else {
                         return redirect()->back()->with('msg', 'Password is Incorrect!');
-                    }       
+                    }
                 }
             }
         }
         else{
             return redirect()->back()->with('msg', 'Email is not registered!');
-        }  
+        }
     }
 
-    public function logout(Request $request) 
+    public function logout(Request $request)
     {
         Session::forget('userLoggedIn');
-        if (Session::has('remember_me')) {    
+        if (Session::has('remember_me')) {
             Session::forget('remember_me');
         }
         return redirect()->route('home');
     }
 
-    public function editProfile(Request $request) 
+    public function editProfile(Request $request)
     {
         $listUser = user::all();
-        
+
         $userLog = Session::get('userLoggedIn');
 
         $id = $userLog['id'];
@@ -106,13 +123,13 @@ class UserController extends Controller
         $cekPassword = $request->old_password;
 
         if ($cekPassword != '') {
-            
-            if(Hash::check($cekPassword, $userLog['password']) == true) {           
+
+            if(Hash::check($cekPassword, $userLog['password']) == true) {
                 $usernameChange = $request->name;
                 $emailChange = $request->email;
                 $passwordChange = $request->password;
                 $profileChange = $request->profile_picture;
-        
+
                 if ($emailChange == $userLog['email']) {
                     if ($profileChange != '') {
                         $rules = [
@@ -135,7 +152,7 @@ class UserController extends Controller
                 }
                 else {
                     $cekUser = DB::table('user')->where("user_email", "=", $emailChange)->first();
-    
+
                     if ($cekUser == null) {
                         if ($profileChange != '') {
                             $rules = [
@@ -160,14 +177,14 @@ class UserController extends Controller
                         return redirect()->back()->with('msg', 'Email already registered!');
                     }
                 }
-        
+
                 $messages = [
                     "required" => "Please fill this field",
                     "confirmed" => "Confirm Password does not match",
                     "mimes" => "Photo must be either in gif, png, jpg or jpeg!"
                 ];
                 $request->validate($rules, $messages);
-        
+
                 if ($passwordChange == '') {
                     if ($profileChange == '') {
                         $user = [
@@ -177,16 +194,16 @@ class UserController extends Controller
                             "password" => $userLog['password'],
                             "profile" => $userLog['profile'],
                             "role" => $userLog['role']
-                        ];                
+                        ];
                     }else {
                         $namaFolderPhoto = ""; $namaFilePhoto = "";
                         foreach ($request->file("profile_picture") as $photo) {
                             $namaFilePhoto  = 'profileuser'.$id.".".$photo->getClientOriginalExtension();
                             $namaFolderPhoto = "photo/";
-                
+
                             $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
                         }
-    
+
                         $user = [
                             "id" => $userLog['id'],
                             "name" => $request->name,
@@ -194,7 +211,7 @@ class UserController extends Controller
                             "password" => $userLog['password'],
                             "profile" => $namaFilePhoto,
                             "role" => $userLog['role']
-                        ];     
+                        ];
                     }
                 }else {
                     if ($profileChange == '') {
@@ -205,16 +222,16 @@ class UserController extends Controller
                             "password" => Hash::make($request->password),
                             "profile" => $userLog['profile'],
                             "role" => $userLog['role']
-                        ];           
+                        ];
                     }else {
                         $namaFolderPhoto = ""; $namaFilePhoto = "";
                         foreach ($request->file("profile_picture") as $photo) {
                             $namaFilePhoto  = 'profileuser'.$id.".".$photo->getClientOriginalExtension();
                             $namaFolderPhoto = "photo/";
-                
+
                             $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
                         }
-    
+
                         $user = [
                             "id" => $userLog['id'],
                             "name" => $request->name,
@@ -222,20 +239,20 @@ class UserController extends Controller
                             "password" => Hash::make($request->password),
                             "profile" => $namaFilePhoto,
                             "role" => $userLog['role']
-                        ];   
+                        ];
                     }
                 }
-    
+
                 DB::table('user')->where('user_id', '=', $id)->update([
                     'user_name' => $user['name'],
                     'user_email' => $user['email'],
                     'user_password' => $user['password'],
                     'user_profile' => $user['profile']
                 ]);
-    
-                
+
+
                 Session::put('userLoggedIn', $user);
-        
+
                 return redirect()->route('user-edit')->with('msgSuccess', 'Edit succeed!');
             }
         }else {

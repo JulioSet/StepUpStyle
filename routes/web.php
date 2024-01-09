@@ -121,6 +121,7 @@ Route::prefix('admin')->group(function () {
 
 Route::get('/login', [PageController::class, 'viewLogin']);
 Route::get('/register', [PageController::class, 'viewRegister']);
+Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyEmail'])->name('verify');
 
 Route::get('/orders', [PageController::class, 'viewOrders']);
 Route::get('/profile', [PageController::class, 'viewProfile']);
@@ -174,7 +175,7 @@ Route::prefix('retur')->group(function () {
 });
 
 Route::get('/search', [PageController::class, 'viewSearchProducts'])->name('search');
-Route::get('/filter', [PageController::class, 'viewFilteredProducts'])->name('filter');
+Route::get('/filter', [PageController::class, 'viewFilteredProducts'])->name('filterP');
 
 
 // user login, register, logout, profile edit
