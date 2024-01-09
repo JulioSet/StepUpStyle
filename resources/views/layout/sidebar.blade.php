@@ -26,7 +26,7 @@
             @endforelse
         </ul>
     </div>
-    <form action="{{ route('filter') }}" method="get">
+    <form action="{{ route('filter-products') }}" method="get">
     @csrf
     <div class="sidebar-filter mt-50">
         <div class="top-filter-head">Product Filters</div>

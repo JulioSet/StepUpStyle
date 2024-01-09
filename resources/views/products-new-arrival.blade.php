@@ -75,6 +75,7 @@
 												<h6>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</h6>
 												<h6 class="l-through">{{ formatCurrencyIDR($sepatu->sepatu_price + 50000) }}</h6>
 											</div>
+											<div><p><b>Size : {{ $sepatu->ukuran->ukuran_sepatu_nama }}</b></p></div>	
 											<div class="prd-bottom">
 												<a href="{{ route('add-to-cart', $sepatu->sepatu_id) }}" class="social-info">
 													<span class="ti-bag"></span>
