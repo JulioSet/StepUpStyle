@@ -167,7 +167,7 @@ Route::prefix('retur')->group(function () {
     Route::post('/submit', [ReturController::class, 'retur'])->name('submit-retur');
 });
 
-Route::post('/search', [PageController::class, 'search']);
+Route::get('/search', [PageController::class, 'viewSearchProducts'])->name('search');
 
 
 // user login, register, logout, profile edit
