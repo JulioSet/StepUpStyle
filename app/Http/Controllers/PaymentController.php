@@ -68,15 +68,25 @@ class PaymentController extends Controller
     // }
 
     // ================= CART CHECKOUT (DARI CART) =================
-    public function process($product=null)
+    public function process2($product=null)
     {
         $cart = json_decode(Cookie::get('cartSepatu'), true); //cookie 14 hari
         $user = Session::get('userLoggedIn');
         $htrans_penjualan_id = rand(10000,99999);
+        $cek = htrans::find($htrans_penjualan_id);
+        while (!$cek->isEmpty()) {
+            $htrans_penjualan_id = rand(10000,99999);
+            $cek = htrans::find($htrans_penjualan_id);
+        }
+
         $totalProducts = 0;
 
         if ($cart == null) {
             $cart = $product;
+        }
+
+        if ($cart == null) {
+            return redirect('/orders');
         }
 
         $transaction = htrans::create([
@@ -163,7 +173,7 @@ class PaymentController extends Controller
 
 
     // ================= BARANG RETUR =================
-    public function process2($product=null)
+    public function process($product=null)
     {
         $cart = json_decode(Cookie::get('cartSepatu'), true); //cookie 14 hari
         $user = Session::get('userLoggedIn');
@@ -174,12 +184,15 @@ class PaymentController extends Controller
             $cart = $product;
         }
 
+        if ($cart == null && $product == null) {
+            return redirect('/products');
+        }
+
         $transaction = htrans::create([
             'htrans_penjualan_id' => $htrans_penjualan_id,
             'fk_customer' => $user['id'],
             'htrans_penjualan_status' => 1,
         ]);
-
 
         foreach ($cart as $c) {
             if ($c['id'] < 1001) {
@@ -197,12 +210,12 @@ class PaymentController extends Controller
                 $sepatu->save();
                 $totalProducts += $subtotal;
             } else {
-                $retur = retur::where('fk_sepatu','=',$c['id']);
+                $retur = retur::find($c['id']-1000);
                 $subtotal = $c['qty']*$retur->retur_price;
                 $dtrans = dtrans::create([
                     'fk_htrans_penjualan' => $htrans_penjualan_id,
-                    'fk_sepatu' => $c['id'],
-                    'fk_ukuran_sepatu' => $retur->dtrans->sepatu->sepatu_ukuran_id,
+                    'fk_sepatu' => $retur->fk_sepatu,
+                    'fk_ukuran_sepatu' => $retur->sepatu->sepatu_ukuran_id,
                     'dtrans_penjualan_qty' => $c['qty'],
                     'dtrans_penjualan_price' => $retur->retur_price,
                     'dtrans_penjualan_subtotal' => $subtotal
@@ -235,7 +248,7 @@ class PaymentController extends Controller
         $transaction->htrans_penjualan_total = $totalProducts;
         $transaction->save();
 
-        return redirect()->route('checkout2', $htrans_penjualan_id);
+        return redirect()->route('checkout', $htrans_penjualan_id);
     }
 
     // ================= DIRECT CHECKOUT (DARI HALAMAN PRODUCT) =================
@@ -256,20 +269,8 @@ class PaymentController extends Controller
         array_push($cartSepatu, $sepatu);
 
         Cookie::queue('cartSepatu', json_encode($cartSepatu));
-        return $this->process2($cartSepatu);
+        return $this->process($cartSepatu);
     }
-
-    // public function checkout2(htrans $transaction, $product=null)
-    // {
-    //     $userLoggedIn = Session::get('userLoggedIn');
-    //     $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
-    //     $cart = [];
-    //     Cookie::queue('cartSepatu', json_encode($cart), 1209600);
-    //     if ($product != null) {
-    //         $cartSepatu = $product;
-    //     }
-    //     return view('checkout', compact('transaction', 'cartSepatu', 'userLoggedIn'));
-    // }
 
     public function success(htrans $transaction){
         $transaction->htrans_penjualan_status = 2;

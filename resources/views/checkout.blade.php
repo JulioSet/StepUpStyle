@@ -2,6 +2,7 @@
 
 @php
 	use App\Models\sepatu;
+	use App\Models\retur;
 	// use App\Models\htrans;
 
     // $transaction = htrans::find($htrans_penjualan_id);
@@ -62,35 +63,67 @@
                                             $subtotalProducts = 0;
                                         @endphp
                                         @forelse ($cartSepatu as $c)
-                                            @php
-                                                $sepatu = sepatu::find($c['id']);
-                                            @endphp
-                                            <tr>
-                                                <td class="align-middle">
-                                                    <div class="media">
-                                                        <div class="d-flex col-4">
-                                                            <img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
+                                            @if ($c['id']<1001)
+                                                @php
+                                                    $sepatu = sepatu::find($c['id']);
+                                                @endphp
+                                                <tr>
+                                                    <td class="align-middle">
+                                                        <div class="media">
+                                                            <div class="d-flex col-4">
+                                                                <img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
+                                                            </div>
+                                                            <div class="media-body align-self-center">
+                                                                <p class="p-0 m-0">{{ $sepatu->sepatu_name }}</p>
+                                                                <p class="p-0 m-0">Size : {{ $sepatu->ukuran->ukuran_sepatu_nama }}</p>
+                                                            </div>
                                                         </div>
-                                                        <div class="media-body align-self-center">
-                                                            <p class="p-0 m-0">{{ $sepatu->sepatu_name }}</p>
-                                                            <p class="p-0 m-0">Size : {{ $sepatu->ukuran->ukuran_sepatu_nama }}</p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p>{{ $c['qty'] }} pcs</p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        @php
+                                                            $total = $sepatu->sepatu_price * $c['qty'];
+                                                            $subtotalProducts += $total;
+                                                        @endphp
+                                                        <p>{{ formatCurrencyIDR($total) }}</p>
+                                                    </td>
+                                                </tr>
+                                            @else
+                                                @php
+                                                    $retur = retur::find($c['id']-1000)
+                                                @endphp
+                                                <tr>
+                                                    <td class="align-middle">
+                                                        <div class="media">
+                                                            <div class="d-flex col-4">
+                                                                <img class="img-fluid" src="{{ Storage::url("retur/$retur->retur_pict") }}" alt="">
+                                                            </div>
+                                                            <div class="media-body align-self-center">
+                                                                <p class="p-0 m-0">{{ $retur->sepatu->sepatu_name }} (DEFECT)</p>
+                                                                <p class="p-0 m-0">Size : {{ $retur->sepatu->ukuran->ukuran_sepatu_nama }}</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <p>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</p>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <p>{{ $c['qty'] }} pcs</p>
-                                                </td>
-                                                <td class="align-middle">
-                                                    @php
-                                                        $total = $sepatu->sepatu_price * $c['qty'];
-                                                        $subtotalProducts += $total;
-                                                    @endphp
-                                                    <p>{{ formatCurrencyIDR($total) }}</p>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p>{{ formatCurrencyIDR($retur->retur_price) }}</p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <p>{{ $c['qty'] }} pcs</p>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        @php
+                                                            $total = $retur->retur_price * $c['qty'];
+                                                            $subtotalProducts += $total;
+                                                        @endphp
+                                                        <p>{{ formatCurrencyIDR($total) }}</p>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @empty
                                             <tr>
                                                 <td colspan="4">Your cart is empty!</td>

@@ -86,7 +86,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [PageController::class, 'viewAdminRetur']);
         Route::get('/reject/{id}', [AdminController::class, 'rejectRetur']);
         Route::get('/accept/{id}', [AdminController::class, 'acceptRetur']);
-        Route::get('/cancel/{id}', [AdminController::class, 'cancelRetur']);
+        // Route::get('/cancel/{id}', [AdminController::class, 'cancelRetur']);
     });
 
     Route::prefix('product')->group(function () {
