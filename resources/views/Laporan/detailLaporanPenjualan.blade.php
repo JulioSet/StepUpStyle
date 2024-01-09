@@ -12,9 +12,30 @@
             </form>
             <div class="detail-info">
                 @foreach ($listhtrans as $item)
-                <h5 class="p-2">ID                  : {{$item->htrans_penjualan_id}}</h5>
-                <h5 class="p-2">Customer            : {{$item->customer->user_name}}</h5>
-                <h5 class="p-2">Transaction Date    : {{$item->created_at->format('d M y')}}</h5>
+                <div class="row">
+                    <div class="col-2">
+                        <h5 class="p-2">ID</h5>
+                    </div>
+                    <div class="col-10">
+                        <h5 class="p-2">: {{$item->htrans_penjualan_id}}</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <h5 class="p-2">Customer</h5>
+                    </div>
+                    <div class="col-10">
+                        <h5 class="p-2">: {{$item->customer->user_name}}</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <h5 class="p-2">Transaction Date</h5>
+                    </div>
+                    <div class="col-10">
+                        <h5 class="p-2">: {{$item->created_at->format('d M Y')}}</h5>
+                    </div>
+                </div>
                 @endforeach
             </div>
             <table class="table table-bordered">
