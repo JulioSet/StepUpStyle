@@ -309,14 +309,17 @@ class AdminController extends Controller
         $kategoriID=$kategori->kategori_id;
         $supplierID=$supplier->supplier_id;
         $ukuranID=$ukuran->ukuran_sepatu_id;
-
+        
         $namaFolderPhoto = ""; $namaFilePhoto = "";
-        foreach ($request->foto as $photo) {
-            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-            $namaFolderPhoto = "photo/";
-
-        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+        if ($request->foto!=null) {
+            foreach ($request->foto as $photo) {
+                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+                $namaFolderPhoto = "photo/";
+    
+            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            }
         }
+        
 
         $sepatu= new sepatu();
         $sepatu->sepatu_supplier_id= $supplierID;
@@ -337,19 +340,21 @@ class AdminController extends Controller
     public function EditSepatu (Request $request){
         $kategori = Kategori::where('kategori_nama', $request->input('kategori'))->first();
         $supplier = supplier::where('supplier_name',$request->input('brand'))->first();
-        $ukuran = ukuran::where('ukuran_sepatu_nama',29)->first();
+        $ukuran = ukuran::where('ukuran_sepatu_nama',$request->input('ukuran'))->first();
 
         $kategoriID=$kategori->kategori_id;
         $supplierID=$supplier->supplier_id;
         $ukuranID=$ukuran->ukuran_sepatu_id;
 
         $namaFolderPhoto = ""; $namaFilePhoto = "";
-        foreach ($request->foto as $photo) {
-            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-            $namaFolderPhoto = "photo/";
+        if ($request->foto!=null) {
+            foreach ($request->foto as $photo) {
+                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+                $namaFolderPhoto = "photo/";
 
-        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
-        }
+            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            }
+    }
 
         $sepatu= sepatu::find($request->id);
         $sepatu->sepatu_supplier_id= $supplierID;
