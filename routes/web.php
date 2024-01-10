@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\laporanController;
+use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReturController;
@@ -42,8 +43,15 @@ Route::prefix('laporan')->group(function () {
         Route::get('/', [PageController::class, 'viewLaporanRetur']);
         Route::post('/', [laporanController::class, 'filterLaporanRetur'])->name("filterR");
     });
+
+    Route::get('/product', [PageController::class, 'viewLaporanProduct']);
 });
 
+Route::prefix('owner')->group(function () {
+    Route::get('/', [PageController::class, 'viewMasterAdmin']);
+    Route::post('/', [OwnerController::class, 'createAdmin']);
+    Route::get('/delete/{id}', [OwnerController::class, 'deleteAdmin']);
+});
 
 Route::prefix('admin')->group(function () {
 

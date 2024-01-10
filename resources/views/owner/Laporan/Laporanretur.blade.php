@@ -1,4 +1,4 @@
-@extends('laporan.layout.laporan')
+@extends('owner.layout.laporan')
 @section('content')
 <div class="col-md-12 mt-2">
 
@@ -6,7 +6,7 @@
 
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
-                <h3>Laporan Retur</h3>    
+                <h3>Laporan Retur</h3>
             </div>
             <form action="{{route("filterR")}}" method="post" class="mb-3">
                 @csrf
@@ -22,7 +22,7 @@
                         <span style="color: red;">{{ $errors->first('enddate') }}</span>
                     </div>
                 </div>
-    
+
                 <div class="mt-3">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
@@ -38,7 +38,7 @@
                         <th>Qty</th>
                         <th>Alasan</th>
 
-                        
+
                     </tr>
                 </thead>
                 <tbody>

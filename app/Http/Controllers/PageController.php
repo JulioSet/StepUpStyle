@@ -124,7 +124,7 @@ class PageController extends Controller
         $page = "Brand";
         $id = $request->id;
         $listBrand = sepatu::where('sepatu_supplier_id','=',$id)->get();
-        
+
         return view('products-brand', compact('listBrand'));
     }
 
@@ -135,7 +135,7 @@ class PageController extends Controller
         $listSearch = sepatu::where('sepatu_name',$request->search)
         ->orWhere('sepatu_name','like',"%{$request->search}%")
         ->get();;
-        
+
         return view('products-search', compact('listSearch'));
     }
 
@@ -150,17 +150,17 @@ class PageController extends Controller
             ->whereIn('sepatu_ukuran_id', $filterSize)
             ->where('deleted_at', null)
             ->where('sepatu_stock','>',0)
-            ->get();   
+            ->get();
         }elseif ($filterBrand && !$filterSize) {
             $listFilter = sepatu::whereIn('sepatu_supplier_id', $filterBrand)
             ->where('deleted_at', null)
             ->where('sepatu_stock','>',0)
-            ->get(); 
+            ->get();
         }elseif (!$filterBrand && $filterSize) {
             $listFilter = sepatu::whereIn('sepatu_ukuran_id', $filterSize)
             ->where('deleted_at', null)
             ->where('sepatu_stock','>',0)
-            ->get(); 
+            ->get();
         }
 
         return view('products-filter', compact('listFilter'));
@@ -232,7 +232,7 @@ class PageController extends Controller
 
 
     function viewAdminUser() {
-        return view('admin.user.adminuser',['listuser'=>user::withTrashed()->get()]);
+        return view('admin.user.adminuser',['listuser'=>user::withTrashed()->where('user_role', 'customer')->get()]);
     }
     function viewAdminAddUser(){
         return view('admin.user.adminadduser');
@@ -314,11 +314,15 @@ class PageController extends Controller
 
     // OWNER
 
+    function viewMasterAdmin(){
+        return view('owner.ownerAdmin', ['listadmin' => user::where('user_role', 'admin')->get()]);
+    }
+
     function viewLaporanPenjualan(){
-        return view('laporan.laporanpenjualan',['listhtrans' => htrans::where('htrans_penjualan_status', 2)->get()]);
+        return view('owner.laporan.laporanpenjualan',['listhtrans' => htrans::where('htrans_penjualan_status', 2)->get()]);
     }
     function viewDetailLaporanPenjualan(Request $request){
-        return view('laporan.detailLaporanPenjualan',[
+        return view('owner.laporan.detailLaporanPenjualan',[
             "listdtrans"=>dtrans::where('fk_htrans_penjualan', $request->id)->get(),
             "listhtrans"=>htrans::where('htrans_penjualan_id', $request->id)->get()
         ]);
@@ -326,6 +330,11 @@ class PageController extends Controller
 
 
     function viewLaporanRetur(){
-        return view('laporan.laporanretur',['listretur'=>retur::all()]);
+        return view('owner.laporan.laporanretur',['listretur'=>retur::all()]);
+    }
+
+
+    function viewLaporanProduct(){
+        return view('owner.Laporan.laporanProduct',['listproduct'=>sepatu::orderBy('sepatu_stock')->get()]);
     }
 }

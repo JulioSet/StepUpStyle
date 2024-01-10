@@ -49,9 +49,10 @@ class AdminController extends Controller
         $user= new user();
         $user->user_name = $request->input('nama');
         $user->user_email = $request->input('email');
-        $user->user_password= $request->input('password');
-        $user->user_profile= $namaFilePhoto;
-        $user->user_role="admin";
+        $user->user_password = $request->input('password');
+        $user->user_profile = $namaFilePhoto;
+        $user->user_role = "customer";
+        $user->verification = "special";
         $user->save();
 
         return redirect("/admin/user");
@@ -309,17 +310,17 @@ class AdminController extends Controller
         $kategoriID=$kategori->kategori_id;
         $supplierID=$supplier->supplier_id;
         $ukuranID=$ukuran->ukuran_sepatu_id;
-        
+
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         if ($request->foto!=null) {
             foreach ($request->foto as $photo) {
                 $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
                 $namaFolderPhoto = "photo/";
-    
+
             $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
             }
         }
-        
+
 
         $sepatu= new sepatu();
         $sepatu->sepatu_supplier_id= $supplierID;

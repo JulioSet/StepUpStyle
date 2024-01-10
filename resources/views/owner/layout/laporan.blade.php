@@ -46,7 +46,17 @@
                 </div>
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                    <!-- Master User Menu Item -->
+                    <!-- Master Admin Menu Item -->
+                    <li class="nav-item">
+                        <a href="/owner" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Master Admin
+                            </p>
+                        </a>
+                    </li>
+
+                    <!-- Laporan Penjualan Menu Item -->
                     <li class="nav-item">
                         <a href="/laporan/penjualan" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
@@ -56,7 +66,7 @@
                         </a>
                     </li>
 
-                    <!-- Master Supplier Menu Item -->
+                    <!-- Laporan Product Menu Item -->
                     <li class="nav-item">
                         <a href="/laporan/product" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
@@ -66,6 +76,7 @@
                         </a>
                     </li>
 
+                    <!-- Laporan Retur Menu Item -->
                     <li class="nav-item">
                         <a href="/laporan/retur" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
