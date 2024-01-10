@@ -48,7 +48,7 @@ class ReturController extends Controller
         ]);
 
         $notif = new notifikasi();
-        $notif->notifikasi_content = "New order incoming from ".$retur->user->user_email;
+        $notif->notifikasi_content = "Ada retur dari ".$retur->user->user_email;
         $notif->save();
 
         return redirect('/orders');

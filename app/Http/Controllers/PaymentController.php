@@ -279,7 +279,7 @@ class PaymentController extends Controller
         $transaction->save();
 
         $notif = new notifikasi();
-        $notif->notifikasi_content = "New order incoming from ".$transaction->customer->user_email;
+        $notif->notifikasi_content = "Ada pesanan baru dari ".$transaction->customer->user_email;
         $notif->save();
 
         return view('checkout-confirmation',  compact('transaction'));
