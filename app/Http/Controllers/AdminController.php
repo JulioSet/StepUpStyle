@@ -11,6 +11,7 @@ use App\Models\supplier;
 use App\Models\ukuran;
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -418,5 +419,11 @@ class AdminController extends Controller
         $order->htrans_penjualan_status = 3;
         $order->save();
         return redirect('admin/order');
+    }
+
+    public function logout(Request $request)
+    {
+        Session::forget('AdminLoggedIn');
+        return redirect()->route('login');
     }
 }

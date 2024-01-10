@@ -27,7 +27,7 @@
                     <a class="nav-link " data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item ml-auto">
-                    <a  href="#" class="btn btn-danger">Logout</a>
+                    <a  href="{{ route('user-logout') }}" class="btn btn-danger">Logout</a>
                 </li>
             </ul>
 
