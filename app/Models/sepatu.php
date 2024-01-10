@@ -17,16 +17,16 @@ class sepatu extends Model
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class, 'sepatu_supplier_id');
+        return $this->belongsTo(supplier::class, 'sepatu_supplier_id');
     }
 
     public function kategori()
     {
-        return $this->belongsTo(Kategori::class, 'sepatu_kategori_id');
+        return $this->belongsTo(kategori::class, 'sepatu_kategori_id');
     }
 
     public function ukuran()
     {
-        return $this->belongsTo(Ukuran::class, 'sepatu_ukuran_id');
+        return $this->belongsTo(ukuran::class, 'sepatu_ukuran_id');
     }
 }

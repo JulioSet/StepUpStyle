@@ -17,6 +17,6 @@ class kategori extends Model
 
     public function sepatu()
     {
-        return $this->hasMany(Sepatu::class, 'sepatu_kategori_id');
+        return $this->hasMany(sepatu::class, 'sepatu_kategori_id');
     }
 }
