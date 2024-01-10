@@ -220,7 +220,7 @@ class PageController extends Controller
 
     public function viewAdminNotif()
     {
-        $list = notifikasi::all();
+        $list = notifikasi::all()->sortByDesc("created_at");
         $modified = array();
         foreach ($list as $notif) {
             $modified[] = [
