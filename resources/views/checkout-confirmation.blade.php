@@ -87,38 +87,38 @@
                                                     @if ($p->dtrans_penjualan_price < $p->sepatu->sepatu_price)
                                                         <h5>{{ $p->sepatu->sepatu_name }} (DEFECT)</h5>
                                                     @else
-													    <h5>{{ $p->sepatu->sepatu_name }}</h5>
+                                                        <h5>{{ $p->sepatu->sepatu_name }}</h5>
                                                     @endif
 													<p>{{ $p->sepatu->ukuran->ukuran_sepatu_nama }}</p>
 												</div>
 												@if ($transaction->htrans_penjualan_status == 3)
 												<div class="col-4 text-center">
 													@if ($p->dtrans_penjualan_retur == null)
-															<a href="{{ route('form-retur', $p->dtrans_penjualan_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">
-																Request a Return
-															</a>
+                                                        <a href="{{ route('form-retur', $p->dtrans_penjualan_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">
+                                                            Request a Return
+                                                        </a>
 													@else
-															@php
-																$retur = retur::where('fk_dtrans', '=', $p->dtrans_penjualan_id)->first();
-															@endphp
+                                                        @php
+                                                            $retur = retur::where('fk_dtrans', '=', $p->dtrans_penjualan_id)->first();
+                                                        @endphp
 
-															@if ($retur->retur_status == 0)
-																<a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn danger radius py-1" style="line-height: 12px" id="pay-button">
-																	Return Request Rejected
-																</a>
-															@elseif ($retur->retur_status == 1)
-																<a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn success radius py-1" style="line-height: 12px" id="pay-button">
-																	Return Request Accepted
-																</a>
-															@elseif ($retur->retur_status == 2)
-																<a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn primary radius py-1" style="line-height: 12px" id="pay-button">
-																	Return Requested
-																</a>
-															@elseif ($retur->retur_status == 9)
-																<a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">
-																	Return Cancelled
-																</a>
-															@endif
+                                                        @if ($retur->retur_status == 0)
+                                                            <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn danger radius py-1" style="line-height: 12px" id="pay-button">
+                                                                Return Request Rejected
+                                                            </a>
+                                                        @elseif ($retur->retur_status == 1)
+                                                            <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn success radius py-1" style="line-height: 12px" id="pay-button">
+                                                                Return Request Accepted
+                                                            </a>
+                                                        @elseif ($retur->retur_status == 2)
+                                                            <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn primary radius py-1" style="line-height: 12px" id="pay-button">
+                                                                Return Requested
+                                                            </a>
+                                                        @elseif ($retur->retur_status == 9)
+                                                            <a href="{{ route('details-retur', $retur->retur_id) }}" class="genric-btn default radius py-1" style="line-height: 12px" id="pay-button">
+                                                                Return Cancelled
+                                                            </a>
+                                                        @endif
 													@endif
 												</div>
 												@endif

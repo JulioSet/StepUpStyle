@@ -192,9 +192,10 @@ class PageController extends Controller
         $userLoggedIn = Session::get('userLoggedIn');
         $product = dtrans::find($dtrans_id);
         Cookie::queue('tempRetur', json_encode($product), 1209600);
-        $tempRetur = json_decode(Cookie::get('tempRetur'), true);
+        // $tempRetur = json_decode(Cookie::get('tempRetur'), true);
+        // dd($tempRetur);
 
-        return view('retur-form', compact('userLoggedIn', 'product', 'tempRetur'));
+        return view('retur-form', compact('userLoggedIn', 'product'));
     }
 
     public function viewOrders(){

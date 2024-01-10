@@ -82,7 +82,7 @@
 						</p>
 						<div class="card_area d-flex align-items-center">
 							{{-- <a class="icon_btn" href="{{ route('add-to-cart', ['id'=>$sepatu['id']]) }}"><i class="ti-bag"></i></a> --}}
-							<a class="primary-btn" href="{{ route('checkout-product-retur',) }}"><i class="ti-money"></i>Checkout</a>
+							<a class="primary-btn" href="{{ route('checkout-product-retur', $retur->retur_id) }}"><i class="ti-money"></i>Checkout</a>
 						</div>
 					</div>
 				</div>
@@ -105,7 +105,7 @@
 	<!-- Start related-product Area -->
 
 	@include('layout.deals-of-the-week')
-	
+
 	<!-- End related-product Area -->
 
 

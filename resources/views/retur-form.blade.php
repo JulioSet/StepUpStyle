@@ -56,7 +56,9 @@
                                     <h5 class="pt-2 col-3">Qty <span class="text-danger">*</span></h5>
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
                                     <div class="product_count m-0 mt-2">
-                                        <input type="number" name="qty" max="{{ $tempRetur['dtrans_penjualan_qty'] }}" min=1 value="{{ $tempRetur['dtrans_penjualan_qty'] }}" title="Quantity:" class="input-text qty">
+                                        {{-- <input type="number" name="qty" max="{{ $tempRetur['dtrans_penjualan_qty'] }}" min=1 value="{{ $tempRetur['dtrans_penjualan_qty'] }}" title="Quantity:" class="input-text qty"> --}}
+                                        <input type="text" name="qty" value=1 max=1 min=1 class="input-text qty" readonly>
+                                        <p class="text-danger small">max retur : 1</p>
                                     </div>
                                 </div>
                                 <div class="d-flex form-group align-middle">
