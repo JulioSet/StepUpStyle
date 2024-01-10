@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\dtrans;
+use App\Models\notifikasi;
 use App\Models\retur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -45,6 +46,10 @@ class ReturController extends Controller
             'retur_price' => $dtrans->sepatu->sepatu_price*0.6,
             'retur_status' => 2,
         ]);
+
+        $notif = new notifikasi();
+        $notif->notifikasi_content = "Ada retur dari ".$retur->user->user_email;
+        $notif->save();
 
         return redirect('/orders');
         // return redirect('checkout-details', ['transaction'=>$dtrans->fk_htrans_penjualan]);

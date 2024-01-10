@@ -80,18 +80,42 @@ class UserController extends Controller
                 if ($key->user_email == $email) {
                     if(Hash::check($password, $key->user_password) == true) {
 
-                        $userLoggedIn = [
-                            "id" => $key->user_id,
-                            "name" => $key->user_name,
-                            "email" => $key->user_email,
-                            "password" => $key->user_password,
-                            "profile" => $key->user_profile,
-                            "role" => $key->user_role
-                        ];
+                        if ($key->user_role == "admin") {
 
-                        Session::put('userLoggedIn', $userLoggedIn);
+                            $AdminLoggedIn = [
+                                "id" => $key->user_id,
+                                "name" => $key->user_name,
+                                "email" => $key->user_email,
+                                "password" => $key->user_password,
+                                "profile" => $key->user_profile,
+                                "role" => $key->user_role
+                            ];
+                            Session::put('adminLoggedIn', $AdminLoggedIn);
+                            return redirect("admin");
+                        }
+                        else if($key->user_role == "owner"){
+                            Session::put('ownerLoggedIn', "Owner");
 
-                        return redirect()->route('home');
+                            return redirect("owner");
+                        }
+                        else if($key->user_role == "customer"){
+                            if ($key->user_verification == 0) {
+                                return redirect()->back()->with('msg', 'Email is not verified!');
+                            }
+                            $userLoggedIn = [
+                                "id" => $key->user_id,
+                                "name" => $key->user_name,
+                                "email" => $key->user_email,
+                                "password" => $key->user_password,
+                                "profile" => $key->user_profile,
+                                "role" => $key->user_role
+                            ];
+
+                            Session::put('userLoggedIn', $userLoggedIn);
+
+                            return redirect()->route('home');
+                        }
+
                     }
                     else {
                         return redirect()->back()->with('msg', 'Password is Incorrect!');
@@ -107,6 +131,8 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         Session::forget('userLoggedIn');
+        Session::forget('adminLoggedIn');
+        Session::forget('ownerLoggedIn');
         if (Session::has('remember_me')) {
             Session::forget('remember_me');
         }

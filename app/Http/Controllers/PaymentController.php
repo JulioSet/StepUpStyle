@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\dtrans;
 use App\Models\htrans;
+use App\Models\notifikasi;
 use App\Models\retur;
 use App\Models\sepatu;
 use Illuminate\Support\Facades\Cookie;
@@ -166,6 +167,7 @@ class PaymentController extends Controller
         if ($product != null) {
             $cartSepatu = $product;
         }
+
         return view('checkout', compact('transaction', 'cartSepatu', 'userLoggedIn'));
     }
 
@@ -275,6 +277,10 @@ class PaymentController extends Controller
     public function success(htrans $transaction){
         $transaction->htrans_penjualan_status = 2;
         $transaction->save();
+
+        $notif = new notifikasi();
+        $notif->notifikasi_content = "Ada pesanan baru dari ".$transaction->customer->user_email;
+        $notif->save();
 
         return view('checkout-confirmation',  compact('transaction'));
     }
