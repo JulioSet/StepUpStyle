@@ -136,13 +136,15 @@ Route::middleware(['authadmin'])->group(function () {
 });
 
 Route::get('logout', [UserController::class, 'logout'])->name('user-logout');
+
+Route::middleware(['authlogin'])->group(function () {
 Route::get('/login', [PageController::class, 'viewLogin']);
 Route::get('/register', [PageController::class, 'viewRegister']);
-
-Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyEmail'])->name('verify');
 Route::post('login', [UserController::class, 'login'])->name('user-login');
 Route::post('register', [UserController::class, 'register'])->name('user-register');
+});
 
+Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyEmail'])->name('verify');
 Route::get('/search', [PageController::class, 'viewSearchProducts'])->name('search');
 Route::get('/filter', [PageController::class, 'viewFilteredProducts'])->name('filter-products');
 
