@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailSepatu;
 use App\Models\htrans;
 use App\Models\kategori;
 use App\Models\retur;
 use App\Models\sepatu;
+use App\Models\SubKategori;
 use App\Models\supplier;
 use App\Models\ukuran;
 use App\Models\user;
@@ -106,63 +108,6 @@ class AdminController extends Controller
         $user = user::withTrashed()->find($id);
         $user->restore();
         return redirect("/admin/user");
-    }
-
-     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //                                                           UKURAN
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    public function addUkuran (Request $request){
-        $rules = [
-            'ukuran' => ["required", "numeric","integer"],
-        ];
-        $messages = [
-            "required" => "Please fill this field",
-            "numeric" => "Value Must Number",
-            "integer" => "Value Must Number"
-        ];
-
-        $request->validate($rules, $messages);
-
-        $ukuran= new ukuran();
-        $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
-        $ukuran->save();
-
-        return redirect("/admin/ukuran");
-    }
-
-
-    public function EditUkuran (Request $request){
-        $rules = [
-            'ukuran' => ["required", "numeric","integer"],
-        ];
-        $messages = [
-            "required" => "Please fill this field",
-            "numeric" => "Value Must Integer",
-            "integer" => "Value Must Integer"
-        ];
-
-        $request->validate($rules, $messages);
-
-        $ukuran= ukuran::find($request->id);
-        $ukuran->ukuran_sepatu_nama = $request->input('ukuran');
-        $ukuran->save();
-
-        return redirect("/admin/ukuran");
-    }
-
-    public function unavailableUkuran($id)
-    {
-        $ukuran = ukuran::find($id);
-        $ukuran->delete();
-        return redirect('/admin/ukuran');
-    }
-
-    public function availableUkuran($id)
-    {
-        $ukuran = ukuran::withTrashed()->find($id);
-        $ukuran->restore();
-        return redirect('/admin/ukuran');
     }
 
 
@@ -284,6 +229,42 @@ class AdminController extends Controller
         return redirect("/admin/kategori");
     }
 
+    public function addVarianKategori (Request $request){
+        $rules = [
+            'sub_kategori' => ["required", "min:1",'unique:subkategori,subkategori_nama'],
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken"
+        ];
+        $request->validate($rules, $messages);
+
+        $subkategori= new SubKategori();
+        $subkategori->fk_kategori= $request->id;
+        $subkategori->subkategori_nama= $request->input('sub_kategori');
+        $subkategori->save();
+
+        return redirect()->route('viewAdminVarianKategori', ['id' => $request->id]);
+    }
+
+    public function EditSubKategori (Request $request){
+        $rules = [
+            'sub_kategori' => ["required", "min:1",'unique:subkategori,subkategori_nama'],
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken"
+        ];
+
+        $request->validate($rules, $messages);
+
+        $subkategori= SubKategori::find($request->sub);
+        $subkategori->subkategori_nama= $request->input('sub_kategori');
+        $subkategori->save();
+
+        return redirect()->route('viewAdminVarianKategori', ['id' => $request->id]);
+    }
+
     public function unavailableKategori($id)
     {
         $kategori = kategori::find($id);
@@ -304,14 +285,17 @@ class AdminController extends Controller
 
 
     public function addSepatu (Request $request){
-        $kategori = Kategori::where('kategori_nama', $request->input('kategori'))->first();
-        $supplier = supplier::where('supplier_name',$request->input('brand'))->first();
-        $ukuran = ukuran::where('ukuran_sepatu_nama',$request->input('ukuran'))->first();
+        $sepatu = new sepatu();
+        $sepatu->sepatu_name=$request->input('namaSepatu');
+        $sepatu->sepatu_supplier_id = $request->input('brand');
+        $sepatu->sepatu_kategori_id = $request->input('kategori');
+        $sepatu->sepatu_subkategori_id = $request->input('sub_kategori');
+        $sepatu->save();
 
-        $kategoriID=$kategori->kategori_id;
-        $supplierID=$supplier->supplier_id;
-        $ukuranID=$ukuran->ukuran_sepatu_id;
+        return redirect("/admin/product");
+    }
 
+    public function addVarianSepatu (Request $request){
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         if ($request->foto!=null) {
             foreach ($request->foto as $photo) {
@@ -322,32 +306,30 @@ class AdminController extends Controller
             }
         }
 
+        $varian = new DetailSepatu();
+        $varian->fk_sepatu= $request->id;
+        $varian->detail_sepatu_pict= $namaFilePhoto;
+        $varian->detail_sepatu_warna=$request->input('warna');
+        $varian->detail_sepatu_ukuran= $request->input('ukuran');
+        $varian->detail_sepatu_stok=$request->input('stock');
+        $varian->detail_sepatu_harga=$request->input('harga');
+        $varian->save();
 
-        $sepatu= new sepatu();
-        $sepatu->sepatu_supplier_id= $supplierID;
-        $sepatu->sepatu_kategori_id= $kategoriID;
-        $sepatu->sepatu_ukuran_id= $ukuranID;
-        $sepatu->sepatu_pict= $namaFilePhoto;
-        $sepatu->sepatu_name=$request->input('namaSepatu');
-        $sepatu->sepatu_stock=$request->input('stock');
-        $sepatu->sepatu_price=$request->input('harga');
-        $sepatu->sepatu_color=$request->input('warna');
+        return redirect()->route('viewVarianProduct', ['id' => $request->id]);
+    }
+
+    public function EditSepatu (Request $request){
+        $sepatu = sepatu::find($request->id);
+        $sepatu->sepatu_name = $request->input('namaSepatu');
+        $sepatu->sepatu_supplier_id = $request->input('brand');
+        $sepatu->sepatu_kategori_id = $request->input('kategori');
+        $sepatu->sepatu_subkategori_id = $request->input('sub_kategori');
         $sepatu->save();
 
         return redirect("/admin/product");
     }
 
-
-
-    public function EditSepatu (Request $request){
-        $kategori = Kategori::where('kategori_nama', $request->input('kategori'))->first();
-        $supplier = supplier::where('supplier_name',$request->input('brand'))->first();
-        $ukuran = ukuran::where('ukuran_sepatu_nama',$request->input('ukuran'))->first();
-
-        $kategoriID=$kategori->kategori_id;
-        $supplierID=$supplier->supplier_id;
-        $ukuranID=$ukuran->ukuran_sepatu_id;
-
+    public function EditVarianSepatu (Request $request){
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         if ($request->foto!=null) {
             foreach ($request->foto as $photo) {
@@ -356,26 +338,38 @@ class AdminController extends Controller
 
             $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
             }
+        }
+
+        $varian = DetailSepatu::find($request->id);
+        $varian->detail_sepatu_pict = $namaFilePhoto;
+        $varian->detail_sepatu_warna = $request->input('warna');
+        $varian->detail_sepatu_ukuran= $request->input('ukuran');
+        $varian->detail_sepatu_stok = $request->input('stock');
+        $varian->detail_sepatu_harga = $request->input('harga');
+        $varian->save();
+
+        return redirect()->route('viewVarianProduct', ['id' => $request->id]);
     }
 
-        $sepatu= sepatu::find($request->id);
-        $sepatu->sepatu_supplier_id= $supplierID;
-        $sepatu->sepatu_kategori_id= $kategoriID;
-        $sepatu->sepatu_ukuran_id= $ukuranID;
-        $sepatu->sepatu_pict= $namaFilePhoto;
-        $sepatu->sepatu_name=$request->input('namaSepatu');
-        $sepatu->sepatu_stock=$request->input('stock');
-        $sepatu->sepatu_price=$request->input('harga');
-        $sepatu->sepatu_color=$request->input('warna');
-        $sepatu->save();
-
-        return redirect("/admin/product");
-    }
     public function deleteSepatu($id)
     {
         $sepatu = sepatu::find($id);
         $sepatu->delete();
         return redirect('/admin/product');
+    }
+
+    public function unavailableVarianSepatu($id, $sub)
+    {
+        $varian = DetailSepatu::find($sub);
+        $varian->delete();
+        return redirect()->route('viewVarianProduct', ['id' => $id]);
+    }
+
+    public function availableVarianSepatu($id, $sub)
+    {
+        $varian = DetailSepatu::withTrashed()->find($sub);
+        $varian->restore();
+        return redirect()->route('viewVarianProduct', ['id' => $id]);
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------

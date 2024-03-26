@@ -65,6 +65,15 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="/admin/product" class="nav-link">
+                            <i class="nav-icon fas fa-truck"></i>
+                            <p>
+                                Master Product
+                            </p>
+                        </a>
+                    </li>
+
                     <!-- Master Order Menu Item -->
                     <li class="nav-item">
                         <a href="/admin/order" class="nav-link">
@@ -85,14 +94,6 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="/admin/product" class="nav-link">
-                            <i class="nav-icon fas fa-truck"></i>
-                            <p>
-                                Master Product
-                            </p>
-                        </a>
-                    </li>
 
                     <li class="nav-item">
                         <a href="/admin/ukuran" class="nav-link">
@@ -153,11 +154,9 @@
     <!-- Tambahkan JS AdminLTE -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
     <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-
-
-    let table = new DataTable('#myTable');
+        let table = new DataTable('#myTable');
     </script>
 </body>
 </html>

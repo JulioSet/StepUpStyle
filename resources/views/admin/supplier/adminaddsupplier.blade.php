@@ -9,7 +9,7 @@
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Add Master Supplier</h3>
-                <a href="/admin/supplier" class="btn btn-primary ml-auto mb-1">Back</a>
+                <a href="/admin/supplier" class="btn btn-danger ml-auto mb-1">Back</a>
             </div>
             <form action="{{ route('addSupplier') }}" method="post"
                 enctype="multipart/form-data" class="dropzone">

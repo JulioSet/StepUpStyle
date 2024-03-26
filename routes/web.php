@@ -33,6 +33,8 @@ Route::get('/flush', function () {
     Session::flush();
 });
 
+Route::get('/get-sub-items/{id}', [PageController::class, 'getSubKategori']);
+
 
 Route::middleware(['authowner'])->group(function () {
     Route::prefix('laporan')->group(function () {
@@ -41,16 +43,16 @@ Route::middleware(['authowner'])->group(function () {
             Route::post('/', [laporanController::class, 'filterLaporanPenjualan'])->name("filter");
             Route::get('/detail/{id}', [PageController::class, 'viewDetailLaporanPenjualan'])->name("detail");
         });
-        
+
         Route::prefix('retur')->group(function () {
             Route::get('/', [PageController::class, 'viewLaporanRetur']);
             Route::post('/', [laporanController::class, 'filterLaporanRetur'])->name("filterR");
         });
-        
+
         Route::get('/product', [PageController::class, 'viewLaporanProduct']);
     });
-    
-    
+
+
     Route::prefix('owner')->group(function () {
         Route::get('/', [PageController::class, 'viewMasterAdmin']);
         Route::post('/', [OwnerController::class, 'createAdmin']);
@@ -67,10 +69,10 @@ Route::middleware(['authadmin'])->group(function () {
             Route::get('/detail/{id}', [PageController::class, 'viewAdminDetailOrder'])->name('detail_order');
             Route::get('/done/{id}', [AdminController::class, 'markAsDoneOrder'])->name('mark_as_done');
         });
-        
+
         // NOTIFIKASI
         Route::get('/', [PageController::class, 'viewAdminNotif']);
-        
+
         Route::prefix('ukuran')->group(function () {
             // UKURAN
             Route::get('/', [PageController::class, 'viewAdminUkuran']);
@@ -81,7 +83,7 @@ Route::middleware(['authadmin'])->group(function () {
             Route::get('/unavailable/{id}', [AdminController::class, 'unavailableUkuran']);
             Route::get('/available/{id}', [AdminController::class, 'availableUkuran']);
         });
-        
+
         Route::prefix('kategori')->group(function () {
             // KATEGORI
             Route::get('/', [PageController::class, 'viewAdminKategori']);
@@ -91,6 +93,12 @@ Route::middleware(['authadmin'])->group(function () {
             Route::post('/edit/{id}', [AdminController::class, 'EditKategori'])->name('AdminEditkategori');
             Route::get('/unavailable/{id}', [AdminController::class, 'unavailableKategori']);
             Route::get('/available/{id}', [AdminController::class, 'availableKategori']);
+            // SUB-KATEGORI
+            Route::get('/{id}', [PageController::class, 'viewAdminVarianKategori'])->name('viewAdminVarianKategori');
+            Route::get('/{id}/add', [PageController::class, 'viewAdminAddVarianKategori']);
+            Route::post('/{id}/add', [AdminController::class, 'addVarianKategori'])->name('addVarianKategori');
+            Route::get('/{id}/edit/{sub}', [PageController::class, 'viewAdminEditSubKategori'])->name('viewEditSubKategori');
+            Route::post('/{id}/edit/{sub}', [AdminController::class, 'EditSubKategori'])->name('AdminEditSubkategori');
         });
 
         Route::prefix('supplier')->group(function () {
@@ -102,7 +110,7 @@ Route::middleware(['authadmin'])->group(function () {
             Route::post('/edit/{id}', [AdminController::class, 'EditSupplier'])->name('AdminEditsupplier');
             Route::get('/delete/{id}', [AdminController::class, 'deleteSupplier']);
         });
-        
+
         Route::prefix('retur')->group(function () {
             // RETUR
             Route::get('/', [PageController::class, 'viewAdminRetur']);
@@ -110,18 +118,26 @@ Route::middleware(['authadmin'])->group(function () {
             Route::get('/accept/{id}', [AdminController::class, 'acceptRetur']);
             // Route::get('/cancel/{id}', [AdminController::class, 'cancelRetur']);
         });
-        
+
         Route::prefix('product')->group(function () {
-        // PRODUCT
-        Route::get('/', [PageController::class, 'viewAdminProduct']);
-        Route::get('/add', [PageController::class, 'viewAdminAddProduct']);
-        Route::post('/add', [AdminController::class, 'addSepatu'])->name('addSepatu');
-        Route::get('/edit/{id}', [PageController::class, 'viewAdminEditProduct'])->name('viewEditProduct');
-        Route::post('/edit/{id}', [AdminController::class, 'EditSepatu'])->name('AdminEditProduct');
+            // PRODUCT
+            Route::get('/', [PageController::class, 'viewAdminProduct']);
+            Route::get('/add', [PageController::class, 'viewAdminAddProduct']);
+            Route::post('/add', [AdminController::class, 'addSepatu'])->name('addSepatu');
+            Route::get('/edit/{id}', [PageController::class, 'viewAdminEditProduct'])->name('viewEditProduct');
+            Route::post('/edit/{id}', [AdminController::class, 'EditSepatu'])->name('AdminEditProduct');
             Route::get('/delete/{id}', [AdminController::class, 'deleteSepatu']);
+            // VARIANT PRODUCT
+            Route::get('/{id}', [PageController::class, 'viewAdminVarianProduct'])->name('viewVarianProduct');
+            Route::get('/{id}/add', [PageController::class, 'viewAdminAddVarianProduct'])->name('viewAddVarianProduct');
+            Route::post('/{id}/add', [AdminController::class, 'addVarianSepatu'])->name('addVarianSepatu');
+            Route::get('/{id}/edit/{varian}', [PageController::class, 'viewAdminEditVarianProduct'])->name('viewEditVarianProduct');
+            Route::post('/{id}/edit/{varian}', [AdminController::class, 'EditVarianSepatu'])->name('EditVarianProduct');
+            Route::get('/{id}/available/{varian}', [AdminController::class, 'availableVarianSepatu'])->name('availableVarianSepatu');
+            Route::get('/{id}/unavailable/{varian}', [AdminController::class, 'unavailableVarianSepatu'])->name('unavailableVarianSepatu');
         });
 
-        
+
         Route::prefix('user')->group(function () {
             // USER
             Route::get('/', [PageController::class, 'viewAdminUser']);
@@ -151,24 +167,23 @@ Route::get('/filter', [PageController::class, 'viewFilteredProducts'])->name('fi
 Route::get('/home', [PageController::class, 'viewHome'])->name('home');
 Route::get('/contact', [PageController::class, 'viewContact']);
 
+Route::prefix('products')->group(function () {
+    Route::get('/', [PageController::class, 'viewAllProducts']);
+    Route::get('/new-arrival', [PageController::class, 'viewNewArrival']);
+    Route::get('/best-seller', [PageController::class, 'viewBestSeller']);
+    Route::get('/{id}', [PageController::class, 'viewDetailProduct'])->name('product-detail');
+    Route::get('/brand/{id}', [PageController::class, 'viewBrandProducts']);
+    Route::get('/category/{id}', [PageController::class, 'viewCategoryProducts'])->name('product-category');
+    // Route::get('/flashsale', [PageController::class, 'viewFlashSale'])->name('flashsale');
+    // Route::get('/flashsale/{id}', [PageController::class, 'viewDetailRetur'])->name('product-retur');
+});
 
-    Route::prefix('products')->group(function () {
-        Route::get('/', [PageController::class, 'viewAllProducts']);
-        Route::get('/new-arrival', [PageController::class, 'viewNewArrival']);
-        Route::get('/best-seller', [PageController::class, 'viewBestSeller']);
-        Route::get('/{id}', [PageController::class, 'viewDetailProduct'])->name('product-detail');
-        Route::get('/brand/{id}', [PageController::class, 'viewBrandProducts']);
-        Route::get('/category/{id}', [PageController::class, 'viewCategoryProducts'])->name('product-category');
-        // Route::get('/flashsale', [PageController::class, 'viewFlashSale'])->name('flashsale');
-        // Route::get('/flashsale/{id}', [PageController::class, 'viewDetailRetur'])->name('product-retur');
-    });
+Route::prefix('flashsale')->group(function () {
+    Route::get('/', [PageController::class, 'viewFlashSale'])->name('flashsale');
+    Route::get('/{id?}', [PageController::class, 'viewDetailRetur'])->name('product-retur');
+});
 
-    Route::prefix('flashsale')->group(function () {
-        Route::get('/', [PageController::class, 'viewFlashSale'])->name('flashsale');
-        Route::get('/{id?}', [PageController::class, 'viewDetailRetur'])->name('product-retur');
-    });
-    
-    Route::get('/category', [PageController::class, 'viewCategory']);
+Route::get('/category', [PageController::class, 'viewCategory']);
 
 
 Route::middleware(['authuser'])->group(function () {
@@ -193,9 +208,9 @@ Route::middleware(['authuser'])->group(function () {
         Route::get('/success/{transaction}', [PaymentController::class, 'success'])->name("checkout-success");
         Route::get('/cancel/{transaction}', [PaymentController::class, 'cancel'])->name("checkout-cancel");
         Route::get('/details/{transaction}', [PaymentController::class, 'details'])->name("checkout-details");
-        
+
         Route::get('/retur/{retur_id}', [PaymentController::class, 'directProcess2'])->name("checkout-product-retur");
-        
+
     });
 
     Route::prefix('retur')->group(function () {
@@ -206,7 +221,7 @@ Route::middleware(['authuser'])->group(function () {
     });
 
 
-    
+
     // user login, register, logout, profile edit
 
     Route::post('profile', [UserController::class, 'editProfile'])->name('user-edit');

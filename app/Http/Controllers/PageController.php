@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailSepatu;
 use App\Models\dtrans;
 use App\Models\htrans;
 use App\Models\kategori;
 use App\Models\notifikasi;
 use App\Models\retur;
 use App\Models\sepatu;
+use App\Models\SubKategori;
 use App\Models\supplier;
 use App\Models\ukuran;
 use App\Models\user;
@@ -244,46 +246,70 @@ class PageController extends Controller
 
 
     function viewAdminProduct(){
-        return view('admin.product.adminproduct',['listproduk'=>sepatu::all()]);
+        return view('admin.product.adminproduct',['listproduk'=>sepatu::orderBy('created_at','desc')->get()]);
+    }
+    function viewAdminVarianProduct($id){
+        return view('admin.product.adminvarianproduct',[
+            'sepatu' => sepatu::find($id),
+            'listvarian' => DetailSepatu::withTrashed()->where('fk_sepatu', $id)->orderBy('detail_sepatu_ukuran')->get()
+        ]);
     }
     function viewAdminAddProduct(){
         return view('admin.product.adminaddproduct' ,[
             'listkategori'=>kategori::all(),
-            'listsupplier'=>supplier::all(),
-            'listukuran'=>ukuran::all()
+            'listsupplier'=>supplier::all()
         ]);
+    }
+    function viewAdminAddVarianProduct($id){
+        return view('admin.product.adminaddvarianproduk', ['sepatu' => sepatu::find($id)]);
+    }
+    function getSubKategori($id)
+    {
+        $temp = SubKategori::where('fk_kategori', $id)->get();
+        $listsubkategori = array();
+        foreach ($temp as $item) {
+            $listsubkategori[] = [
+                'id' => $item->subkategori_id,
+                'nama' => $item->subkategori_nama
+            ];
+        }
+        return response()->json($listsubkategori ?? []);
     }
     function viewAdminEditProduct(Request $request){
         return view('admin.product.admineditproduct' ,[
             'IdProduct'=>sepatu::find($request->id),
             'listkategori'=>kategori::all(),
             'listsupplier'=>supplier::all(),
-            'listukuran'=>ukuran::all()
         ]);
     }
-
-
-    function viewAdminUkuran(){
-        return view('admin.ukuran.adminukuran',['listukuran'=>ukuran::withTrashed()->get()]);
-    }
-    function viewAdminAddUkuran(){
-        return view('admin.ukuran.adminaddukuran');
-    }
-    function viewAdminEditUkuran(Request $request){
-        return view('admin.ukuran.admineditukuran',['IdUkuran'=>ukuran::find($request->id)]);
+    function viewAdminEditVarianProduct(Request $request){
+        return view('admin.product.admineditvarianproduct' ,['varian'=>DetailSepatu::find($request->varian)]);
     }
 
 
     function viewAdminKategori(){
         return view('admin.kategori.adminkategori',['listkategori'=>kategori::withTrashed()->get()]);
     }
+    function viewAdminVarianKategori($id){
+        return view('admin.kategori.adminsubkategori',[
+            'kategori'=>kategori::find($id),
+            'listsubkategori'=>SubKategori::where('fk_kategori', $id)->get()
+        ]);
+    }
     function viewAdminAddKategori(){
         return view('admin.kategori.adminaddkategori');
+    }
+    function viewAdminAddVarianKategori($id){
+        return view('admin.kategori.adminaddvariankategori',[
+            'id'=>$id
+        ]);
     }
     function viewAdminEditKategori(Request $request){
         return view('admin.kategori.admineditkategori',['IdKategori'=>kategori::find($request->id)]);
     }
-
+    function viewAdminEditSubKategori(Request $request){
+        return view('admin.kategori.admineditsubkategori',['IdSubKategori'=>SubKategori::find($request->sub)]);
+    }
 
     function viewAdminSupplier(){
         return view('admin.supplier.adminsupplier',['listsupplier'=>supplier::all()]);

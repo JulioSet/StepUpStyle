@@ -25,8 +25,8 @@ class sepatu extends Model
         return $this->belongsTo(kategori::class, 'sepatu_kategori_id');
     }
 
-    public function ukuran()
+    public function subkategori()
     {
-        return $this->belongsTo(ukuran::class, 'sepatu_ukuran_id');
+        return $this->belongsTo(SubKategori::class, 'sepatu_subkategori_id');
     }
 }

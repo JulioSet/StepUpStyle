@@ -9,7 +9,7 @@
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Edit Master User</h3>
-                <a href="/admin/user" class="btn btn-primary ml-auto mb-1">Back</a>
+                <a href="/admin/user" class="btn btn-danger ml-auto mb-1">Back</a>
             </div>
             <form action="{{ route('AdminEditUser',$IdUser->user_id) }}" method="post"
                 enctype="multipart/form-data">

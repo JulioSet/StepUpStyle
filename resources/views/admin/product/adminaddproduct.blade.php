@@ -9,7 +9,7 @@
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Add Master Product</h3>
-                <a href="/admin/product" class="btn btn-primary ml-auto mb-1">Back</a>
+                <a href="/admin/product" class="btn btn-danger ml-auto mb-1">Back</a>
             </div>
             <form action="{{ route('addSepatu') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -18,77 +18,57 @@
                     <input type="text" class="form-control" id="namaSepatu" name="namaSepatu" placeholder="Masukkan Nama Sepatu">
                 </div>
 
-                <!-- Harga -->
-                <div class="mb-3">
-                    <label for="harga" class="form-label">Harga</label>
-                    <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga">
-                </div>
-
-                <div class="mb-3">
-                    <label for="stock" class="form-label">Stock</label>
-                    <input type="text" class="form-control" id="stock" name="stock" placeholder="Masukkan Harga">
-                </div>
-
-
-                <!-- Gambar -->
-                <div class="mb-3">
-                    <label for="gambar" class="form-label">Gambar</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="gambar" name="foto[]">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                    </div>
-                </div>
-
-                <!-- Ukuran -->
-                <div class="mb-3">
-                    <label for="ukuran" class="form-label">Ukuran</label>
-                    <select class="form-control" id="ukuran" name="ukuran">
-                        @foreach ($listukuran as $item)
-                            <option value="{{$item->ukuran_sepatu_nama}}">{{$item->ukuran_sepatu_nama}}</option>
-                        @endforeach
-                        <!-- Tambahkan opsi ukuran lainnya sesuai kebutuhan -->
-                    </select>
-                </div>
-
-                <!-- Warna (Combobox) -->
-                <div class="mb-3">
-                    <label for="warna" class="form-label">Warna</label>
-                    <select class="form-control" id="warna" name="warna">
-                        <option value="Hitam">Hitam</option>
-                        <option value="Putih">Putih</option>
-                        <option value="Merah">Merah</option>
-                        <option value="Biru">Biru</option>
-                        <option value="Hijau">Hijau</option>
-                        <option value="Kuning">Kuning</option>
-                        <!-- Tambahkan opsi warna lainnya sesuai kebutuhan -->
-                    </select>
-                </div>
-
                 <!-- Brand -->
                 <div class="mb-3">
                     <label for="brand" class="form-label">Brand</label>
                     <select class="form-control" id="brand" name="brand">
-
+                        <option hidden>Select Brand</option>
                         @foreach ($listsupplier as $item)
-                        <option value="{{$item->supplier_name}}">{{$item->supplier_name}}</option>
+                            <option value="{{$item->supplier_id}}">{{$item->supplier_name}}</option>
                         @endforeach
-                        <!-- Tambahkan opsi brand lainnya sesuai kebutuhan -->
                     </select>
                 </div>
 
+                {{-- Kategori --}}
                 <div class="mb-3">
                     <label for="kategori" class="form-label">Kategori</label>
                     <select class="form-control" id="kategori" name="kategori">
-
+                        <option hidden>Select Category</option>
                         @foreach ($listkategori as $item)
-                        <option value="{{$item->kategori_nama}}">{{$item->kategori_nama}}</option>
+                            <option value="{{$item->kategori_id}}">{{$item->kategori_nama}}</option>
                         @endforeach
-                        <!-- Tambahkan opsi brand lainnya sesuai kebutuhan -->
                     </select>
                 </div>
+
+                {{-- Sub Kategori --}}
+                <div class="mb-3">
+                    <label for="kategori" class="form-label">Sub Kategori</label>
+                    <select class="form-control" id="sub_kategori" name="sub_kategori">
+                        <option value="">Select Sub Category</option>
+                    </select>
+                </div>
+
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+          $('#kategori').on('change', function() {
+            var categoryId = $(this).val();
+
+            $.ajax({
+              url: '/get-sub-items/' + categoryId,
+              success: function(data) {
+                $('#sub_kategori').empty(); // Clear existing options
+                $.each(data, function(key, subkategori) {
+                  $('#sub_kategori').append('<option value="' + subkategori.id + '">' + subkategori.nama + '</option>');
+                });
+              }
+            });
+          });
+        });
+    </script>
 @endsection

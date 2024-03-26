@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ukuran extends Model
+class SubKategori extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = "ukuran";
-    protected $primaryKey = "ukuran_sepatu_id";
+    protected $table = "subkategori";
+    protected $primaryKey = "subkategori_id";
     public $incrementing = true;
     public $timestamps = true;
 
-    public function sepatu()
+    public function kategori()
     {
-        return $this->belongsTo(sepatu::class, 'sepatu_ukuran_id');
+        return $this->belongsTo(kategori::class, 'fk_kategori');
     }
 }
