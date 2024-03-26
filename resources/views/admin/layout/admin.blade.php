@@ -65,6 +65,7 @@
                         </a>
                     </li>
 
+                    <!-- Master Product Menu Item -->
                     <li class="nav-item">
                         <a href="/admin/product" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
@@ -94,15 +95,7 @@
                         </a>
                     </li>
 
-
-                    <li class="nav-item">
-                        <a href="/admin/ukuran" class="nav-link">
-                            <i class="nav-icon fas fa-truck"></i>
-                            <p>
-                                Master Ukuran
-                            </p>
-                        </a>
-                    </li>
+                    <!-- Master Retur Menu Item -->
                     <li class="nav-item">
                         <a href="/admin/retur" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
@@ -112,6 +105,7 @@
                         </a>
                     </li>
 
+                    <!-- Master Category Menu Item -->
                     <li class="nav-item">
                         <a href="/admin/kategori" class="nav-link">
                             <i class="nav-icon fas fa-truck"></i>
