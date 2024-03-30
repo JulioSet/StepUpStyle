@@ -1,11 +1,14 @@
 @php
     use App\Models\kategori;
     use App\Models\supplier;
-    use App\Models\ukuran;
+    use App\Models\DetailSepatu;
 	$userLoggedIn = Session::get('userLoggedIn');
     $listCategory = kategori::All();
     $listSupplier = supplier::All();
-    $listUkuran = ukuran::All();
+    $listDetail = DetailSepatu::All();
+
+    $listUkuran = [36,37,38,39,40,41,42,43,44,45];
+    $listWarna = ['Hitam', 'Putih', 'Merah', 'Biru', 'Abu-abu', 'Coklat'];
 @endphp
 
 <div class="col-xl-3 col-lg-4 col-md-5">
@@ -49,8 +52,21 @@
                 <ul>
                     @forelse ($listUkuran as $key=>$ukuran)
                     <li class="filter-list">
-                        <input class="pixel-radio" type="checkbox" id="{{ $ukuran->ukuran_sepatu_id }}" name="size[]" value="{{ $ukuran->ukuran_sepatu_id }}">
-                        <label for="{{ $ukuran->ukuran_sepatu_nama }}">{{ $ukuran->ukuran_sepatu_nama }}</label>
+                        <input class="pixel-radio" type="checkbox" id="{{ $ukuran }}" name="size[]" value="{{ $ukuran }}">
+                        <label for="{{ $ukuran }}">{{ $ukuran }}</label>
+                    </li>
+                    @empty
+
+                    @endforelse
+                </ul>
+            </div>
+
+            <div class="head">Warna</div>
+                <ul>
+                    @forelse ($listWarna as $key=>$warna)
+                    <li class="filter-list">
+                        <input class="pixel-radio" type="checkbox" id="{{ $warna }}" name="color[]" value="{{ $warna }}">
+                        <label for="{{ $warna }}">{{ $warna }}</label>
                     </li>
                     @empty
 

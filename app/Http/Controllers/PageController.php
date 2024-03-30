@@ -146,8 +146,9 @@ class PageController extends Controller
         $page = "Filter";
         $filterBrand = $request->input('brand', []);
         $filterSize = $request->input('size', []);
+        $filterWarna = $request->input('color', []);
 
-        if ($filterBrand && $filterSize) {
+        if ($filterBrand && $filterSize && $filterWarna) {
             $listFilter = sepatu::whereIn('sepatu_supplier_id', $filterBrand)
             ->whereIn('sepatu_ukuran_id', $filterSize)
             ->where('deleted_at', null)

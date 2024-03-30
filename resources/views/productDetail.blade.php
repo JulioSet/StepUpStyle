@@ -3,28 +3,40 @@
 @php
 	use App\Models\sepatu;
 	use App\Models\kategori;
-	use App\Models\ukuran;
+	use App\Models\DetailSepatu;
 	use App\Models\supplier;
 	$userLoggedIn = Session::get('userLoggedIn');
 	$listSepatu = sepatu::All();
-	$listUkuran = ukuran::All();
+	$listDetail = DetailSepatu::All();
     $listCategory = kategori::all();
     $listBrand = supplier::all();
 
     $kategori = '' ;
-    $ukuran = '' ;
     $brand = '' ;
 
+	$listSize = DetailSepatu::select('detail_sepatu_ukuran')
+	->where('fk_sepatu','=',$sepatu['id'])
+	->distinct()
+	->get();
+
+	$listWarna = DetailSepatu::select('detail_sepatu_warna')
+	->where('fk_sepatu','=',$sepatu['id'])
+	->distinct()
+	->get();
+
+	$gambar = '';
+	$harga = 0;
+
+	foreach($listDetail as $key) {
+        if ($key->fk_sepatu == $sepatu['id']) {
+            $gambar = $key->detail_sepatu_gambar;
+			$harga = $key->detail_sepatu_harga;
+        }
+    }
 
     foreach($listCategory as $key) {
         if ($key->kategori_id == $sepatu['kategori']) {
             $kategori = $key->kategori_nama;
-        }
-    }
-
-    foreach($listUkuran as $key) {
-        if ($key->ukuran_sepatu_id == $sepatu['ukuran']) {
-            $ukuran = $key->ukuran_sepatu_nama;
         }
     }
 
@@ -60,20 +72,30 @@
 		<div class="container">
 			<div class="row s_product_inner">
 				<div class="col-lg-6">
-					<img src="{{ Storage::url("photo/$sepatu[picture]") }}" class="img-fluid"  alt="">
+					<img src="{{ Storage::url("photo/$gambar") }}" class="img-fluid"  alt="">
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
 						<h3>{{ $sepatu['name'] }}</h3>
-						<h2>{{ formatCurrencyIDR($sepatu['price']) }}</h2>
+						<h2>{{ formatCurrencyIDR($harga) }}</h2>
 						<ul class="list">
 							<li><a class="active" href="category/{{$sepatu['kategori']}}"><span>Category</span> : {{ $kategori }}</a></li>
 							<li><a class="active" href="brand/{{$sepatu['supplier']}}"><span>Brand</span> : {{ $brand }}</a></li>
 						</ul>
 						<p>
                             {{ $sepatu['name'] }} <br>
-                            Size : {{ $ukuran }} <br>
-                            Color : {{ $sepatu['color'] }} <br>
+                            Size : 
+							@foreach ($listSize as $key => $size)
+								<input class="pixel-radio" type="radio" id="{{ $size->detail_sepatu_ukuran }}" name="size[]" value="{{ $size->detail_sepatu_ukuran }}">
+								<label for="{{ $size->detail_sepatu_ukuran }}">{{ $size->detail_sepatu_ukuran }}</label>
+							@endforeach
+							<br>
+                            Color : 
+							@foreach ($listWarna as $key => $warna)
+								<input class="pixel-radio" type="radio" id="{{ $warna->detail_sepatu_warna }}" name="color[]" value="{{ $warna->detail_sepatu_warna }}">
+								<label for="{{ $warna->detail_sepatu_warna }}">{{ $warna->detail_sepatu_warna }}</label>
+							@endforeach
+							<br>
                             Stock : {{ $sepatu['stock'] }}
                         </p>
 						<div class="card_area d-flex align-items-center">
