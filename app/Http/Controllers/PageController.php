@@ -148,18 +148,45 @@ class PageController extends Controller
         $filterSize = $request->input('size', []);
         $filterWarna = $request->input('color', []);
 
-        if ($filterBrand && $filterSize && $filterWarna) {
+        $tempList;
+        $tempList2;
+
+        if($filterBrand)  {
+            $tempList = sepatu::where('sepatu_supplier_id', $filterBrand)
+            ->where('deleted_at', null)
+            ->get();
+        }
+
+        if ($filterSize) {
+            if ($filterBrand) {
+                foreach ($tempList as $key => $value) {
+                    $tempList2 = DetailSepatu::where('fk_sepatu', $value->sepatu_id)
+                    ->whereIn('detail_sepatu_ukuran', $filterSize)
+                    ->where('deleted_at', null)
+                    ->where('detail_sepatu_stock','>',0)
+                    ->get();
+                }
+            }else {
+                
+            }
+        }
+
+        if ($filterWarna) {
+            
+        }
+
+        if ($filterBrand && $filterSize && !$filterWarna) {
             $listFilter = sepatu::whereIn('sepatu_supplier_id', $filterBrand)
             ->whereIn('sepatu_ukuran_id', $filterSize)
             ->where('deleted_at', null)
             ->where('sepatu_stock','>',0)
             ->get();
-        }elseif ($filterBrand && !$filterSize) {
+        }elseif ($filterBrand && !$filterSize && !$filterWarna) {
             $listFilter = sepatu::whereIn('sepatu_supplier_id', $filterBrand)
             ->where('deleted_at', null)
             ->where('sepatu_stock','>',0)
             ->get();
-        }elseif (!$filterBrand && $filterSize) {
+        }elseif (!$filterBrand && $filterSize && !$filterWarna) {
             $listFilter = sepatu::whereIn('sepatu_ukuran_id', $filterSize)
             ->where('deleted_at', null)
             ->where('sepatu_stock','>',0)
