@@ -61,7 +61,6 @@ class AdminController extends Controller
         return redirect("/admin/user");
     }
 
-
     public function EditUser (Request $request){
 
         $rules = [
@@ -180,6 +179,7 @@ class AdminController extends Controller
 
         return redirect("/admin/supplier");
     }
+
     public function deleteSupplier($id)
     {
         $supplier = supplier::find($id);
@@ -296,15 +296,27 @@ class AdminController extends Controller
     }
 
     public function addVarianSepatu (Request $request){
-        $namaFolderPhoto = ""; $namaFilePhoto = "";
-        if ($request->foto!=null) {
-            foreach ($request->foto as $photo) {
-                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-                $namaFolderPhoto = "photo/";
+        $rules = [
+            'foto' => ["required", "max:2048", "extensions:jpg,jpeg,png"],
+            'warna' => 'required',
+            'ukuran' => 'required',
+            'stock' => 'required',
+            'harga' => 'required',
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken",
+            "max" => "File size exceeds 2MB limit",
+            "extensions" => "File is not jpg, jpeg, or png",
+        ];
 
-            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
-            }
-        }
+        $request->validate($rules, $messages);
+
+        $photo = $request->foto;
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+        $namaFolderPhoto = "photo/";
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
 
         $varian = new DetailSepatu();
         $varian->fk_sepatu= $request->id;
@@ -312,7 +324,7 @@ class AdminController extends Controller
         $varian->detail_sepatu_warna=$request->input('warna');
         $varian->detail_sepatu_ukuran= $request->input('ukuran');
         $varian->detail_sepatu_stok=$request->input('stock');
-        $varian->detail_sepatu_harga=$request->input('harga');
+        $varian->detail_sepatu_harga=str_replace(',','',$request->input('harga'));
         $varian->save();
 
         return redirect()->route('viewVarianProduct', ['id' => $request->id]);

@@ -17,8 +17,9 @@
                 <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="gambar" name="foto[]">
+                        <input type="file" class="custom-file-input" id="gambar" name="foto">
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        <span style="color: red;">{{ $errors->first('foto') }}</span>
                     </div>
                 </div>
 
@@ -35,24 +36,28 @@
                         <option value="Kuning">Kuning</option>
                         <!-- Tambahkan opsi warna lainnya sesuai kebutuhan -->
                     </select>
+                    <span style="color: red;">{{ $errors->first('warna') }}</span>
                 </div>
 
                 <!-- Ukuran -->
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
                     <input type="text" class="form-control" id="ukuran" name="ukuran" placeholder="Masukkan Ukuran">
+                    <span style="color: red;">{{ $errors->first('ukuran') }}</span>
                 </div>
 
                 <!-- Stok -->
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock</label>
                     <input type="text" class="form-control" id="stock" name="stock" placeholder="Masukkan Stok">
+                    <span style="color: red;">{{ $errors->first('stock') }}</span>
                 </div>
 
                 <!-- Harga -->
                 <div class="mb-3">
                     <label for="harga" class="form-label">Harga</label>
                     <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga">
+                    <span style="color: red;">{{ $errors->first('harga') }}</span>
                 </div>
 
                 <!-- Tombol Submit -->
@@ -60,4 +65,17 @@
             </form>
         </div>
     </div>
+
+    <script>
+        var cleave = new Cleave('#harga', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+
+        $('#gambar').on('change',function(e){
+            if (e.target.files.length) {
+                $(this).next('.custom-file-label').html(e.target.files[0].name);
+            }
+        })
+    </script>
 @endsection
