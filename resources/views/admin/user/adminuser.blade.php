@@ -25,7 +25,7 @@
                     <tr>
                         @if ($item->deleted_at == null)
                         <td>{{$loop->iteration}}</td>
-                        <td><img src="{{ Storage::url("photo/$item->user_profil") }}" alt="" width="100%" ></td>
+                        <td><img src="{{ Storage::url("photo/$item->user_profile") }}" alt="" width="100%" ></td>
                         <td>{{$item->user_name}}</td>
                         <td>{{$item->user_email}}</td>
                         <td>

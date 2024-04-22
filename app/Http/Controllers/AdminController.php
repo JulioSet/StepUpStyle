@@ -42,6 +42,9 @@ class AdminController extends Controller
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         if ($request->foto!=null) {
             foreach ($request->foto as $photo) {
+                if ($photo->getSize() > 5000000) {
+                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
+                }
                 $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
                 $namaFolderPhoto = "photo/";
 
@@ -80,6 +83,9 @@ class AdminController extends Controller
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         if ($request->foto!=null) {
             foreach ($request->foto as $photo) {
+                if ($photo->getSize() > 5000000) {
+                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
+                }
                 $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
                 $namaFolderPhoto = "photo/";
 
@@ -129,11 +135,16 @@ class AdminController extends Controller
         $request->validate($rules, $messages);
 
         $namaFolderPhoto = ""; $namaFilePhoto = "";
-        foreach ($request->foto as $photo) {
-            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-            $namaFolderPhoto = "photo/";
+        if ($request->foto!=null) {
+            foreach ($request->foto as $photo) {
+                if ($photo->getSize() > 5000000) {
+                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
+                }
+                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+                $namaFolderPhoto = "photo/";
 
-        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            }
         }
 
         $supplier= new supplier();
@@ -160,12 +171,16 @@ class AdminController extends Controller
         $request->validate($rules, $messages);
 
         $namaFolderPhoto = ""; $namaFilePhoto = "";
+        if ($request->foto!=null) {
+            foreach ($request->foto as $photo) {
+                if ($photo->getSize() > 5000000) {
+                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
+                }
+                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+                $namaFolderPhoto = "photo/";
 
-        foreach ($request->foto as $photo) {
-            $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-            $namaFolderPhoto = "photo/";
-
-        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            }
         }
 
 
@@ -345,6 +360,9 @@ class AdminController extends Controller
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         if ($request->foto!=null) {
             foreach ($request->foto as $photo) {
+                if ($photo->getSize() > 5000000) {
+                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
+                }
                 $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
                 $namaFolderPhoto = "photo/";
 

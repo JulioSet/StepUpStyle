@@ -40,7 +40,10 @@
                 <!-- Upload Foto -->
                 <div class="mb-3">
                     <label for="foto" class="form-label">Upload Foto</label><br>
-                    <input type="file" class="" id="foto" name="foto[]">
+                    <input type="file" class="form-control" id="foto" name="foto[]">
+                    @if (session('error'))
+                        <span style="color: red;">{{ session('error') }}</span>
+                    @endif
                 </div>
 
                 <!-- Tombol Submit -->
