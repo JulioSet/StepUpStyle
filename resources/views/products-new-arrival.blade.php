@@ -1,11 +1,7 @@
 @extends('layout.main')
 
 @php
-	use App\Models\sepatu;
 	$userLoggedIn = Session::get('userLoggedIn');
-	
-
-	$listSepatu = sepatu::orderBy('created_at', 'DESC')->get();
 @endphp
 
 @section('content')
@@ -14,11 +10,11 @@
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>{{ $page }}</h1>
+					<h1>New Arrival</h1>
 					<nav class="d-flex align-items-center">
 						<a href="/home">Home<span class="lnr lnr-arrow-right"></span></a>
 						<a href="/products">Shop<span class="lnr lnr-arrow-right"></span></a>
-						<a href="/products">{{ $page }}</a>
+						<a href="/products">New Arrival</a>
 					</nav>
 				</div>
 			</div>
@@ -59,44 +55,7 @@
 				<!-- End Filter Bar -->
 
 				<!-- Start Best Seller -->
-				<section class="lattest-product-area pb-40 category-list">
-					<div class="row">
-						@forelse ($listSepatu as $key=>$sepatu)
-						<!-- single product -->
-
-							@if($sepatu->deleted_at == null && $sepatu->sepatu_stock > 0)
-								<a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
-										<div class="product-details">
-											<h6>{{ $sepatu->sepatu_name }}</h6>
-											<div class="price">
-												<h6>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</h6>
-												<h6 class="l-through">{{ formatCurrencyIDR($sepatu->sepatu_price + 50000) }}</h6>
-											</div>
-											<div><p><b>Size : {{ $sepatu->ukuran->ukuran_sepatu_nama }}</b></p></div>	
-											<div class="prd-bottom">
-												<a href="{{ route('add-to-cart', $sepatu->sepatu_id) }}" class="social-info">
-													<span class="ti-bag"></span>
-													<p class="hover-text">add to bag</p>
-												</a>
-												<a href="{{ route('checkout-product', $sepatu->sepatu_id) }}" class="social-info">
-													<span class="ti-money"></span>
-													<p class="hover-text">checkout</p>
-												</a>
-											</div>
-										</div>
-
-									</div>
-								</div>
-								</a>
-							@endif
-						@empty
-							<h1 style="margin:auto">No Products Yet</h1>
-						@endforelse
-					</div>
-				</section>
+				@include('layout.product-display')
 				<!-- End Best Seller -->
 				<!-- Start Filter Bar -->
 				<!-- <div class="filter-bar d-flex flex-wrap align-items-center">
