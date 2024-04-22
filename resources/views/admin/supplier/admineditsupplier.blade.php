@@ -35,9 +35,12 @@
                 <div class="mb-3">
                     <label for="logo" class="form-label">Logo</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="logo" name="foto[]">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        <input type="file" class="form-control" id="logo" name="foto[]">
+                        {{-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> --}}
                     </div>
+                    @if (session('error'))
+                        <span style="color: red;">{{ session('error') }}</span>
+                    @endif
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

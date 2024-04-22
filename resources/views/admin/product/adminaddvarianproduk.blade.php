@@ -13,15 +13,7 @@
             </div>
             <form action="{{ route('addVarianSepatu', $sepatu->sepatu_id) }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <!-- Gambar -->
-                <div class="mb-3">
-                    <label for="gambar" class="form-label">Gambar</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="gambar" name="foto[]">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                    </div>
-                </div>
-
+                
                 <!-- Warna (Combobox) -->
                 <div class="mb-3">
                     <label for="warna" class="form-label">Warna</label>
@@ -36,28 +28,40 @@
                         <!-- Tambahkan opsi warna lainnya sesuai kebutuhan -->
                     </select>
                 </div>
-
+                
                 <!-- Ukuran -->
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
                     <input type="text" class="form-control" id="ukuran" name="ukuran" placeholder="Masukkan Ukuran">
                 </div>
-
+                
                 <!-- Stok -->
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock</label>
                     <input type="text" class="form-control" id="stock" name="stock" placeholder="Masukkan Stok">
                 </div>
-
+                
                 <!-- Harga -->
                 <div class="mb-3">
                     <label for="harga" class="form-label">Harga</label>
                     <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga">
                 </div>
-
+                
+                <!-- Gambar -->
+                <div class="mb-3">
+                    <label for="gambar" class="form-label">Gambar</label>
+                    <div class="custom-file">
+                        <input type="file" class="form-control" id="gambar" name="foto[]">
+                        {{-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> --}}
+                    </div>
+                    @if (session('error'))
+                        <span style="color: red;">{{ session('error') }}</span>
+                    @endif
+                </div>
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
-@endsection
+    @endsection
+    

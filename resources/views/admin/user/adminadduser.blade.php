@@ -41,10 +41,12 @@
                 <div class="mb-3">
                     <label for="foto" class="form-label">Upload Foto</label><br>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="foto" name="foto[]">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        <input type="file" class="form-control" id="foto" name="foto[]">
+                        {{-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> --}}
                     </div>
-                    <span style="color: red;">{{ $errors->first('foto') }}</span>
+                    @if (session('error'))
+                        <span style="color: red;">{{ session('error') }}</span>
+                    @endif
                 </div>
 
                 <!-- Tombol Submit -->
