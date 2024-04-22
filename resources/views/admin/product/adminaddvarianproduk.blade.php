@@ -60,17 +60,6 @@
                     <span style="color: red;">{{ $errors->first('harga') }}</span>
                 </div>
 
-                <!-- Gambar -->
-                <div class="mb-3">
-                    <label for="gambar" class="form-label">Gambar</label>
-                    <div class="custom-file">
-                        <input type="file" class="form-control" id="gambar" name="foto[]">
-                        {{-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> --}}
-                    </div>
-                    @if (session('error'))
-                        <span style="color: red;">{{ session('error') }}</span>
-                    @endif
-                </div>
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

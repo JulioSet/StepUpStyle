@@ -357,18 +357,27 @@ class AdminController extends Controller
     }
 
     public function EditVarianSepatu (Request $request){
-        $namaFolderPhoto = ""; $namaFilePhoto = "";
-        if ($request->foto!=null) {
-            foreach ($request->foto as $photo) {
-                if ($photo->getSize() > 5000000) {
-                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
-                }
-                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-                $namaFolderPhoto = "photo/";
+        $rules = [
+            'foto' => ["required", "max:2048", "extensions:jpg,jpeg,png"],
+            'warna' => 'required',
+            'ukuran' => 'required',
+            'stock' => 'required',
+            'harga' => 'required',
+        ];
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken",
+            "max" => "File size exceeds 2MB limit",
+            "extensions" => "File is not jpg, jpeg, or png",
+        ];
 
-            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
-            }
-        }
+        $request->validate($rules, $messages);
+
+        $photo = $request->foto;
+        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+        $namaFolderPhoto = "photo/";
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
 
         $varian = DetailSepatu::find($request->id);
         $varian->detail_sepatu_pict = $namaFilePhoto;

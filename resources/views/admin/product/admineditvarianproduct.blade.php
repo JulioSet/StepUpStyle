@@ -13,7 +13,16 @@
             </div>
             <form action="{{ route('EditVarianProduct',['id'=>$varian->fk_sepatu,'varian'=>$varian->detail_sepatu_id]) }}" method="post" enctype="multipart/form-data">
                 @csrf
-                
+                <!-- Gambar -->
+                <div class="mb-3">
+                    <label for="gambar" class="form-label">Gambar</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="gambar" name="foto">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        <span style="color: red;">{{ $errors->first('foto') }}</span>
+                    </div>
+                </div>
+
                 <!-- Warna (Combobox) -->
                 <div class="mb-3">
                     <label for="warna" class="form-label">Warna</label>
@@ -28,39 +37,41 @@
                         <!-- Tambahkan opsi warna lainnya sesuai kebutuhan -->
                     </select>
                 </div>
-                
+
                 <!-- Ukuran -->
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
                     <input type="text" class="form-control" id="ukuran" name="ukuran" placeholder="Masukkan Ukuran">
                 </div>
-                
+
                 <!-- Stok -->
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock</label>
                     <input type="text" class="form-control" id="stock" name="stock" placeholder="Masukkan Stok">
                 </div>
-                
+
                 <!-- Harga -->
                 <div class="mb-3">
                     <label for="harga" class="form-label">Harga</label>
                     <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga">
                 </div>
-                
-                <!-- Gambar -->
-                <div class="mb-3">
-                    <label for="gambar" class="form-label">Gambar</label>
-                    <div class="custom-file">
-                        <input type="file" class="form-control" id="gambar" name="foto[]">
-                        {{-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> --}}
-                    </div>
-                    @if (session('error'))
-                        <span style="color: red;">{{ session('error') }}</span>
-                    @endif
-                </div>
+
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
+
+    <script>
+        var cleave = new Cleave('#harga', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+
+        $('#gambar').on('change',function(e){
+            if (e.target.files.length) {
+                $(this).next('.custom-file-label').html(e.target.files[0].name);
+            }
+        })
+    </script>
 @endsection
