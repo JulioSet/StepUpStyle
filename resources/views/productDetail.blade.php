@@ -84,18 +84,20 @@
 						</ul>
 						<p>
                             {{ $sepatu['name'] }} <br>
-                            Size : 
-							@foreach ($listSize as $key => $size)
-								<input class="pixel-radio" type="radio" id="{{ $size->detail_sepatu_ukuran }}" name="size[]" value="{{ $size->detail_sepatu_ukuran }}">
-								<label for="{{ $size->detail_sepatu_ukuran }}">{{ $size->detail_sepatu_ukuran }}</label>
-							@endforeach
-							<br>
-                            Color : 
-							@foreach ($listWarna as $key => $warna)
-								<input class="pixel-radio" type="radio" id="{{ $warna->detail_sepatu_warna }}" name="color[]" value="{{ $warna->detail_sepatu_warna }}">
-								<label for="{{ $warna->detail_sepatu_warna }}">{{ $warna->detail_sepatu_warna }}</label>
-							@endforeach
-							<br>
+                            Size : <br>
+								<select name="size[]" style="height:10vh;width:15vw">
+									@foreach ($listSize as $key => $size)
+										<option id="{{ $size->detail_sepatu_ukuran }}"  value="{{ $size->detail_sepatu_ukuran }}">{{ $size->detail_sepatu_ukuran }}</option>
+									@endforeach
+								</select>	
+							<br> <br>
+                            Color : <br>
+							<select name="color[]" id="">
+								@foreach ($listWarna as $key => $warna)
+									<option id="{{ $warna->detail_sepatu_warna }}"  value="{{ $warna->detail_sepatu_warna }}"> {{ $warna->detail_sepatu_warna }}</option>
+								@endforeach
+							</select>
+							<br> <br>
                             Stock : {{ $sepatu['stock'] }}
                         </p>
 						<div class="card_area d-flex align-items-center">

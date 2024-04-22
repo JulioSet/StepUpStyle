@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 // Mengatur perpindahan halaman
 class PageController extends Controller
@@ -46,7 +47,10 @@ class PageController extends Controller
     public function viewAllProducts(){
         //select DB
         $page = "All Products";
-        return view('products', compact('page'));
+
+        $listSepatu = sepatu::All();
+
+        return view('products', compact('listSepatu'));
     }
 
     public function viewDetailRetur(Request $request, $id){
@@ -98,47 +102,57 @@ class PageController extends Controller
     public function viewNewArrival(){
         //select DB
         $page = "New Arrival";
-        return view('products-new-arrival', compact('page'));
+
+        $listSepatu = sepatu::orderBy('created_at', 'DESC')->get();
+
+        return view('products-new-arrival', compact('listSepatu'));
     }
 
     public function viewCategoryProducts(Request $request){
         //select DB
         $page = "Category";
         $id = $request->id;
-        $listCategory = sepatu::where('sepatu_kategori_id','=',$id)->get();
-        return view('products-category', compact('listCategory'));
+        $listSepatu = sepatu::where('sepatu_kategori_id','=',$id)->get();
+        return view('products-category', compact('listSepatu'));
     }
 
     public function viewBestSeller(){
         //select DB
         $page = "Best Seller";
 
-        $bestSeller = dtrans::select('fk_sepatu')
-        ->groupBy('fk_sepatu')
-        ->orderByRaw('COUNT(*) DESC')
+        // $bestSeller = dtrans::select('fk_sepatu')
+        // ->groupBy('fk_sepatu')
+        // ->orderByRaw('COUNT(*) DESC')
+        // ->get();
+
+        $listSepatu = DB::table('sepatu')
+        ->join('dtrans_penjualan', 'sepatu.sepatu_id', '=', 'dtrans_penjualan.fk_sepatu')
+        ->select('sepatu.sepatu_id','sepatu.sepatu_name', DB::raw('count(*) as total_bought'))
+        ->groupBy('sepatu.sepatu_id','sepatu.sepatu_name')
+        ->orderByDesc('total_bought')
         ->get();
 
-        return view('products-best-seller', compact('bestSeller'));
+        return view('products-best-seller', compact('listSepatu'));
     }
 
     public function viewBrandProducts(Request $request){
         //select DB
         $page = "Brand";
         $id = $request->id;
-        $listBrand = sepatu::where('sepatu_supplier_id','=',$id)->get();
+        $listSepatu = sepatu::where('sepatu_supplier_id','=',$id)->get();
 
-        return view('products-brand', compact('listBrand'));
+        return view('products-brand', compact('listSepatu'));
     }
 
     public function viewSearchProducts(Request $request){
         //select DB
         $page = "Search";
         $search = $request->search;
-        $listSearch = sepatu::where('sepatu_name',$request->search)
+        $listSepatu = sepatu::where('sepatu_name',$request->search)
         ->orWhere('sepatu_name','like',"%{$request->search}%")
         ->get();;
 
-        return view('products-search', compact('listSearch'));
+        return view('products-search', compact('listSepatu'));
     }
 
     public function viewFilteredProducts(Request $request){
