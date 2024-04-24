@@ -25,9 +25,9 @@ class AdminController extends Controller
     public function addUser (Request $request){
 
         $rules = [
+            'foto' => ["required", "max:2048", "extensions:jpg,jpeg,png"],
             'nama' => ["required", "min:1",'unique:user,user_name'],
             'password' => 'required',
-            // 'password_confirmation' => 'required',
             'email' => ["required", "email"]
         ];
         $messages = [
@@ -39,18 +39,11 @@ class AdminController extends Controller
         $request->validate($rules, $messages);
 
 
+        $photo = $request->foto;
         $namaFolderPhoto = ""; $namaFilePhoto = "";
-        if ($request->foto!=null) {
-            foreach ($request->foto as $photo) {
-                if ($photo->getSize() > 5000000) {
-                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
-                }
-                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-                $namaFolderPhoto = "photo/";
-
-            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
-            }
-        }
+        $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+        $namaFolderPhoto = "photo/";
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
 
         $user= new user();
         $user->user_name = $request->input('nama');
@@ -67,9 +60,9 @@ class AdminController extends Controller
     public function EditUser (Request $request){
 
         $rules = [
+            'foto' => ["required", "max:2048", "extensions:jpg,jpeg,png"],
             'nama' => ["required", "min:1",'unique:user,user_name'],
             'password' => 'required',
-            // 'password_confirmation' => 'required',
             'email' => ["required", "email"]
         ];
         $messages = [
@@ -80,18 +73,11 @@ class AdminController extends Controller
 
         $request->validate($rules, $messages);
 
+        $photo = $request->foto;
         $namaFolderPhoto = ""; $namaFilePhoto = "";
-        if ($request->foto!=null) {
-            foreach ($request->foto as $photo) {
-                if ($photo->getSize() > 5000000) {
-                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
-                }
-                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-                $namaFolderPhoto = "photo/";
-
-            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
-            }
-        }
+        $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+        $namaFolderPhoto = "photo/";
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
 
         $user= user::find($request->id);
         $user->user_name = $request->input('nama');
@@ -123,6 +109,7 @@ class AdminController extends Controller
 
     public function addSupplier (Request $request){
         $rules = [
+            'foto' => ["required", "max:2048", "extensions:jpg,jpeg,png"],
             'nama_supplier' => ["required", "min:1",'unique:supplier,supplier_name'],
             'supplier_contact' => 'required',
             'supplier_office' => 'required',
@@ -134,18 +121,11 @@ class AdminController extends Controller
 
         $request->validate($rules, $messages);
 
+        $photo = $request->foto;
         $namaFolderPhoto = ""; $namaFilePhoto = "";
-        if ($request->foto!=null) {
-            foreach ($request->foto as $photo) {
-                if ($photo->getSize() > 5000000) {
-                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
-                }
-                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-                $namaFolderPhoto = "photo/";
-
-            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
-            }
-        }
+        $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+        $namaFolderPhoto = "photo/";
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
 
         $supplier= new supplier();
         $supplier->supplier_name= $request->input('nama_supplier');
@@ -159,6 +139,7 @@ class AdminController extends Controller
 
     public function EditSupplier (Request $request){
         $rules = [
+            'foto' => ["required", "max:2048", "extensions:jpg,jpeg,png"],
             'nama_supplier' => ["required", "min:1",'unique:supplier,supplier_name'],
             'supplier_contact' => 'required',
             'supplier_office' => 'required',
@@ -170,20 +151,11 @@ class AdminController extends Controller
 
         $request->validate($rules, $messages);
 
+        $photo = $request->foto;
         $namaFolderPhoto = ""; $namaFilePhoto = "";
-        if ($request->foto!=null) {
-            foreach ($request->foto as $photo) {
-                if ($photo->getSize() > 5000000) {
-                    return redirect()->back()->with('error', 'Ukuran foto terlalu besar. Maksimal ukuran adalah 5MB.');
-                }
-                $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
-                $namaFolderPhoto = "photo/";
-
-            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
-            }
-        }
-
-
+        $namaFilePhoto  = time().".".$photo->getClientOriginalExtension();
+        $namaFolderPhoto = "photo/";
+        $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
 
         $supplier= supplier::find($request->id);
         $supplier->supplier_name= $request->input('nama_supplier');

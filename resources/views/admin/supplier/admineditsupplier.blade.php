@@ -15,6 +15,15 @@
                 enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
+                    <label for="gambar" class="form-label">Logo</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="gambar" name="foto">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        <span style="color: red;">{{ $errors->first('foto') }}</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
                     <label for="nama_supplier" class="form-label">Nama Supplier</label>
                     <input type="text" class="form-control" id="nama_supplier" name="nama_supplier" value="{{$IdSupplier->supplier_name}}">
                     <span style="color: red;">{{ $errors->first('nama_supplier') }}</span>
@@ -48,4 +57,12 @@
             </form>
         </div>
     </div>
+
+    <script>
+        $('#gambar').on('change',function(e){
+            if (e.target.files.length) {
+                $(this).next('.custom-file-label').html(e.target.files[0].name);
+            }
+        })
+    </script>
 @endsection

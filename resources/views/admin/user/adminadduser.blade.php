@@ -14,6 +14,17 @@
             <form action="{{ route('Useraddadmin') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
+                <!-- Upload Foto -->
+                <div class="mb-3">
+                    <label for="gambar" class="form-label">Upload Foto</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="gambar" name="foto">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        <span style="color: red;">{{ $errors->first('foto') }}</span>
+                    </div>
+                </div>
+
+                <!-- Nama -->
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
                     <input type="text" class="form-control" id="nama" name="nama"
@@ -37,21 +48,17 @@
                     <span style="color: red;">{{ $errors->first('password') }}</span>
                 </div>
 
-                <!-- Upload Foto -->
-                <div class="mb-3">
-                    <label for="foto" class="form-label">Upload Foto</label><br>
-                    <div class="custom-file">
-                        <input type="file" class="form-control" id="foto" name="foto[]">
-                        {{-- <label class="custom-file-label" for="exampleInputFile">Choose file</label> --}}
-                    </div>
-                    @if (session('error'))
-                        <span style="color: red;">{{ session('error') }}</span>
-                    @endif
-                </div>
-
                 <!-- Tombol Submit -->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
+
+    <script>
+        $('#gambar').on('change',function(e){
+            if (e.target.files.length) {
+                $(this).next('.custom-file-label').html(e.target.files[0].name);
+            }
+        })
+    </script>
 @endsection
