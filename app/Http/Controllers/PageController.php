@@ -162,8 +162,8 @@ class PageController extends Controller
         $filterSize = $request->input('size', []);
         $filterWarna = $request->input('color', []);
 
-        $tempList = "";
-        $tempList2 = "";
+        $tempList;
+        $tempList2;
 
         if($filterBrand)  {
             $tempList = sepatu::where('sepatu_supplier_id', $filterBrand)

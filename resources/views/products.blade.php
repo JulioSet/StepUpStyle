@@ -57,111 +57,9 @@
 				<!-- End Filter Bar -->
 
 				<!-- Start Best Seller -->
-<<<<<<< Updated upstream
 
 				@include('layout.product-display')
 
-=======
-				<section class="lattest-product-area pb-40 category-list">
-					<div class="row">
-						@forelse ($listSepatu as $key=>$sepatu)
-						<!-- single product -->
-							
-							
-								<div class="col-lg-4 col-md-6">
-									<div class="single-product">
-										<img class="img-fluid" src="{{ Storage::url("photo/$gambar") }}" alt="">
-										<div class="product-details">
-											<a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
-												<h6>{{ $sepatu->sepatu_name }}</h6>
-												<div class="price">
-													<h6>{{ formatCurrencyIDR($price) }}</h6>
-													<h6 class="l-through">{{ formatCurrencyIDR($price + 50000) }}</h6>
-												</div>
-											</a>
-											<div class="prd-bottom">
-
-												<button type="button" class="btn social-info" data-bs-toggle="modal" data-bs-target="#detailSepatu">
-													<span class="ti-bag"></span>
-													{{-- <p class="hover-text">add to cart</p> --}}
-												</button>
-												
-												<!-- Modal -->
-												<div class="modal fade" id="detailSepatu" tabindex="-1" aria-labelledby="detailSepatuLabel" aria-hidden="true">
-													<div class="modal-dialog modal-dialog-centered bg-dark">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h1 class="modal-title fs-5" id="exampleModalLabel">{{ $sepatu->sepatu_name }} </h1>
-																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
-															<div class="modal-body">
-																<p>
-												{{-- @foreach ($listDetail as $key => $detail) 
-													@if ($detail->detail_sepatu_id == $sepatu->sepatu_id)
-														@php
-															$price = $detail->detail_sepatu_harga ;
-															$gambar = $detail->detail_sepatu_gambar ; 
-														@endphp
-													@endif --}}
-												
-																	@php
-																		$listSize = DetailSepatu::select('detail_sepatu_ukuran')
-																		->where('fk_sepatu','=',$sepatu['id'])
-																		->distinct()
-																		->get();
-
-																		$listWarna = DetailSepatu::select('detail_sepatu_warna')
-																		->where('fk_sepatu','=',$sepatu['id'])
-																		->distinct()
-																		->get();
-																	@endphp
-												
-																	Size : 
-																	@foreach ($listSize as $key => $size)
-																		<input class="pixel-radio" type="radio" id="{{ $size->detail_sepatu_ukuran }}" name="size[]" value="{{ $size->detail_sepatu_ukuran }}">
-																		<label for="{{ $size->detail_sepatu_ukuran }}">{{ $size->detail_sepatu_ukuran }}</label>
-																	@endforeach
-																	<br>
-																	Color : 
-																	@foreach ($listWarna as $key => $warna)
-																		<input class="pixel-radio" type="radio" id="{{ $warna->detail_sepatu_warna }}" name="color[]" value="{{ $warna->detail_sepatu_warna }}">
-																		<label for="{{ $warna->detail_sepatu_warna }}">{{ $warna->detail_sepatu_warna }}</label>
-																	@endforeach
-																	<br>
-																	Stock : {{ $sepatu['stock'] }}
-																</p>
-															</div>
-															<div class="modal-footer">
-																<div class="card_area d-flex align-items-center">
-																	{{-- <a href="{{ route('add-to-cart', $detail->detail_sepatu_id) }}" class="social-info"> --}}
-																		<span class="ti-bag"></span>
-																		<p class="hover-text">add to cart</p>
-																	{{-- </a> --}}
-																	{{-- <a href="{{ route('checkout-product', $detail->detail_sepatu_id) }}" class="social-info"> --}}
-																		<span class="ti-money"></span>
-																		<p class="hover-text">checkout</p>
-																	{{-- </a> --}}
-																	{{-- <a class="icon_btn" href="{{ route('add-to-cart', ['id'=>$sepatu['id']]) }}"><i class="ti-bag"></i></a>
-																	<a class="primary-btn" href="{{ route('checkout-product', ['id'=>$sepatu['id']]) }}"><i class="ti-money"></i>Checkout</a> --}}
-																</div>
-																{{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-																<button type="button" class="btn btn-primary">Save changes</button> --}}
-															</div>
-														</div>
-													</div>
-												</div>
-												{{-- @endforeach --}}
-											</div>
-										</div>
-
-									</div>
-								</div>
-						@empty
-							<h1 style="margin:auto">No Products Yet</h1>
-						@endforelse
-					</div>
-				</section>
->>>>>>> Stashed changes
 				<!-- End Best Seller -->
 				<!-- Start Filter Bar -->
 				<!-- <div class="filter-bar d-flex flex-wrap align-items-center">
@@ -339,6 +237,5 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			</div>
 		</div>
 	</div>
-
 
 @endsection
