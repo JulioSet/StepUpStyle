@@ -8,6 +8,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReturController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -34,6 +35,7 @@ Route::get('/flush', function () {
 });
 
 Route::get('/get-sub-items/{id}', [PageController::class, 'getSubKategori']);
+Route::post('/backPage', [PageController::class, 'backPage'])->name('back-page');
 
 
 Route::middleware(['authowner'])->group(function () {
@@ -190,11 +192,16 @@ Route::middleware(['authuser'])->group(function () {
     Route::get('/orders', [PageController::class, 'viewOrders']);
     Route::get('/profile', [PageController::class, 'viewProfile']);
 
-
+    Route::post('/toCartCheckout', [PageController::class, 'toCartOrCheckout'])->name('to-cart-or-checkout');
+    
+    Route::prefix('wishlist')->group(function () {
+        Route::post('/add', [WishlistController::class, 'like'])->name('add-to-wishlist');
+        Route::post('/remove', [WishlistController::class, 'unlike'])->name('remove-from-wishlist');
+    });
 
     Route::prefix('cart')->group(function () {
         Route::get('/', [PageController::class, 'viewCart']);
-        Route::get('/add/{id}/{qty?}', [CartController::class, 'addToCart'])->name("add-to-cart");
+        Route::get('/add/{id}/{size}/{color}/{qty}', [CartController::class, 'addToCart'])->name("add-to-cart");
         Route::get('/up/{id}', [CartController::class, 'addQty'])->name("increase-cart-qty");
         Route::get('/down/{id}', [CartController::class, 'substractQty'])->name("reduced-cart-qty");
     });
@@ -203,7 +210,7 @@ Route::middleware(['authuser'])->group(function () {
     // Route::post('/checkout', [PageController::class, 'viewCheckout']);
     Route::prefix('checkout')->group(function () {
         Route::post('/', [PaymentController::class, 'process'])->name("checkout-process");
-        Route::get('/product/{id}', [PaymentController::class, 'directProcess'])->name('checkout-product');
+        Route::get('/product/{id}/{size}/{color}/{qty}', [PaymentController::class, 'directProcess'])->name('checkout-product');
         Route::get('/{transaction}', [PaymentController::class, 'checkout'])->name("checkout");
         Route::get('/success/{transaction}', [PaymentController::class, 'success'])->name("checkout-success");
         Route::get('/cancel/{transaction}', [PaymentController::class, 'cancel'])->name("checkout-cancel");

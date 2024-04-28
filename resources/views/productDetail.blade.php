@@ -68,47 +68,59 @@
 	<!-- End Banner Area -->
 
 	<!--================Single Product Area =================-->
-	<div class="product_image_area">
-		<div class="container">
-			<div class="row s_product_inner">
-				<div class="col-lg-6">
-					<img src="{{ Storage::url("photo/$gambar") }}" class="img-fluid"  alt="">
-				</div>
-				<div class="col-lg-5 offset-lg-1">
-					<div class="s_product_text">
-						<h3>{{ $sepatu['name'] }}</h3>
-						<h2>{{ formatCurrencyIDR($harga) }}</h2>
-						<ul class="list">
-							<li><a class="active" href="category/{{$sepatu['kategori']}}"><span>Category</span> : {{ $kategori }}</a></li>
-							<li><a class="active" href="brand/{{$sepatu['supplier']}}"><span>Brand</span> : {{ $brand }}</a></li>
-						</ul>
-						<p>
-                            {{ $sepatu['name'] }} <br>
-                            Size : <br>
-								<select name="size[]" style="height:10vh;width:15vw">
-									@foreach ($listSize as $key => $size)
-										<option id="{{ $size->detail_sepatu_ukuran }}"  value="{{ $size->detail_sepatu_ukuran }}">{{ $size->detail_sepatu_ukuran }}</option>
+	<form action="{{ route('to-cart-or-checkout') }}" method="post">
+		@csrf
+		<div class="product_image_area">
+			<div class="container">
+				<div class="row s_product_inner">
+					<div class="col-lg-6">
+						<img src="{{ Storage::url("photo/$gambar") }}" class="img-fluid"  alt="">
+					</div>
+					<div class="col-lg-5 offset-lg-1">
+						<div class="s_product_text">
+							<input type="hidden" name="sepatu_id" value="{{ $sepatu['id'] }}">
+							<h3>{{ $sepatu['name'] }}</h3>
+							<h2>{{ formatCurrencyIDR($harga) }}</h2>
+							<ul class="list">
+								<li><a class="active" href="category/{{$sepatu['kategori']}}"><span>Category</span> : {{ $kategori }}</a></li>
+								<li><a class="active" href="brand/{{$sepatu['supplier']}}"><span>Brand</span> : {{ $brand }}</a></li>
+							</ul>
+							<p>
+								{{ $sepatu['name'] }} <br>
+								Size : <br>
+									<select name="size" style="height:10vh;width:15vw">
+										@foreach ($listSize as $key => $size)
+											<option id="{{ $size->detail_sepatu_ukuran }}"  value="{{ $size->detail_sepatu_ukuran }}">{{ $size->detail_sepatu_ukuran }}</option>
+										@endforeach
+									</select>	
+								<br> <br>
+								Color : <br>
+								<select name="color" id="">
+									@foreach ($listWarna as $key => $warna)
+										<option id="{{ $warna->detail_sepatu_warna }}"  value="{{ $warna->detail_sepatu_warna }}"> {{ $warna->detail_sepatu_warna }}</option>
 									@endforeach
-								</select>	
-							<br> <br>
-                            Color : <br>
-							<select name="color[]" id="">
-								@foreach ($listWarna as $key => $warna)
-									<option id="{{ $warna->detail_sepatu_warna }}"  value="{{ $warna->detail_sepatu_warna }}"> {{ $warna->detail_sepatu_warna }}</option>
-								@endforeach
-							</select>
-							<br> <br>
-                            Stock : {{ $sepatu['stock'] }}
-                        </p>
-						<div class="card_area d-flex align-items-center">
-                            <a class="icon_btn" href="{{ route('add-to-cart', ['id'=>$sepatu['id']]) }}"><i class="ti-bag"></i></a>
-							<a class="primary-btn" href="{{ route('checkout-product', ['id'=>$sepatu['id']]) }}"><i class="ti-money"></i>Checkout</a>
+								</select>
+								<div class="product_count">
+									<label for="qty">Quantity:</label>
+									<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+									<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+									class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+									<button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+										class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+								</div>
+								<br> <br>
+								Stock : {{ $sepatu['stock'] }}
+							</p>
+							<div class="card_area d-flex align-items-center">
+								<button type="submit" name="cart" class="icon_btn"><i class="ti-bag"></i></button>
+								<button type="submit" name="checkout" class="primary-btn"><i class="ti-money"></i>Checkout</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 	<!--================End Single Product Area =================-->
 
 	<!--================Product Description Area =================-->

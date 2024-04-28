@@ -3,6 +3,7 @@
 @php
 	use App\Models\sepatu;
 	use App\Models\retur;
+    use App\Models\DetailSepatu;
 	// use App\Models\htrans;
 
     // $transaction = htrans::find($htrans_penjualan_id);
@@ -63,31 +64,32 @@
                                             $subtotalProducts = 0;
                                         @endphp
                                         @forelse ($cartSepatu as $c)
-                                            @if ($c['id']<1001)
+                                            @if ($c['detail_id']<1001)
                                                 @php
-                                                    $sepatu = sepatu::find($c['id']);
+                                                    $detail = DetailSepatu::find($c['detail_id']);
                                                 @endphp
                                                 <tr>
                                                     <td class="align-middle">
                                                         <div class="media">
                                                             <div class="d-flex col-4">
-                                                                <img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
+                                                                <img class="img-fluid" src="{{ Storage::url("photo/$detail->detail_sepatu_pict") }}" alt="">
                                                             </div>
                                                             <div class="media-body align-self-center">
-                                                                <p class="p-0 m-0">{{ $sepatu->sepatu_name }}</p>
-                                                                <p class="p-0 m-0">Size : {{ $sepatu->ukuran->ukuran_sepatu_nama }}</p>
+                                                                <h5 class="p-0 m-0">{{ $detail->sepatu->sepatu_name }}</h5>
+                                                                <p class="p-0 m-0">Size : {{ $detail->detail_sepatu_ukuran }}</p>
+                                                                <p class="p-0 m-0">Color : {{ $detail->detail_sepatu_warna }}</p>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <p>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</p>
+                                                        <p>{{ formatCurrencyIDR($detail->detail_sepatu_harga) }}</p>
                                                     </td>
                                                     <td class="align-middle">
                                                         <p>{{ $c['qty'] }} pcs</p>
                                                     </td>
                                                     <td class="align-middle">
                                                         @php
-                                                            $total = $sepatu->sepatu_price * $c['qty'];
+                                                            $total = $detail->detail_sepatu_harga * $c['qty'];
                                                             $subtotalProducts += $total;
                                                         @endphp
                                                         <p>{{ formatCurrencyIDR($total) }}</p>
@@ -95,7 +97,7 @@
                                                 </tr>
                                             @else
                                                 @php
-                                                    $retur = retur::find($c['id']-1000)
+                                                    $retur = retur::find($c['detail_id']-1000)
                                                 @endphp
                                                 <tr>
                                                     <td class="align-middle">

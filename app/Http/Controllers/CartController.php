@@ -2,35 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailSepatu;
 use App\Models\retur;
 use App\Models\sepatu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
-    public function addToCart($id){ //non retur
+    public function addToCart($sepatu_id, $detail_size, $detail_color, $qty){ //non retur  
+        // dd($request->all());
+        
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
+
+        $detail_id = DetailSepatu::where('fk_sepatu','=',$sepatu_id)
+            ->where('detail_sepatu_ukuran','=',$detail_size)
+            ->where('detail_sepatu_warna','=',$detail_color)
+            ->value('detail_sepatu_id');
+
+            
+        // dd($detail_id);
 
         if ($cartSepatu === null) {
             $cartSepatu = [];
             Cookie::queue('cartSepatu', json_encode($cartSepatu), 1209600);
         }
 
-        foreach ($cartSepatu as $c){
-            if ($c['id'] == $id){
-                return $this->addQty($id);
+        // var_dump($cartSepatu);
+        if(sizeof($cartSepatu) > 0){
+            foreach ($cartSepatu as $c){
+                if ($c['detail_id'] == $detail_id){
+                    return $this->addQty($detail_id);
+                }
             }
         }
-
-        $selected = sepatu::find($id);
+            
         $sepatu = [
-            "id" => $selected->sepatu_id,
-            // "pict" => $selected->sepatu_pict,
-            // "nama" => $selected->sepatu_name,
-            // "size" => $selected->ukuran->ukuran_sepatu_nama,
-            // "price" => $selected->sepatu_price,  
-            "qty" => 1
+            "detail_id" => $detail_id, 
+            "qty" => $qty
         ];
 
         array_push($cartSepatu, $sepatu);
@@ -43,7 +53,7 @@ class CartController extends Controller
         $updatedCart = [];
 
         foreach ($cartSepatu as $c){
-            if ($c['id'] == $id){
+            if ($c['detail_id'] == $id){
                 $c['qty'] += 1;
             }
             array_push($updatedCart, $c);
@@ -57,7 +67,7 @@ class CartController extends Controller
         $updatedCart = [];
 
         for ($i=0 ; $i < count($cartSepatu) ; $i++) {
-            if ($cartSepatu[$i]['id'] == $id && $cartSepatu[$i]['qty'] > 0) {
+            if ($cartSepatu[$i]['detail_id'] == $id && $cartSepatu[$i]['qty'] > 0) {
                 $cartSepatu[$i]['qty'] -= 1;
                 if ($cartSepatu[$i]['qty'] == 0){
                     array_splice($cartSepatu, $i, 1);

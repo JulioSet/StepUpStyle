@@ -15,8 +15,8 @@
 	$latest = sepatu::latest()->take(5)->get();
 	$newArrival = sepatu::latest()->take(8)->get();
 
-	$bestSeller = dtrans::select('fk_sepatu')
-        ->groupBy('fk_sepatu')
+	$bestSeller = dtrans::select('fk_detail_sepatu')
+        ->groupBy('fk_detail_sepatu')
         ->orderByRaw('COUNT(*) DESC')
         ->get();
 @endphp
@@ -43,10 +43,10 @@
 									<h2 ><b style="color:black">{{$sepatu->sepatu_name}} New <br>Collection!</b></h2>
 									<p>Introducing the latest collection from {{ $brand }} - 
 										<br>Get yours now before it runs out!</p>
-									<div class="add-bag d-flex align-items-center">
+									{{-- <div class="add-bag d-flex align-items-center">
 										<a class="add-btn" href="{{ route('add-to-cart', ['id'=>$sepatu->sepatu_id]) }}"><span class="lnr lnr-cross"></span></a>
 										<span class="add-text text-uppercase">Add to Bag</span>
-									</div>
+									</div> --}}
 								</div>
 							</div>
 							<div class="col-lg-7">
@@ -240,7 +240,7 @@
 				<div class="row">
 					@foreach ($bestSeller as $key=>$best)
 						@foreach ($listSepatu as $key=>$sepatu)
-						@if($sepatu->deleted_at == null && $sepatu->sepatu_id == $best->fk_sepatu&& $sepatu->sepatu_stock > 0)
+						@if($sepatu->deleted_at == null && $sepatu->sepatu_id == $best->fk_detail_sepatu&& $sepatu->sepatu_stock > 0)
 						<!-- single product -->
 						<a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
 							<div class="col-lg-3 col-md-6">

@@ -11,7 +11,7 @@ class dtrans extends Model
     protected $table = "dtrans_penjualan";
     protected $primaryKey = "dtrans_penjualan_id";
     protected $fillable = [
-        'fk_sepatu',
+        'fk_detail_sepatu',
         'fk_htrans_penjualan',
         'fk_ukuran_sepatu',
         'dtrans_penjualan_qty',
@@ -26,14 +26,9 @@ class dtrans extends Model
         return $this->belongsTo(htrans::class, 'fk_htrans_penjualan');
     }
 
-    public function sepatu()
+    public function detail()
     {
-        return $this->belongsTo(sepatu::class, 'fk_sepatu', 'sepatu_id');
-    }
-
-    public function ukuran()
-    {
-        return $this->belongsTo(ukuran::class, 'fk_ukuran_sepatu','ukuran_sepatu_id');
+        return $this->belongsTo(DetailSepatu::class, 'fk_detail_sepatu', 'detail_sepatu_id');
     }
 
 }

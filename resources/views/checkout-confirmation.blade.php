@@ -79,27 +79,28 @@
 								$listProducts = $transaction->dtrans()->get();
 							@endphp
 
-							@foreach ($listProducts as $p)
+							@foreach ($listProducts as $dtrans)
 								<tr>
 									<td class="align-middle d-flex">
 											{{-- <div class="d-flex"> --}}
 												<div class="flex-fill align-middle">
-                                                    @if ($p->dtrans_penjualan_price < $p->sepatu->sepatu_price)
-                                                        <h5>{{ $p->sepatu->sepatu_name }} (DEFECT)</h5>
+                                                    @if ($dtrans->dtrans_penjualan_price < $dtrans->detail->detail_sepatu_harga)
+                                                        <h5>{{ $dtrans->detail->sepatu->sepatu_name }} (DEFECT)</h5>
                                                     @else
-                                                        <h5>{{ $p->sepatu->sepatu_name }}</h5>
+                                                        <h5>{{ $dtrans->detail->sepatu->sepatu_name }}</h5>
                                                     @endif
-													<p>{{ $p->sepatu->ukuran->ukuran_sepatu_nama }}</p>
+													<p>Size : {{ $dtrans->detail->detail_sepatu_ukuran }}</p>
+													<p>Color : {{ $dtrans->detail->detail_sepatu_warna }}</p>
 												</div>
 												@if ($transaction->htrans_penjualan_status == 3)
 												<div class="col-4 text-center">
-													@if ($p->dtrans_penjualan_retur == null)
-                                                        <a href="{{ route('form-retur', $p->dtrans_penjualan_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">
+													@if ($dtrans->dtrans_penjualan_retur == null)
+                                                        <a href="{{ route('form-retur', $dtrans->dtrans_penjualan_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">
                                                             Request a Return
                                                         </a>
 													@else
                                                         @php
-                                                            $retur = retur::where('fk_dtrans', '=', $p->dtrans_penjualan_id)->first();
+                                                            $retur = retur::where('fk_dtrans', '=', $dtrans->dtrans_penjualan_id)->first();
                                                         @endphp
 
                                                         @if ($retur->retur_status == 0)
@@ -125,10 +126,10 @@
 											{{-- </div> --}}
 									</td>
 									<td class="align-middle">
-											<h5 class="text-center">{{ $p->dtrans_penjualan_qty }}</h5>
+											<h5 class="text-center">{{ $dtrans->dtrans_penjualan_qty }}</h5>
 									</td>
 									<td class="align-middle">
-											<h5> {{ formatCurrencyIDR( $p->dtrans_penjualan_subtotal) }} </h5>
+											<h5> {{ formatCurrencyIDR( $dtrans->dtrans_penjualan_subtotal) }} </h5>
 									</td>
 								</tr>
 							@endforeach

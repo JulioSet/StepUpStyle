@@ -31,6 +31,8 @@
 	<link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+	<script src="https://kit.fontawesome.com/ce07bc8dc2.js" crossorigin="anonymous"></script>
 </head>
 
 <body>

@@ -1,6 +1,7 @@
 @extends('layout.main')
 @php
 	use App\Models\sepatu;
+    use App\Models\DetailSepatu;
 @endphp
 @section('content')
 
@@ -41,34 +42,36 @@
                             @endphp
                             @forelse ($cartSepatu as $c)
                                 @php
-                                    $sepatu = sepatu::find($c['id']);
+                                    $sepatu = DetailSepatu::find($c['detail_id']);
                                 @endphp
                                 <tr>
                                     <td>
                                         <div class="media">
                                             <div class="d-flex col-4">
-                                                <img class="img-fluid" src="{{ Storage::url("photo/$sepatu->sepatu_pict") }}" alt="">
+                                                @if ($sepatu->detail_sepatu_pict != null)
+                                                    <img class="img-fluid" src="{{ Storage::url("photo/$sepatu->detail_sepatu_pict") }}" alt="">
+                                                @endif
                                             </div>
                                             <div class="media-body">
-                                                <h4>{{ $sepatu->sepatu_name }}</h4>
-                                                <h4>Size : {{ $sepatu->ukuran->ukuran_sepatu_nama }}</h4>
-                                            </div>
+                                                <h4>{{ $sepatu->sepatu->sepatu_name }}</h4>
+                                                <h5>Size : {{ $sepatu->detail_sepatu_ukuran }}</h4>
+                                                <h5>Color : {{ $sepatu->detail_sepatu_warna }}</h4>
                                         </div>
                                     </td>
                                     <td>
-                                        <h5>{{ formatCurrencyIDR($sepatu->sepatu_price) }}</h5>
+                                        <h5>{{ formatCurrencyIDR($sepatu->detail_sepatu_harga) }}</h5>
                                     </td>
                                     <td>
                                         <div class="product_count">
                                             <input type="text" name="qty" id="sst" maxlength="12" value="{{ $c['qty'] }}" title="Quantity:"
                                                 class="input-text qty">
-                                            <button class="increase items-count" type="button"><a href="{{ route('increase-cart-qty', $c['id']) }}"><i class="lnr lnr-chevron-up"></i></a></button>
-                                            <button class="reduced items-count" type="button"><a href="{{ route('reduced-cart-qty', $c['id']) }}"><i class="lnr lnr-chevron-down"></i></a></button>
+                                            <button class="increase items-count" type="button"><a href="{{ route('increase-cart-qty', $c['detail_id']) }}"><i class="lnr lnr-chevron-up"></i></a></button>
+                                            <button class="reduced items-count" type="button"><a href="{{ route('reduced-cart-qty', $c['detail_id']) }}"><i class="lnr lnr-chevron-down"></i></a></button>
                                         </div>
                                     </td>
                                     <td>
                                         @php
-                                            $total = $sepatu->sepatu_price * $c['qty'];
+                                             $total = $sepatu->detail_sepatu_harga * $c['qty'];
                                             $subtotalProducts += $total;
                                         @endphp
                                         <h5>{{ formatCurrencyIDR($total) }}</h5>

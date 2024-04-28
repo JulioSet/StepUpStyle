@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailSepatu;
 use App\Models\dtrans;
 use App\Models\htrans;
 use App\Models\notifikasi;
@@ -97,17 +98,16 @@ class PaymentController extends Controller
         ]);
 
         foreach ($cart as $c) {
-            $sepatu = sepatu::find($c['id']);
-            $subtotal = $c['qty']*$sepatu->sepatu_price;
+            $sepatu = sepatu::find($c['detail_id']);
+            $subtotal = $c['qty']*$sepatu->detail_sepatu_price;
             $dtrans = dtrans::create([
                 'fk_htrans_penjualan' => $htrans_penjualan_id,
-                'fk_sepatu' => $c['id'],
-                'fk_ukuran_sepatu' => $sepatu->sepatu_ukuran_id,
+                'fk_detail_sepatu' => $c['detail_id'],
                 'dtrans_penjualan_qty' => $c['qty'],
-                'dtrans_penjualan_price' => $sepatu->sepatu_price,
+                'dtrans_penjualan_price' => $sepatu->detail_sepatu_price,
                 'dtrans_penjualan_subtotal' => $subtotal
             ]);
-            $sepatu->sepatu_stock -= $c['qty'];
+            $sepatu->detail_sepatu_stok -= $c['qty'];
             $sepatu->save();
             $totalProducts += $subtotal;
         }
@@ -137,8 +137,8 @@ class PaymentController extends Controller
         return redirect()->route('checkout', $htrans_penjualan_id);
     }
 
-    // ================= DIRECT CHECKOUT (DARI HALAMAN PRODUCT) =================
-    public function directProcess($id)
+    // ================= DIRECT CHECKOUT (DARI HALAMAN DETAIL PRODUCT) =================
+    public function directProcess($sepatu_id, $detail_size, $detail_color, $qty)
     {
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
 
@@ -147,9 +147,14 @@ class PaymentController extends Controller
             Cookie::queue('cartSepatu', json_encode($cartSepatu), 1209600);
         }
 
+        $detail_id = DetailSepatu::where('fk_sepatu','=',$sepatu_id)
+            ->where('detail_sepatu_ukuran','=',$detail_size)
+            ->where('detail_sepatu_warna','=',$detail_color)
+            ->value('detail_sepatu_id');
+
         $sepatu = [
-            "id" => $id,
-            "qty" => 1
+            "detail_id" => $detail_id,
+            "qty" => $qty
         ];
 
         array_push($cartSepatu, $sepatu);
@@ -172,9 +177,7 @@ class PaymentController extends Controller
     }
 
 
-
-
-    // ================= BARANG RETUR =================
+    // ================= checkout =================
     public function process($product=null)
     {
         $cart = json_decode(Cookie::get('cartSepatu'), true); //cookie 14 hari
@@ -197,27 +200,26 @@ class PaymentController extends Controller
         ]);
 
         foreach ($cart as $c) {
-            if ($c['id'] < 1001) {
-                $sepatu = sepatu::find($c['id']);
-                $subtotal = $c['qty']*$sepatu->sepatu_price;
+            if ($c['detail_id'] < 1001) { // ========== UTK CHECKOUT BARANG BUKAN RETUR
+                $sepatu = DetailSepatu::find($c['detail_id']);
+                // dd($sepatu);
+                $subtotal = $c['qty']*$sepatu->detail_sepatu_harga;
                 $dtrans = dtrans::create([
                     'fk_htrans_penjualan' => $htrans_penjualan_id,
-                    'fk_sepatu' => $c['id'],
-                    'fk_ukuran_sepatu' => $sepatu->sepatu_ukuran_id,
+                    'fk_detail_sepatu' => $sepatu->detail_sepatu_id,
                     'dtrans_penjualan_qty' => $c['qty'],
-                    'dtrans_penjualan_price' => $sepatu->sepatu_price,
+                    'dtrans_penjualan_price' => $sepatu->detail_sepatu_harga,
                     'dtrans_penjualan_subtotal' => $subtotal
                 ]);
-                $sepatu->sepatu_stock -= $c['qty'];
+                $sepatu->detail_sepatu_stok -= $c['qty'];
                 $sepatu->save();
                 $totalProducts += $subtotal;
-            } else {
-                $retur = retur::find($c['id']-1000);
+            } else {                    // ========== UTK CHECKOUT BARANG BUKAN RETUR
+                $retur = retur::find($c['detail_id']-1000);
                 $subtotal = $c['qty']*$retur->retur_price;
                 $dtrans = dtrans::create([
                     'fk_htrans_penjualan' => $htrans_penjualan_id,
-                    'fk_sepatu' => $retur->fk_sepatu,
-                    'fk_ukuran_sepatu' => $retur->sepatu->sepatu_ukuran_id,
+                    'fk_detail_sepatu' => $retur->fk_detail_sepatu,
                     'dtrans_penjualan_qty' => $c['qty'],
                     'dtrans_penjualan_price' => $retur->retur_price,
                     'dtrans_penjualan_subtotal' => $subtotal
@@ -253,7 +255,7 @@ class PaymentController extends Controller
         return redirect()->route('checkout', $htrans_penjualan_id);
     }
 
-    // ================= DIRECT CHECKOUT (DARI HALAMAN PRODUCT) =================
+    // ================= DIRECT RETUR =================
     public function directProcess2($id)
     {
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
@@ -264,7 +266,7 @@ class PaymentController extends Controller
         }
 
         $sepatu = [
-            "id" => $id+1000,
+            "detail_id" => $id+1000,
             "qty" => 1
         ];
 

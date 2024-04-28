@@ -162,8 +162,8 @@ class PageController extends Controller
         $filterSize = $request->input('size', []);
         $filterWarna = $request->input('color', []);
 
-        $tempList;
-        $tempList2;
+        $tempList = [];
+        $tempList2 = [];
 
         if($filterBrand)  {
             $tempList = sepatu::where('sepatu_supplier_id', $filterBrand)
@@ -223,6 +223,32 @@ class PageController extends Controller
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
         return view('cart', compact('cartSepatu'));
     }
+
+    public function backPage(Request $request){
+        return redirect($request->input('url'));
+    }
+
+    public function toCartOrCheckout(Request $req){
+        if ($req->has('cart')) {
+            return redirect()->route('add-to-cart', [
+                "id" => $req->input('sepatu_id'),
+                "size" =>  $req->input('size'),
+                "color" =>  $req->input('color'),
+                "qty" =>  $req->input('qty')
+            ]);
+            // return redirect('cart/add/{}');
+        }
+        else if($req->has('checkout')){
+            return redirect()->route('checkout-product', [
+                "id" => $req->input('sepatu_id'),
+                "size" =>  $req->input('size'),
+                "color" =>  $req->input('color'),
+                "qty" =>  $req->input('qty')
+            ]);
+            // return redirect('checkout', $req->input('sepatu-id'));
+        }
+    }
+
 
     // public function viewCheckout(){
     //     //pengecekan Auth User

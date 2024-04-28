@@ -52,8 +52,8 @@
                                             $listProducts = $item->dtrans()->get();
                                         @endphp
                                         <ul>
-                                            @forelse ($listProducts as $p)
-                                                <li>{{ $p->sepatu->sepatu_name }} Size {{ $p->sepatu->ukuran->ukuran_sepatu_nama }}</li>
+                                            @forelse ($listProducts as $dtrans)
+                                                <li>{{ $dtrans->detail->sepatu->sepatu_name }} Size {{ $dtrans->detail->detail_sepatu_ukuran }}</li>
                                             @empty
                                             @endforelse
                                         </ul>

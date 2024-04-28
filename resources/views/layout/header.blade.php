@@ -7,6 +7,12 @@
         <nav class="navbar navbar-expand-lg navbar-light main_box">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
+                <form action="{{ route('back-page') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="url" value="{{ URL::previous() }}">
+                    <button type="submit" style="border: 0; background-color: #ffffff; padding-right: 2vw"><span class="ti-angle-left" style="cursor: pointer; color: #fb7d23"></span></button>
+                </form>
+
                 <a class="navbar-brand logo_h" href="/home"><img src="{{ asset('img/logo-full.png') }}" width="150px"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="icon-bar"></span>
