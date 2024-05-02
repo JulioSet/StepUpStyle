@@ -2,10 +2,12 @@
     use App\Models\kategori;
     use App\Models\supplier;
     use App\Models\DetailSepatu;
+    use App\Models\SubKategori;
     $userLoggedIn = Session::get('userLoggedIn');
     $listCategory = kategori::all();
     $listSupplier = supplier::all();
     $listDetail = DetailSepatu::all();
+    $listSub = SubKategori::all();
     $listUkuran = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
     $listWarna = ['Hitam', 'Putih', 'Merah', 'Biru', 'Abu-abu', 'Coklat'];
 @endphp
@@ -16,9 +18,16 @@
         <ul class="main-categories">
             @forelse ($listCategory as $key=>$category)
                 <li class="main-nav-list">
-                    <a href="{{ route('product-category', $category->kategori_id) }}">
-                        <span class="lnr lnr-arrow-right"></span>
-                        {{ $category->kategori_nama }}
+                    <a data-toggle="collapse" href="#{{$category->kategori_nama}}" aria-expanded="false" aria-controls="{{ $category->kategori_id }}"><span class="lnr lnr-arrow-right"></span>{{ $category->kategori_nama }}</a>
+                        <ul class="collapse" id="{{$category->kategori_nama}}" data-toggle="collapse" aria-expanded="false" aria-controls="{{ $category->kategori_id }}">
+                            @foreach ($listSub as $key=>$sub)
+                                @if ($category->kategori_id == $sub->fk_kategori)
+                                    <li class="main-nav-list child"><a href="{{ route('product-category', $sub->subkategori_id) }}">{{ $sub->subkategori_nama }}</span></a></li>
+                                @endif
+                            @endforeach
+                            <li class="main-nav-list child"><a href="{{ route('product-category', $category->kategori_id) }}">All {{ $category->kategori_nama }}</span></a></li>
+                        </ul>
+                        
                     </a>
                 </li>
             @empty
@@ -64,7 +73,7 @@
             </div>
 
             <div class="common-filter">
-                <div class="head">Warna</div>
+                <div class="head">Color</div>
                 <ul>
                     @forelse ($listWarna as $key=>$warna)
                         <li class="filter-list">
@@ -74,6 +83,14 @@
                     @empty
                         
                     @endforelse
+                </ul>
+            </div>
+
+            <div class="common-filter">
+                <div class="head">Price</div>
+                <ul>
+                    <input type="text" name="min_price" placeholder="Min Price">
+                    <input type="text" name="max_price" placeholder="Max Price">
                 </ul>
             </div>
             <button class="primary-btn" type="submit" style="width:100%;text-align:center">Filter</button>

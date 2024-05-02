@@ -11,7 +11,7 @@ use App\Models\retur;
 use App\Models\sepatu;
 use App\Models\SubKategori;
 use App\Models\supplier;
-use App\Models\ukuran;
+use App\Models\wishlist;
 use App\Models\user;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -116,6 +116,14 @@ class PageController extends Controller
         return view('products-category', compact('listSepatu'));
     }
 
+    public function viewSubCategoryProducts(Request $request){
+        //select DB
+        $page = "Category";
+        $id = $request->id;
+        $listSepatu = sepatu::where('sepatu_subkategori_id','=',$id)->get();
+        return view('products-category', compact('listSepatu'));
+    }
+
     public function viewBestSeller(){
         //select DB
         $page = "Best Seller";
@@ -158,56 +166,40 @@ class PageController extends Controller
     public function viewFilteredProducts(Request $request){
         //select DB
         $page = "Filter";
-        $filterBrand = $request->input('brand', []);
-        $filterSize = $request->input('size', []);
-        $filterWarna = $request->input('color', []);
 
-        $tempList = [];
-        $tempList2 = [];
+        $query = sepatu::query();
 
-        if($filterBrand)  {
-            $tempList = sepatu::where('sepatu_supplier_id', $filterBrand)
-            ->where('deleted_at', null)
-            ->get();
+        if ($request->has('brand')) {
+            $query->whereIn('sepatu_supplier_id', $request->brand);
+        }
+        
+        if ($request->has('size')) {
+            $query->whereHas('details', function ($q) use ($request) {
+                $q->whereIn('detail_sepatu_ukuran', $request->size);
+            });
         }
 
-        if ($filterSize) {
-            if ($filterBrand) {
-                foreach ($tempList as $key => $value) {
-                    $tempList2 = DetailSepatu::where('fk_sepatu', $value->sepatu_id)
-                    ->whereIn('detail_sepatu_ukuran', $filterSize)
-                    ->where('deleted_at', null)
-                    ->where('detail_sepatu_stock','>',0)
-                    ->get();
-                }
-            }else {
-                
-            }
+        if ($request->has('color')) {
+            $query->whereHas('details', function ($q) use ($request) {
+                $q->whereIn('detail_sepatu_warna', $request->color);
+            });
         }
 
-        if ($filterWarna) {
-            
+        if ($request->has('min_price') && $request->min_price !== null) {
+            $query->whereHas('details', function ($q) use ($request) {
+                $q->where('detail_sepatu_harga', '>=', $request->min_price);
+            });
         }
 
-        if ($filterBrand && $filterSize && !$filterWarna) {
-            $listFilter = sepatu::whereIn('sepatu_supplier_id', $filterBrand)
-            ->whereIn('sepatu_ukuran_id', $filterSize)
-            ->where('deleted_at', null)
-            ->where('sepatu_stock','>',0)
-            ->get();
-        }elseif ($filterBrand && !$filterSize && !$filterWarna) {
-            $listFilter = sepatu::whereIn('sepatu_supplier_id', $filterBrand)
-            ->where('deleted_at', null)
-            ->where('sepatu_stock','>',0)
-            ->get();
-        }elseif (!$filterBrand && $filterSize && !$filterWarna) {
-            $listFilter = sepatu::whereIn('sepatu_ukuran_id', $filterSize)
-            ->where('deleted_at', null)
-            ->where('sepatu_stock','>',0)
-            ->get();
+        if ($request->has('max_price') && $request->max_price !== null) {
+            $query->whereHas('details', function ($q) use ($request) {
+                $q->where('detail_sepatu_harga', '<=', $request->max_price);
+            });
         }
 
-        return view('products-filter', compact('listFilter'));
+        $listSepatu = $query->get();
+
+        return view('products-filter', compact('listSepatu'));
     }
 
     public function viewFlashSale(){
@@ -247,6 +239,25 @@ class PageController extends Controller
             ]);
             // return redirect('checkout', $req->input('sepatu-id'));
         }
+    }
+
+    public function viewWishlist(Request $request){
+        //select DB
+        $page = "Wishlist";
+
+        $userLoggedIn = Session::get('userLoggedIn');
+        
+        // $listWishlist = wishlist::where('fk_customer', '=', $userLoggedIn['id'])
+        //                     ->with('shoe')
+        //                     ->get();     
+            
+        $listWishlist = wishlist::where('fk_customer', $userLoggedIn['id'])
+                        ->with(['shoe.details' => function ($query) {
+                        $query->select('fk_sepatu', 'detail_sepatu_pict');
+                        }])
+                        ->get();
+
+        return view('wishlist', compact('listWishlist'));
     }
 
 

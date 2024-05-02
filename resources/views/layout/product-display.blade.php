@@ -5,6 +5,7 @@
 	$userLoggedIn = Session::get('userLoggedIn');
 
 	$listDetail = DetailSepatu::all();
+    $listWishlist = wishlist::all();
 
 	$price = 0;
 	$gambar = '';
@@ -36,12 +37,19 @@
                             
                             <div class="prd-bottom" style="padding: 0px; margin: 0;">
                                 {{-- <a href="{{ route('add-to-whislist', $sepatu->sepatu_id) }}" class="social-info"> --}}
-                                    {{-- <span class="ti-star"></span> --}}
-                                @php
-                                    $wishlist = wishlist::where('fk_sepatu', '=', $sepatu->sepatu_id)
+                                {{-- <span class="ti-star"></span> --}}
+                                
+                                    @if (isset($userLoggedIn)) 
+                                        @php
+                                            $wishlist = wishlist::where('fk_sepatu', '=', $sepatu->sepatu_id)
                                                 ->where('fk_customer', '=', $userLoggedIn['id'])
                                                 ->count();
-                                @endphp
+                                        @endphp
+                                    @else 
+                                        @php
+                                            $wishlist = 0
+                                        @endphp
+                                    @endif
 
                                 @if ($wishlist == 0)
                                     <form action="{{ route('add-to-wishlist') }}" method="post">
