@@ -19,6 +19,11 @@ class wishlist extends Model
 
     public function sepatu()
     {
-        return $this->hasMany(Sepatu::class, 'fk_sepatu', 'sepatu_id');
+        return $this->hasMany(sepatu::class, 'fk_sepatu', 'sepatu_id');
+    }
+
+    public function shoe()
+    {
+        return $this->belongsTo(sepatu::class, 'fk_sepatu');
     }
 }

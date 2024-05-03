@@ -175,6 +175,7 @@ Route::prefix('products')->group(function () {
     Route::get('/best-seller', [PageController::class, 'viewBestSeller']);
     Route::get('/{id}', [PageController::class, 'viewDetailProduct'])->name('product-detail');
     Route::get('/brand/{id}', [PageController::class, 'viewBrandProducts']);
+    // Route::get('/category/{id}', [PageController::class, 'viewSubCategoryProducts'])->name('product-sub');
     Route::get('/category/{id}', [PageController::class, 'viewCategoryProducts'])->name('product-category');
     // Route::get('/flashsale', [PageController::class, 'viewFlashSale'])->name('flashsale');
     // Route::get('/flashsale/{id}', [PageController::class, 'viewDetailRetur'])->name('product-retur');
@@ -195,6 +196,7 @@ Route::middleware(['authuser'])->group(function () {
     Route::post('/toCartCheckout', [PageController::class, 'toCartOrCheckout'])->name('to-cart-or-checkout');
     
     Route::prefix('wishlist')->group(function () {
+        Route::get('/', [PageController::class, 'viewWishlist']);
         Route::post('/add', [WishlistController::class, 'like'])->name('add-to-wishlist');
         Route::post('/remove', [WishlistController::class, 'unlike'])->name('remove-from-wishlist');
     });

@@ -65,6 +65,7 @@
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" style="margin-left: -9rem">
                                 <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/orders">Orders</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/wishlist">Wishlist</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{{ route('user-logout') }}">Logout</a></li>
                             </ul>
                         </li>

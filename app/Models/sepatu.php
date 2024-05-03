@@ -29,4 +29,9 @@ class sepatu extends Model
     {
         return $this->belongsTo(SubKategori::class, 'sepatu_subkategori_id');
     }
+
+    public function details()
+    {
+        return $this->hasMany(DetailSepatu::class, 'fk_sepatu');
+    }
 }

@@ -124,7 +124,7 @@
 								<div class="overlay"></div>
 								<img class="img-fluid w-100" src="img/category/c1.jpg" alt="">
 									<div class="deal-details">
-										<h6 class="deal-title">Sneakers</h6>
+										<h6 class="deal-title">Casual</h6>
 									</div>
 								</a>
 							</div>
