@@ -45,12 +45,12 @@
                                 <div class="d-flex form-group align-middle">
                                     <h5 class="pt-2 col-3">Name <span class="text-danger">*</span></h5>
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
-                                    <input type="text" class="form-control flex-fill" id="name" name="name" placeholder="{{ $product->sepatu->sepatu_name }}" readonly>
+                                    <input type="text" class="form-control flex-fill" id="name" name="name" placeholder="{{ $sepatu->sepatu_name }}" readonly>
                                 </div>
                                 <div class="d-flex form-group align-middle">
                                     <h5 class="pt-2 col-3">Size <span class="text-danger">*</span></h5>
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
-                                    <input type="text" class="form-control flex-fill" id="size" name="size" placeholder="{{ $product->sepatu->ukuran->ukuran_sepatu_nama }}" readonly>
+                                    <input type="text" class="form-control flex-fill" id="size" name="size" placeholder="{{ $detailSepatu->detail_sepatu_ukuran }}" readonly>
                                 </div>
                                 <div class="d-flex form-group align-middle">
                                     <h5 class="pt-2 col-3">Qty <span class="text-danger">*</span></h5>
@@ -69,7 +69,7 @@
                                 <div class="d-flex form-group align-middle">
                                     <h5 class="pt-2 col-3">Product Picture <span class="text-danger">*</span></h5>
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
-                                    <input type="file" class="form-control flex-fill" id="product" name="product[]" placeholder="{{ $product->sepatu->ukuran->ukuran_sepatu_nama }}" required>
+                                    <input type="file" class="form-control flex-fill" id="product" name="product[]" placeholder="" required>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
