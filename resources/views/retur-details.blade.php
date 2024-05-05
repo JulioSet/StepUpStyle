@@ -55,8 +55,8 @@
                                                         <img class="img-fluid" src="{{ Storage::url("retur/$retur->retur_foto") }}" alt="">
                                                     </div>
                                                     <div class="flex-fill">
-                                                        <h5>{{ $retur->dtrans->sepatu->sepatu_name }}</h5>
-                                                        <p>{{ $retur->dtrans->sepatu->ukuran->ukuran_sepatu_nama }}</p>
+                                                        <h5>{{ $retur->dtrans->detail->sepatu->sepatu_name }}</h5>
+                                                        <p>{{ $retur->dtrans->detail->detail_sepatu_ukuran }}</p>
                                                         <p>Qty: <strong>{{ $retur->retur_qty }}</strong></p>
                                                     </div>
                                                 </div>

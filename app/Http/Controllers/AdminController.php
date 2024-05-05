@@ -61,7 +61,7 @@ class AdminController extends Controller
 
         $rules = [
             'foto' => ["required", "max:2048", "extensions:jpg,jpeg,png"],
-            'nama' => ["required", "min:1",'unique:user,user_name'],
+            'nama' => ["required", "min:1"],
             'password' => 'required',
             'email' => ["required", "email"]
         ];
@@ -140,7 +140,7 @@ class AdminController extends Controller
     public function EditSupplier (Request $request){
         $rules = [
             'foto' => ["required", "max:2048", "extensions:jpg,jpeg,png"],
-            'nama_supplier' => ["required", "min:1",'unique:supplier,supplier_name'],
+            'nama_supplier' => ["required", "min:1"],
             'supplier_contact' => 'required',
             'supplier_office' => 'required',
         ];
@@ -200,7 +200,7 @@ class AdminController extends Controller
 
     public function EditKategori (Request $request){
         $rules = [
-            'nama_kategori' => ["required", "min:1",'unique:kategori,kategori_nama'],
+            'nama_kategori' => ["required", "min:1"],
         ];
         $messages = [
             "required" => "Please fill this field",
@@ -236,7 +236,7 @@ class AdminController extends Controller
 
     public function EditSubKategori (Request $request){
         $rules = [
-            'sub_kategori' => ["required", "min:1",'unique:subkategori,subkategori_nama'],
+            'sub_kategori' => ["required", "min:1"],
         ];
         $messages = [
             "required" => "Please fill this field",
