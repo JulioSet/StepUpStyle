@@ -30,5 +30,9 @@ class dtrans extends Model
     {
         return $this->belongsTo(DetailSepatu::class, 'fk_detail_sepatu', 'detail_sepatu_id');
     }
+    // public function details()
+    // {
+    // return $this->hasMany(DetailSepatu::class, 'fk_dtrans_penjualan', 'dtrans_penjualan_id');
+    // }
 
 }

@@ -35,15 +35,14 @@ class ReturController extends Controller
 
         $dtrans->dtrans_penjualan_retur = 2;
         $dtrans->save();
-
         $retur = retur::create([
             'fk_dtrans' => $dtrans->dtrans_penjualan_id,
             'fk_customer' => $user['id'],
-            'fk_sepatu' => $dtrans->fk_sepatu,
+            'fk_sepatu' => $dtrans->detail->sepatu->sepatu_id,
             'retur_reason' => $req->reason,
             'retur_qty' => $req->qty,
             'retur_foto' => $namaFilePhoto,
-            'retur_price' => $dtrans->sepatu->sepatu_price*0.6,
+            'retur_price' => $dtrans->detail->sepatu->sepatu_price * 0.6,
             'retur_status' => 2,
         ]);
 

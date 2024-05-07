@@ -278,12 +278,20 @@ class PageController extends Controller
     public function viewFormRetur($dtrans_id){
         //pengecekan Auth User
         $userLoggedIn = Session::get('userLoggedIn');
-        $product = dtrans::find($dtrans_id);
-        Cookie::queue('tempRetur', json_encode($product), 1209600);
+        $dtrans = dtrans::find($dtrans_id);
+        // Cookie::queue('tempRetur', json_encode($dtrans ), 1209600);
         // $tempRetur = json_decode(Cookie::get('tempRetur'), true);
-        // dd($tempRetur);
+        // dd($dtrans );
 
-        return view('retur-form', compact('userLoggedIn', 'product'));
+        if($dtrans) {
+            $detailSepatu = $dtrans->detail;
+            $sepatu = $detailSepatu->sepatu;
+            // dd($sepatu);
+            Cookie::queue('tempRetur', json_encode($dtrans), 1209600);
+            return view('retur-form', compact('userLoggedIn', 'dtrans', 'detailSepatu','sepatu'));
+        } else {
+            return redirect()->back()->with('error', 'Data not found.');
+        }
     }
 
     public function viewOrders(){
