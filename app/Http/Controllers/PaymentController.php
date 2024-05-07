@@ -8,6 +8,7 @@ use App\Models\htrans;
 use App\Models\notifikasi;
 use App\Models\retur;
 use App\Models\sepatu;
+use App\Services\RajaOngkir;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -68,6 +69,13 @@ class PaymentController extends Controller
 
     //     return response(['status' => 'OK']);
     // }
+
+    // ================= KALKULASI ONGKIR =================
+    public function calculateCost($cityID) {
+        $rajaOngkir = new RajaOngkir(config('rajaongkir.API'));
+        $cost = $rajaOngkir->postCost($cityID);
+        return response()->json($cost ?? []);
+    }
 
     // ================= CART CHECKOUT (DARI CART) =================
     public function process2($product=null)

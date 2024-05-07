@@ -13,6 +13,7 @@ use App\Models\SubKategori;
 use App\Models\supplier;
 use App\Models\wishlist;
 use App\Models\user;
+use App\Services\RajaOngkir;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -22,6 +23,12 @@ use Illuminate\Support\Facades\DB;
 // Mengatur perpindahan halaman
 class PageController extends Controller
 {
+    // public function viewTest() {
+    //     $rajaOngkir = new RajaOngkir(config('rajaongkir.API'));
+    //     $cost = $rajaOngkir->postCost(384);
+    //     return view('payment.test', compact('cost'));
+    // }
+
     // USER
 
     public function viewHome(){
@@ -172,7 +179,7 @@ class PageController extends Controller
         if ($request->has('brand')) {
             $query->whereIn('sepatu_supplier_id', $request->brand);
         }
-        
+
         if ($request->has('size')) {
             $query->whereHas('details', function ($q) use ($request) {
                 $q->whereIn('detail_sepatu_ukuran', $request->size);
@@ -246,11 +253,11 @@ class PageController extends Controller
         $page = "Wishlist";
 
         $userLoggedIn = Session::get('userLoggedIn');
-        
+
         // $listWishlist = wishlist::where('fk_customer', '=', $userLoggedIn['id'])
         //                     ->with('shoe')
-        //                     ->get();     
-            
+        //                     ->get();
+
         $listWishlist = wishlist::where('fk_customer', $userLoggedIn['id'])
                         ->with(['shoe.details' => function ($query) {
                         $query->select('fk_sepatu', 'detail_sepatu_pict');
@@ -296,6 +303,13 @@ class PageController extends Controller
         return view('category');
     }
 
+    public function viewShipping(){
+        //pengecekan Auth User
+        $rajaOngkir = new RajaOngkir(config('rajaongkir.API'));
+        $cities = $rajaOngkir->getCities();
+        $provinces = $rajaOngkir->getProvinces();
+        return view('shipping', compact('cities','provinces'));
+    }
 
     // ADMIN
 

@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
+// Route::get('test', [PageController::class, 'viewTest']);
+
 Route::get('/', function () {
     if (Session::get('userLoggedIn') == null) {
         return redirect('/login');
@@ -37,6 +39,10 @@ Route::get('/flush', function () {
 Route::get('/get-sub-items/{id}', [PageController::class, 'getSubKategori']);
 Route::post('/backPage', [PageController::class, 'backPage'])->name('back-page');
 
+// SHIPPING
+Route::get('shipping', [PageController::class, 'viewShipping']);
+Route::get('calculate-shipping/{cityID}', [PaymentController::class, 'calculateCost']);
+Route::get('get-cities', [PageController::class, 'getCities']);
 
 Route::middleware(['authowner'])->group(function () {
     Route::prefix('laporan')->group(function () {
@@ -194,7 +200,7 @@ Route::middleware(['authuser'])->group(function () {
     Route::get('/profile', [PageController::class, 'viewProfile']);
 
     Route::post('/toCartCheckout', [PageController::class, 'toCartOrCheckout'])->name('to-cart-or-checkout');
-    
+
     Route::prefix('wishlist')->group(function () {
         Route::get('/', [PageController::class, 'viewWishlist']);
         Route::post('/add', [WishlistController::class, 'like'])->name('add-to-wishlist');
