@@ -9,8 +9,8 @@ use App\Models\notifikasi;
 use App\Models\retur;
 use App\Models\sepatu;
 use App\Services\RajaOngkir;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Midtrans\Config;
 use Midtrans\Snap;
@@ -175,19 +175,25 @@ class PaymentController extends Controller
     {
         $userLoggedIn = Session::get('userLoggedIn');
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
+        $shipping_description = json_decode(Cookie::get('shipping-description'), true) ?? "Service";
+        $shipping_price = json_decode(Cookie::get('shipping-price'), true) ?? 0;
         $cart = [];
         Cookie::queue('cartSepatu', json_encode($cart), 1209600);
         if ($product != null) {
             $cartSepatu = $product;
         }
 
-        return view('checkout', compact('transaction', 'cartSepatu', 'userLoggedIn'));
+        return view('checkout', compact('transaction', 'cartSepatu', 'userLoggedIn', 'shipping_description', 'shipping_price'));
     }
 
 
     // ================= checkout =================
-    public function process($product=null)
+    public function process(Request $req, $product=null)
     {
+        // Shipping
+        Cookie::queue('shipping-description', json_encode($req->input('shipping-description')), 1209600);
+        Cookie::queue('shipping-price', json_encode($req->input('shipping-price')), 1209600);
+
         $cart = json_decode(Cookie::get('cartSepatu'), true); //cookie 14 hari
         $user = Session::get('userLoggedIn');
         $htrans_penjualan_id = rand(10000,99999);

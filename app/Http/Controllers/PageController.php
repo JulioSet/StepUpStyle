@@ -220,7 +220,10 @@ class PageController extends Controller
     public function viewCart(){
         //pengecekan Auth User
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
-        return view('cart', compact('cartSepatu'));
+        $rajaOngkir = new RajaOngkir(config('rajaongkir.API'));
+        $cities = $rajaOngkir->getCities();
+        $provinces = $rajaOngkir->getProvinces();
+        return view('cart', compact('cartSepatu', 'cities', 'provinces'));
     }
 
     public function backPage(Request $request){
@@ -309,14 +312,6 @@ class PageController extends Controller
     public function viewCategory(){
         //pengecekan Auth User
         return view('category');
-    }
-
-    public function viewShipping(){
-        //pengecekan Auth User
-        $rajaOngkir = new RajaOngkir(config('rajaongkir.API'));
-        $cities = $rajaOngkir->getCities();
-        $provinces = $rajaOngkir->getProvinces();
-        return view('shipping', compact('cities','provinces'));
     }
 
     // ADMIN

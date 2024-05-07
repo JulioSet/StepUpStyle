@@ -133,6 +133,25 @@
                                         @endforelse
 
                                         <tr>
+                                            <td>
+                                                <h5 class="p-0 m-0">SHIPPING</h5>
+                                                <p class="p-0 m-0" id="shipping">{{ $shipping_description }}</p>
+                                            </td>
+                                            <td>
+                                                <p style="font-weight: 500" id="shipping-price1">{{ formatCurrencyIDR($shipping_price) }}</p>
+                                            </td>
+                                            <td>
+                                                <p>1 pcs</p>
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $subtotalProducts += $shipping_price;
+                                                @endphp
+                                                <p style="font-weight: 500" id="shipping-price2">{{ formatCurrencyIDR($shipping_price) }}</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
                                             <td colspan="3">
                                                 <p class="text-right" style="font-weight: 500">SUBTOTAL PRODUCTS</p>
                                             </td>
