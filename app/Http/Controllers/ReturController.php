@@ -18,12 +18,22 @@ class ReturController extends Controller
         $dtrans = dtrans::find($tempRetur['dtrans_penjualan_id']);
         $user = Session::get('userLoggedIn');
 
-        $req->validate(
+        $rules =
             [
+                "qty"=>"required",
+                "reason"=>"required",
                 "product" => "required",
                 "product.*" => "mimes:png,jpg,jpeg|max:2048",
-            ]
-        );
+            ];
+
+        $messages = [
+            "required" => "Please fill this field",
+            "unique" => "The Name has already been taken",
+            "max" => "File size exceeds 2MB limit",
+            "extensions" => "File is not jpg, jpeg, or png",
+        ];
+
+        $req->validate($rules, $messages);
 
         $namaFolderPhoto = ""; $namaFilePhoto = "";
         foreach ($req->file("product") as $photo) {
