@@ -52,33 +52,38 @@
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
                                     <input type="text" class="form-control flex-fill" id="size" name="size" placeholder="{{ $detailSepatu->detail_sepatu_ukuran }}" readonly>
                                 </div>
-                                <div class="d-flex form-group align-middle">
+                                <div class="d-flex form-group align-middle mb-1">
                                     <h5 class="pt-2 col-3">Qty <span class="text-danger">*</span></h5>
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
                                     <div class="product_count m-0 mt-2">
                                         {{-- <input type="number" name="qty" max="{{ $tempRetur['dtrans_penjualan_qty'] }}" min=1 value="{{ $tempRetur['dtrans_penjualan_qty'] }}" title="Quantity:" class="input-text qty"> --}}
-                                        <input type="text" name="qty" value=1 max=1 min=1 class="input-text qty" readonly>
-                                        <p class="text-danger small">max retur : 1</p>
+                                        <input type="number" name="qty" value={{ $dtrans->dtrans_penjualan_qty }} class="input-text qty" min="0" max="{{ $dtrans->dtrans_penjualan_qty }}">
                                     </div>
                                 </div>
-                                <div class="d-flex form-group align-middle">
+                                <span  style="color: red; margin-left: 26%;">{{ $errors->first('qty') }}</span>
+                                
+                                <div class="d-flex form-group align-middle mb-1 mt-2">
                                     <h5 class="pt-2 col-3">Reason <span class="text-danger">*</span></h5>
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
-                                    <textarea class="form-control flex-fill" name="reason" id="reason" cols="30" rows="5" required></textarea>
+                                    <textarea class="form-control flex-fill" name="reason" id="reason" cols="30" rows="5"></textarea><br>
                                 </div>
-                                <div class="d-flex form-group align-middle">
+                                <span  style="color: red; margin-left: 26%;">{{ $errors->first('reason') }}</span>
+                                
+                                <div class="d-flex form-group align-middle mb-1 mt-2">
                                     <h5 class="pt-2 col-3">Product Picture <span class="text-danger">*</span></h5>
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
-                                    <input type="file" class="form-control flex-fill" id="product" name="product[]" placeholder="" required>
+                                    <input type="file" class="form-control flex-fill" id="product" name="product[]" placeholder="">
                                 </div>
-
+                                <span style="color: red; margin-left: 26%;" >{{ $errors->first('product') }}</span>
+                                
+                                
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn px-2 primary-btn" data-toggle="modal" data-target="#notifModal">
                                         Request Return
                                     </button>
                                 </div>
 
-                                <div class="modal fade" id="notifModal" tabindex="-1" role="dialog" aria-labelledby="notifModalTitle" aria-hidden="true">
+                                {{-- <div class="modal fade" id="notifModal" tabindex="-1" role="dialog" aria-labelledby="notifModalTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                         <div class="modal-header">
@@ -94,18 +99,18 @@
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                                         </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 @foreach ($errors->all() as $err)
                     <div style="color: red">{{ $err }}</div>
                 @endforeach
-            @endif
+            @endif --}}
         </div>
         {{-- </div> --}}
     </section>
