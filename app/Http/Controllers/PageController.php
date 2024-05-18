@@ -78,6 +78,7 @@ class PageController extends Controller
             "color" => $retur->sepatu->sepatu_color,
         ];
 
+        
         return view('product-retur-detail', ["sepatu" => $sepatu, "retur" => $retur]);
     }
 
@@ -419,6 +420,8 @@ class PageController extends Controller
 
 
     function viewAdminRetur(){
+        // $namaFilePhotosJson = $retur->retur_foto;
+        // $namaFilePhotos = json_decode($namaFilePhotosJson, true);
         return view('admin.retur.adminretur',['listretur'=>retur::all()]);
     }
 

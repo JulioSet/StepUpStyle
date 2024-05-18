@@ -22,8 +22,9 @@ class ReturController extends Controller
             [
                 "qty"=>"required",
                 "reason"=>"required",
-                "product" => "required",
-                "product.*" => "mimes:png,jpg,jpeg|max:2048",
+                "product*" =>["required", "max:2048", "extensions:jpg,jpeg,png"],
+                "product1*" =>["required", "max:2048", "extensions:jpg,jpeg,png"],
+                "product2*" =>["required", "max:2048", "extensions:jpg,jpeg,png"],
             ];
 
         $messages = [
@@ -35,14 +36,37 @@ class ReturController extends Controller
 
         $req->validate($rules, $messages);
 
-        $namaFolderPhoto = ""; $namaFilePhoto = "";
+        $namaFolderPhoto = "";
+        $namaFilePhotos = []; 
+
         foreach ($req->file("product") as $photo) {
-            $namaFilePhoto  = $dtrans->htrans->htrans_penjualan_id.'-'.$dtrans->dtrans_penjualan_id.".".$photo->getClientOriginalExtension();
+            $namaFilePhoto = $dtrans->htrans->htrans_penjualan_id . '-' . $dtrans->dtrans_penjualan_id . "." . $photo->getClientOriginalExtension();
             $namaFolderPhoto = "retur/";
 
-            $photo->storeAs($namaFolderPhoto,$namaFilePhoto, 'public');
+            $photo->storeAs($namaFolderPhoto, $namaFilePhoto, 'public');
+            $namaFilePhotos[] = $namaFilePhoto; 
         }
 
+        $namaFolderPhoto1 = "";
+        foreach ($req->file("product1") as $photo) {
+            $namaFilePhoto1 = $dtrans->htrans->htrans_penjualan_id . '-' . $dtrans->dtrans_penjualan_id . "." . $photo->getClientOriginalExtension();
+            $namaFolderPhoto1 = "retur/";
+
+            $photo->storeAs($namaFolderPhoto1, $namaFilePhoto1, 'public');
+            $namaFilePhotos[] = $namaFilePhoto1; 
+        }
+
+        $namaFolderPhoto2 = "";
+        foreach ($req->file("product") as $photo) {
+            $namaFilePhoto2 = $dtrans->htrans->htrans_penjualan_id . '-' . $dtrans->dtrans_penjualan_id . "." . $photo->getClientOriginalExtension();
+            $namaFolderPhoto2 = "retur/";
+
+            $photo->storeAs($namaFolderPhoto2, $namaFilePhoto2, 'public');
+            $namaFilePhotos[] = $namaFilePhoto2; 
+        }
+
+        $namaFilePhotosJson = json_encode($namaFilePhotos);
+        
         $dtrans->dtrans_penjualan_retur = 2;
         $dtrans->save();
         $retur = retur::create([
@@ -51,7 +75,7 @@ class ReturController extends Controller
             'fk_sepatu' => $dtrans->detail->sepatu->sepatu_id,
             'retur_reason' => $req->reason,
             'retur_qty' => $req->qty,
-            'retur_foto' => $namaFilePhoto,
+            'retur_foto' => $namaFilePhotosJson,
             'retur_price' => $dtrans->detail->sepatu->sepatu_price * 0.6,
             'retur_status' => 2,
         ]);
@@ -67,7 +91,9 @@ class ReturController extends Controller
     public function detailsRetur($retur_id){
         $retur = retur::find($retur_id);
         $userLoggedIn = Session::get('userLoggedIn');
-        return view('retur-details', compact('retur', 'userLoggedIn'));
+        $namaFilePhotosJson = $retur->retur_foto;
+        $namaFilePhotos = json_decode($namaFilePhotosJson, true);
+        return view('retur-details', compact('retur', 'userLoggedIn','namaFilePhotos'));
     }
 
     public function cancelRetur($retur_id){

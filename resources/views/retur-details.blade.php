@@ -52,7 +52,9 @@
                                             <td>
                                                 <div class="d-flex">
                                                     <div class="col-3">
-                                                        <img class="img-fluid" src="{{ Storage::url("retur/$retur->retur_foto") }}" alt="">
+                                                        <img class="img-fluid p-1" src="{{ Storage::url("retur/$namaFilePhotos[0]") }}" alt="">
+                                                        <img class="img-fluid p-1" src="{{ Storage::url("retur/$namaFilePhotos[1]") }}" alt="">
+                                                        <img class="img-fluid p-1" src="{{ Storage::url("retur/$namaFilePhotos[2]") }}" alt="">
                                                     </div>
                                                     <div class="flex-fill">
                                                         <h5>{{ $retur->dtrans->detail->sepatu->sepatu_name }}</h5>
