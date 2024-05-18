@@ -13,7 +13,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Photo</th>
+                        <th>Photo 1</th>
+                        <th>Photo 2</th>
                         <th>Name</th>
                         <th>From</th>
                         <th>Reason</th>
@@ -23,9 +24,14 @@
                 </thead>
                 <tbody>
                     @foreach ($listretur as $item)
+                    <?php
+                        $namaFilePhotosJson = $item->retur_foto;
+                        $namaFilePhotos = json_decode($namaFilePhotosJson, true);
+                    ?>
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td><img src="{{ Storage::url("retur/$item->retur_foto") }}" alt="" width="100%" ><img src="{{ Storage::url("retur/$item->retur_foto") }}" alt="" width="250px"></td>
+                        <td><img class="img-fluid" src="{{ Storage::url("retur/$namaFilePhotos[0]") }}" alt="" width="100%" ></td>
+                        <td><img class="img-fluid" src="{{ Storage::url("retur/$namaFilePhotos[1]") }}" alt="" width="100%" ></td>
                         <td>{{ $item->sepatu->sepatu_name }}</td>
                         <td>{{ $item->user->user_email }}</td>
                         <td>{{ $item->retur_reason }}</td>

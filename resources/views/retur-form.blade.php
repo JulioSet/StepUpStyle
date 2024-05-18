@@ -57,7 +57,7 @@
                                     <h5 class="pt-2 d-flex mr-1">:</h5>
                                     <div class="product_count m-0 mt-2">
                                         {{-- <input type="number" name="qty" max="{{ $tempRetur['dtrans_penjualan_qty'] }}" min=1 value="{{ $tempRetur['dtrans_penjualan_qty'] }}" title="Quantity:" class="input-text qty"> --}}
-                                        <input type="number" name="qty" value={{ $dtrans->dtrans_penjualan_qty }} class="input-text qty" min="0" max="{{ $dtrans->dtrans_penjualan_qty }}">
+                                        <input type="number" name="qty" value={{ $dtrans->dtrans_penjualan_qty }} class="input-text qty" min="1" max="{{ $dtrans->dtrans_penjualan_qty }}">
                                     </div>
                                 </div>
                                 <span  style="color: red; margin-left: 26%;">{{ $errors->first('qty') }}</span>
@@ -75,7 +75,20 @@
                                     <input type="file" class="form-control flex-fill" id="product" name="product[]" placeholder="">
                                 </div>
                                 <span style="color: red; margin-left: 26%;" >{{ $errors->first('product') }}</span>
-                                
+
+                                <div class="d-flex form-group align-middle mb-1 mt-2">
+                                    <h5 class="pt-2 col-3">Product Picture <span class="text-danger">*</span></h5>
+                                    <h5 class="pt-2 d-flex mr-1">:</h5>
+                                    <input type="file" class="form-control flex-fill" id="product" name="product1[]" placeholder="">
+                                </div>
+                                <span style="color: red; margin-left: 26%;" >{{ $errors->first('product1') }}</span>
+
+                                <div class="d-flex form-group align-middle mb-1 mt-2">
+                                    <h5 class="pt-2 col-3">Product Picture <span class="text-danger">*</span></h5>
+                                    <h5 class="pt-2 d-flex mr-1">:</h5>
+                                    <input type="file" class="form-control flex-fill" id="product" name="product2[]" placeholder="">
+                                </div>
+                                <span style="color: red; margin-left: 26%;" >{{ $errors->first('product2') }}</span>
                                 
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn px-2 primary-btn" data-toggle="modal" data-target="#notifModal">
