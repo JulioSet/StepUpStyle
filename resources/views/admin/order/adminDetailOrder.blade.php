@@ -44,6 +44,7 @@
                         <th>No</th>
                         <th>Nama Sepatu</th>
                         <th>Ukuran</th>
+                        <th>Color</th>
                         <th>Qty</th>
                         <th>Price</th>
                         <th>Subtotal</th>
@@ -53,8 +54,9 @@
                     @foreach ($listdtrans as $item)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$item->sepatu->sepatu_name}}</td>
-                        <td>{{$item->sepatu->ukuran->ukuran_sepatu_nama}}</td>
+                        <td>{{$item->detail->sepatu->sepatu_name}}</td>
+                        <td>{{$item->detail->detail_sepatu_ukuran}}</td>
+                        <td>{{$item->detail->detail_sepatu_warna}}</td>
                         <td>{{$item->dtrans_penjualan_qty}}</td>
                         <td>{{formatCurrencyIDR($item->dtrans_penjualan_price)}}</td>
                         <td>{{formatCurrencyIDR($item->dtrans_penjualan_subtotal)}}</td>
