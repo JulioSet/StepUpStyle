@@ -236,6 +236,20 @@
             return `Rp ${integerPart}${decimalPart}`;
         }
 
+        // INITIALIZE CHECKED RADIO BUTTON
+        function initializeService() {
+            const radioButtons = document.querySelectorAll('input[type="radio"][name="radioOption"]');
+            radioButtons[0].checked = true; // Select the second radio button
+
+            var data = JSON.parse(localStorage.getItem("list-cost"));
+            etd.innerHTML = data[0]['cost'][0]['etd'] + ' DAY';
+            price.innerHTML = formatCurrencyIDR(data[0]['cost'][0]['value']);
+
+            const descriptionInput = document.getElementById("shipping-description");
+            descriptionInput.value = data[0]['description'];
+            const costInput = document.getElementById("shipping-price");
+            costInput.value = data[0]['cost'][0]['value'];
+        }
 
         // CALCULATE COST
         $('#calculate').on('click', function() {
@@ -271,6 +285,7 @@
                         var setLabel = document.getElementById('label' + key);
                         setLabel.setAttribute('for', 'radio' + key);
                     });
+                    initializeService();
                 }
             });
         });

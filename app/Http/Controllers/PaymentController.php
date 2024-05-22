@@ -194,6 +194,7 @@ class PaymentController extends Controller
         Cookie::queue('shipping-description', json_encode($req->input('shipping-description')), 1209600);
         Cookie::queue('shipping-price', json_encode($req->input('shipping-price')), 1209600);
 
+
         $cart = json_decode(Cookie::get('cartSepatu'), true); //cookie 14 hari
         $user = Session::get('userLoggedIn');
         $htrans_penjualan_id = rand(10000,99999);
@@ -243,6 +244,7 @@ class PaymentController extends Controller
                 $totalProducts += $subtotal;
             }
         }
+        $totalProducts += $req->input('shipping-price');
 
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
         \Midtrans\Config::$isProduction = false;
