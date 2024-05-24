@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2024 at 08:37 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: May 24, 2024 at 08:31 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,26 +41,7 @@ CREATE TABLE `detail_sepatu` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `detail_sepatu`
---
-
-INSERT INTO `detail_sepatu` (`detail_sepatu_id`, `fk_sepatu`, `detail_sepatu_pict`, `detail_sepatu_warna`, `detail_sepatu_stok`, `detail_sepatu_ukuran`, `detail_sepatu_harga`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 5, '1711443242.png', 'Hitam', 20, 38, 799000, '2024-03-26 01:54:02', '2024-03-26 01:54:02', NULL),
-(2, 5, '1711443260.png', 'Hitam', 20, 39, 899000, '2024-03-26 01:54:20', '2024-03-26 01:54:20', NULL),
-(3, 5, '1711443284.png', 'Putih', 20, 40, 999000, '2024-03-26 01:54:44', '2024-03-26 01:54:44', NULL),
-(4, 4, '1711443319.png', 'Hitam', 20, 38, 799000, '2024-03-26 01:55:19', '2024-03-26 01:55:19', NULL),
-(5, 4, '1711443343.png', 'Hitam', 20, 39, 899000, '2024-03-26 01:55:43', '2024-03-26 01:55:43', NULL),
-(6, 4, '1711443373.png', 'Putih', 20, 40, 999000, '2024-03-26 01:56:13', '2024-03-26 01:56:13', NULL),
-(7, 3, '1711443403.png', 'Putih', 20, 38, 799000, '2024-03-26 01:56:43', '2024-03-26 01:56:43', NULL),
-(8, 3, '1711443417.png', 'Putih', 20, 39, 899000, '2024-03-26 01:56:57', '2024-03-26 01:56:57', NULL),
-(9, 3, '1711443439.png', 'Hitam', 20, 40, 999000, '2024-03-26 01:57:19', '2024-03-26 01:57:19', NULL),
-(10, 2, '1711443482.png', 'Putih', 17, 38, 799000, '2024-03-26 01:58:02', '2024-04-28 08:46:15', NULL),
-(11, 2, '1711443505.png', 'Putih', 20, 39, 899000, '2024-03-26 01:58:25', '2024-03-26 01:58:25', NULL),
-(12, 1, '1711443526.png', 'Hitam', 20, 38, 799000, '2024-03-26 01:58:46', '2024-03-26 01:58:46', NULL),
-(13, 1, '1711443540.png', 'Hitam', 20, 39, 899000, '2024-03-26 01:59:00', '2024-03-26 01:59:00', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -77,7 +58,7 @@ CREATE TABLE `dtrans_penjualan` (
   `dtrans_penjualan_price` int(11) NOT NULL,
   `dtrans_penjualan_subtotal` int(11) NOT NULL,
   `dtrans_penjualan_retur` text DEFAULT NULL COMMENT '0: ditolak, 1: diterima, 2:pending '
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -94,7 +75,7 @@ CREATE TABLE `htrans_penjualan` (
   `snap_token` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -109,15 +90,7 @@ CREATE TABLE `kategori` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `kategori`
---
-
-INSERT INTO `kategori` (`kategori_id`, `kategori_nama`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Sport', '2024-03-26 01:43:04', '2024-03-26 01:43:04', NULL),
-(2, 'Casual', '2024-03-26 01:49:54', '2024-03-26 01:49:54', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -127,19 +100,13 @@ INSERT INTO `kategori` (`kategori_id`, `kategori_nama`, `created_at`, `updated_a
 
 DROP TABLE IF EXISTS `notifikasi`;
 CREATE TABLE `notifikasi` (
-  `notification_id` int(11) NOT NULL,
+  `notifikasi_id` int(11) NOT NULL,
+  `notifikasi_type` int(11) NOT NULL COMMENT '1 = order | 2 = retur',
   `notifikasi_content` text NOT NULL,
+  `notifikasi_status` int(11) NOT NULL DEFAULT 0 COMMENT '0 = unread | 1 = read',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `notifikasi`
---
-
-INSERT INTO `notifikasi` (`notification_id`, `notifikasi_content`, `created_at`, `updated_at`) VALUES
-(1, 'Ada pesanan baru dari bernadette.g21@mhs.istts.ac.id', '2024-04-28 08:47:59', '2024-04-28 08:47:59'),
-(2, 'Ada pesanan baru dari bernadette.g21@mhs.istts.ac.id', '2024-04-28 08:55:50', '2024-04-28 08:55:50');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -160,7 +127,7 @@ CREATE TABLE `retur` (
   `retur_status` int(11) NOT NULL DEFAULT 2 COMMENT '0: ditolak| 1: diterima | 2: pending | 9:cancel |10:terjual',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -178,18 +145,7 @@ CREATE TABLE `sepatu` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sepatu`
---
-
-INSERT INTO `sepatu` (`sepatu_id`, `sepatu_supplier_id`, `sepatu_kategori_id`, `sepatu_subkategori_id`, `sepatu_name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 2, 'ADIZERO UBERSONIC 4', '2024-03-26 01:52:27', '2024-03-26 01:52:27', NULL),
-(2, 1, 1, 1, 'Adione Ubers 01', '2024-03-26 01:52:40', '2024-03-26 01:52:40', NULL),
-(3, 1, 1, 3, 'Superstar Sneakers', '2024-03-26 01:52:56', '2024-03-26 01:52:56', NULL),
-(4, 1, 2, 4, 'Adimone Manio 22', '2024-03-26 01:53:07', '2024-03-26 01:53:07', NULL),
-(5, 1, 2, 5, 'Campus 00s', '2024-03-26 01:53:19', '2024-03-26 01:53:19', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -205,18 +161,7 @@ CREATE TABLE `subkategori` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `subkategori`
---
-
-INSERT INTO `subkategori` (`subkategori_id`, `fk_kategori`, `subkategori_nama`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'Sneaker', '2024-03-26 01:49:35', '2024-03-26 01:49:35', NULL),
-(2, 1, 'Runner', '2024-03-26 01:49:41', '2024-03-26 01:49:41', NULL),
-(3, 1, 'Walker', '2024-03-26 01:49:46', '2024-03-26 01:49:46', NULL),
-(4, 2, 'Coachie', '2024-03-26 01:50:04', '2024-03-26 01:50:04', NULL),
-(5, 2, 'Loafers', '2024-03-26 01:50:43', '2024-03-26 01:50:43', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -234,14 +179,7 @@ CREATE TABLE `supplier` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `supplier`
---
-
-INSERT INTO `supplier` (`supplier_id`, `supplier_name`, `supplier_contact`, `supplier_office`, `supplier_logo`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Adidas', '089762146899', 'Jl Mawar No. 27, Jakarta', '1711442539.png', '2024-03-26 01:42:19', '2024-03-26 01:42:19', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -262,7 +200,7 @@ CREATE TABLE `user` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
@@ -286,14 +224,7 @@ CREATE TABLE `wishlist` (
   `wishlist_id` int(11) NOT NULL,
   `fk_customer` int(11) NOT NULL,
   `fk_sepatu` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `wishlist`
---
-
-INSERT INTO `wishlist` (`wishlist_id`, `fk_customer`, `fk_sepatu`) VALUES
-(2, 4, 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -330,7 +261,7 @@ ALTER TABLE `kategori`
 -- Indexes for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  ADD PRIMARY KEY (`notification_id`);
+  ADD PRIMARY KEY (`notifikasi_id`);
 
 --
 -- Indexes for table `retur`
@@ -376,7 +307,7 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `detail_sepatu`
 --
 ALTER TABLE `detail_sepatu`
-  MODIFY `detail_sepatu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `detail_sepatu_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `dtrans_penjualan`
@@ -388,13 +319,13 @@ ALTER TABLE `dtrans_penjualan`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `kategori_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `kategori_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `notifikasi_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `retur`
@@ -406,19 +337,19 @@ ALTER TABLE `retur`
 -- AUTO_INCREMENT for table `sepatu`
 --
 ALTER TABLE `sepatu`
-  MODIFY `sepatu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `sepatu_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `subkategori`
 --
 ALTER TABLE `subkategori`
-  MODIFY `subkategori_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `subkategori_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -430,7 +361,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
