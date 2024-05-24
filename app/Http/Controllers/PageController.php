@@ -78,7 +78,7 @@ class PageController extends Controller
             "color" => $retur->sepatu->sepatu_color,
         ];
 
-        
+
         return view('product-retur-detail', ["sepatu" => $sepatu, "retur" => $retur]);
     }
 
@@ -320,14 +320,30 @@ class PageController extends Controller
     public function viewAdminNotif()
     {
         $list = notifikasi::all()->sortByDesc("created_at");
-        $modified = array();
+        $listnotif_order = array();
+        $listnotif_retur = array();
         foreach ($list as $notif) {
-            $modified[] = [
-                'content' => $notif->notifikasi_content,
-                'diff' => Carbon::parse($notif->created_at)->diffForHumans()
-            ];
+            if ($notif->notifikasi_status == 0) {
+                if ($notif->notifikasi_type == 1) {
+                    $listnotif_order[] = [
+                        'id' => $notif->notifikasi_id,
+                        'content' => $notif->notifikasi_content,
+                        'diff' => Carbon::parse($notif->created_at)->diffForHumans()
+                    ];
+                } else {
+                    $listnotif_retur[] = [
+                        'id' => $notif->notifikasi_id,
+                        'content' => $notif->notifikasi_content,
+                        'diff' => Carbon::parse($notif->created_at)->diffForHumans()
+                    ];
+                }
+            }
         }
-        return view('admin.notifikasi.adminnotif', ['listnotif'=>$modified]);
+
+        $unread_order = count($listnotif_order);
+        $unread_retur = count($listnotif_retur);
+
+        return view('admin.notifikasi.adminnotif', compact('listnotif_order', 'listnotif_retur', 'unread_order', 'unread_retur'));
     }
 
 

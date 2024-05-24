@@ -37,14 +37,14 @@ class ReturController extends Controller
         $req->validate($rules, $messages);
 
         $namaFolderPhoto = "";
-        $namaFilePhotos = []; 
+        $namaFilePhotos = [];
 
         foreach ($req->file("product") as $photo) {
             $namaFilePhoto = $dtrans->htrans->htrans_penjualan_id . '-' . $dtrans->dtrans_penjualan_id . "." . $photo->getClientOriginalExtension();
             $namaFolderPhoto = "retur/";
 
             $photo->storeAs($namaFolderPhoto, $namaFilePhoto, 'public');
-            $namaFilePhotos[] = $namaFilePhoto; 
+            $namaFilePhotos[] = $namaFilePhoto;
         }
 
         $namaFolderPhoto1 = "";
@@ -53,7 +53,7 @@ class ReturController extends Controller
             $namaFolderPhoto1 = "retur/";
 
             $photo->storeAs($namaFolderPhoto1, $namaFilePhoto1, 'public');
-            $namaFilePhotos[] = $namaFilePhoto1; 
+            $namaFilePhotos[] = $namaFilePhoto1;
         }
 
         $namaFolderPhoto2 = "";
@@ -62,11 +62,11 @@ class ReturController extends Controller
             $namaFolderPhoto2 = "retur/";
 
             $photo->storeAs($namaFolderPhoto2, $namaFilePhoto2, 'public');
-            $namaFilePhotos[] = $namaFilePhoto2; 
+            $namaFilePhotos[] = $namaFilePhoto2;
         }
 
         $namaFilePhotosJson = json_encode($namaFilePhotos);
-        
+
         $dtrans->dtrans_penjualan_retur = 2;
         $dtrans->save();
         $retur = retur::create([
@@ -81,6 +81,7 @@ class ReturController extends Controller
         ]);
 
         $notif = new notifikasi();
+        $notif->notifikasi_type = 2;
         $notif->notifikasi_content = "Ada retur dari ".$retur->user->user_email;
         $notif->save();
 

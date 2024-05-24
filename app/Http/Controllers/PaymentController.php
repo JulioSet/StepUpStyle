@@ -297,6 +297,7 @@ class PaymentController extends Controller
         $transaction->save();
 
         $notif = new notifikasi();
+        $notif->notifikasi_type = 1;
         $notif->notifikasi_content = "Ada pesanan baru dari ".$transaction->customer->user_email;
         $notif->save();
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DetailSepatu;
 use App\Models\htrans;
 use App\Models\kategori;
+use App\Models\notifikasi;
 use App\Models\retur;
 use App\Models\sepatu;
 use App\Models\SubKategori;
@@ -17,6 +18,25 @@ use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //                                                           NOTIFIKASI
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public function clearAllNotification() {
+        $notifications = notifikasi::all();
+        foreach ($notifications as $notification) {
+            $notification->notifikasi_status = 1;
+            $notification->save();
+        }
+        return redirect()->back();
+    }
+
+    public function clearNotification($id) {
+        $notification = notifikasi::find($id);
+        $notification->notifikasi_status = 1;
+        $notification->save();
+        return redirect()->back();
+    }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //                                                           USER

@@ -80,6 +80,8 @@ Route::middleware(['authadmin'])->group(function () {
 
         // NOTIFIKASI
         Route::get('/', [PageController::class, 'viewAdminNotif']);
+        Route::get('/clear', [AdminController::class, 'clearAllNotification']);
+        Route::get('/clear/{id}', [AdminController::class, 'clearNotification']);
 
         Route::prefix('ukuran')->group(function () {
             // UKURAN
