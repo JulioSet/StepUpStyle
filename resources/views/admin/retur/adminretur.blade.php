@@ -13,8 +13,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Photo 1</th>
-                        <th>Photo 2</th>
+                        <th>Foto</th>
                         <th>Name</th>
                         <th>From</th>
                         <th>Reason</th>
@@ -30,8 +29,9 @@
                     ?>
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td><img class="img-fluid" src="{{ Storage::url("retur/$namaFilePhotos[0]") }}" alt="" width="100%" ></td>
-                        <td><img class="img-fluid" src="{{ Storage::url("retur/$namaFilePhotos[1]") }}" alt="" width="100%" ></td>
+                        <td>@foreach ($namaFilePhotos as $items)
+                        <img class="p-2" src="{{ Storage::url("retur/$items") }}" alt="" width="40%" height="40%" >
+                        @endforeach</td>
                         <td>{{ $item->sepatu->sepatu_name }}</td>
                         <td>{{ $item->user->user_email }}</td>
                         <td>{{ $item->retur_reason }}</td>
