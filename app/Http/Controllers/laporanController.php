@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\chartPenjualan;
 use App\Http\Controllers\Controller;
 use App\Models\htrans;
 use App\Models\retur;
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
 
 class laporanController extends Controller
 {
-    function filterLaporanPenjualan(Request $request){
+    function filterLaporanPenjualan(Request $request , chartPenjualan $chart){
         $rules = [
             'startdate' => 'required|date',
             'enddate' => 'required|date|after_or_equal:startdate',
@@ -29,7 +30,7 @@ class laporanController extends Controller
                     ->where('htrans_penjualan_status', 2)
                     ->get();
 
-        return view('owner.Laporan.laporanpenjualan',['listhtrans'=>$cektanggal]);
+        return view('owner.Laporan.laporanpenjualan',['listhtrans'=>$cektanggal,'chart' =>$chart->build($start, $end)]);
     }
 
     function filterLaporanRetur(Request $request){

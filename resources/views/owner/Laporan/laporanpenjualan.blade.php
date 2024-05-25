@@ -3,7 +3,8 @@
 <div class="col-md-12 mt-2">
 
     <div class="card container-fluid">
-
+        
+        
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Laporan Penjualan</h3>
@@ -27,6 +28,16 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
+
+            <div class="container card-body px-4 mx-auto">
+                <div class="p-6 m-20 bg-white rounded shadow">
+                    <div class="card-body">
+                    {!! $chart->container() !!}
+                    </div>
+                </div>
+            
+            </div>
+    
             <table id="myTable" class="table table-bordered">
                 <thead>
                     <tr >
@@ -71,4 +82,7 @@
         </div>
     </div>
 </div>
+<script src="{{ $chart->cdn() }}"></script>
+
+    {{ $chart->script() }}
 @endsection

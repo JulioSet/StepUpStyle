@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\chartPenjualan;
 use App\Models\DetailSepatu;
 use App\Models\dtrans;
 use App\Models\htrans;
@@ -457,11 +458,11 @@ class PageController extends Controller
     // OWNER
 
     function viewMasterAdmin(){
-        return view('owner.ownerAdmin', ['listadmin' => user::where('user_role', 'admin')->get()]);
+        return view('owner.ownerAdmin', ['listadmin' => user::where('user_role', 'owner')->get()]);
     }
 
-    function viewLaporanPenjualan(){
-        return view('owner.laporan.laporanpenjualan',['listhtrans' => htrans::where('htrans_penjualan_status', 2)->get()]);
+    function viewLaporanPenjualan(chartPenjualan $chart){
+        return view('owner.laporan.laporanpenjualan',['listhtrans' => htrans::where('htrans_penjualan_status', 2)->get(),'chart' => $chart->build()]);
     }
     function viewDetailLaporanPenjualan(Request $request){
         return view('owner.laporan.detailLaporanPenjualan',[
@@ -477,6 +478,6 @@ class PageController extends Controller
 
 
     function viewLaporanProduct(){
-        return view('owner.Laporan.laporanProduct',['listproduct'=>sepatu::orderBy('sepatu_stock')->get()]);
+        return view('owner.Laporan.laporanProduct',['listproduct'=> Sepatu::all()]);
     }
 }

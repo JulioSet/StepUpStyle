@@ -25,7 +25,7 @@
                         <td>{{$loop->iteration}}</td>
                         <td>{{$item->sepatu_name}}</td>
                         <td>{{$item->sepatu_color}}</td>
-                        <td>{{$item->ukuran->ukuran_sepatu_nama}}</td>
+                        <td>{{$item->detail->detail_sepatu_stok}}</td>
                         <td>{{$item->sepatu_stock}}</td>
                     @endforeach
                 </tbody>
