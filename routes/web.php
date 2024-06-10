@@ -225,9 +225,9 @@ Route::middleware(['authuser'])->group(function () {
         Route::get('/success/{transaction}', [PaymentController::class, 'success'])->name("checkout-success");
         Route::get('/cancel/{transaction}', [PaymentController::class, 'cancel'])->name("checkout-cancel");
         Route::get('/details/{transaction}', [PaymentController::class, 'details'])->name("checkout-details");
+        Route::get('/received/{transaction}', [PaymentController::class, 'received'])->name("order-received");
 
         Route::get('/retur/{retur_id}', [PaymentController::class, 'directProcess2'])->name("checkout-product-retur");
-
     });
 
     Route::prefix('retur')->group(function () {

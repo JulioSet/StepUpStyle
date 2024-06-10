@@ -112,8 +112,8 @@
 								Stock : {{ $sepatu['stock'] }}
 							</p>
 							<div class="card_area d-flex align-items-center">
-								<button type="submit" name="cart" class="icon_btn"><i class="ti-bag"></i></button>
-								<button type="submit" name="checkout" class="primary-btn"><i class="ti-money"></i>Checkout</button>
+								<button type="submit" name="cart" class="icon_btn border-0"><i class="ti-bag"></i></button>
+								<button type="submit" name="checkout" class="primary-btn border-0"><i class="ti-money"></i>Checkout</button>
 							</div>
 						</div>
 					</div>

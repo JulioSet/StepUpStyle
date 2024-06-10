@@ -243,13 +243,23 @@ class PageController extends Controller
             // return redirect('cart/add/{}');
         }
         else if($req->has('checkout')){
-            return redirect()->route('checkout-product', [
+            $tempCart = json_decode(Cookie::get('cartSepatu'), true);
+            Cookie::queue('tempCart', json_encode($tempCart));
+            $cart = [];
+            Cookie::queue('cartSepatu', json_encode($cart), 1209600);
+
+            return redirect()->route('add-to-cart', [
                 "id" => $req->input('sepatu_id'),
                 "size" =>  $req->input('size'),
                 "color" =>  $req->input('color'),
                 "qty" =>  $req->input('qty')
             ]);
-            // return redirect('checkout', $req->input('sepatu-id'));
+            // return redirect()->route('add-to-cart', [
+            //     "id" => $req->input('sepatu_id'),
+            //     "size" =>  $req->input('size'),
+            //     "color" =>  $req->input('color'),
+            //     "qty" =>  $req->input('qty')
+            // ]);
         }
     }
 
