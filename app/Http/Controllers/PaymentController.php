@@ -146,30 +146,30 @@ class PaymentController extends Controller
     }
 
     // ================= DIRECT CHECKOUT (DARI HALAMAN DETAIL PRODUCT) =================
-    public function directProcess($sepatu_id, $detail_size, $detail_color, $qty)
-    {
-        $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
+    // public function directProcess($sepatu_id, $detail_size, $detail_color, $qty)
+    // {
+    //     $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
 
-        if ($cartSepatu!=null) {
-            $cartSepatu = [];
-            Cookie::queue('cartSepatu', json_encode($cartSepatu), 1209600);
-        }
+    //     if ($cartSepatu!=null) {
+    //         $cartSepatu = [];
+    //         Cookie::queue('cartSepatu', json_encode($cartSepatu), 1209600);
+    //     }
 
-        $detail_id = DetailSepatu::where('fk_sepatu','=',$sepatu_id)
-            ->where('detail_sepatu_ukuran','=',$detail_size)
-            ->where('detail_sepatu_warna','=',$detail_color)
-            ->value('detail_sepatu_id');
+    //     $detail_id = DetailSepatu::where('fk_sepatu','=',$sepatu_id)
+    //         ->where('detail_sepatu_ukuran','=',$detail_size)
+    //         ->where('detail_sepatu_warna','=',$detail_color)
+    //         ->value('detail_sepatu_id');
 
-        $sepatu = [
-            "detail_id" => $detail_id,
-            "qty" => $qty
-        ];
+    //     $sepatu = [
+    //         "detail_id" => $detail_id,
+    //         "qty" => $qty
+    //     ];
 
-        array_push($cartSepatu, $sepatu);
+    //     array_push($cartSepatu, $sepatu);
 
-        Cookie::queue('cartSepatu', json_encode($cartSepatu));
-        return $this->process($cartSepatu);
-    }
+    //     Cookie::queue('cartSepatu', json_encode($cartSepatu));
+    //     return $this->process($cartSepatu);
+    // }
 
     public function checkout(htrans $transaction, $product=null)
     {
@@ -177,7 +177,16 @@ class PaymentController extends Controller
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
         $shipping_description = json_decode(Cookie::get('shipping-description'), true) ?? "Service";
         $shipping_price = json_decode(Cookie::get('shipping-price'), true) ?? 0;
-        $cart = [];
+        
+        $cart = json_decode(Cookie::get('tempCart'), true);
+        if ($cart != null){
+            $temp = [];
+            Cookie::queue('tempCart', json_encode($temp), 1209600);
+        }
+        else{
+            $cart = [];
+        }
+
         Cookie::queue('cartSepatu', json_encode($cart), 1209600);
         if ($product != null) {
             $cartSepatu = $product;
@@ -305,6 +314,13 @@ class PaymentController extends Controller
     }
 
     public function details(htrans $transaction){
+        return view('checkout-confirmation',  compact('transaction'));
+    }
+
+    public function received(htrans $transaction){
+        $transaction->htrans_penjualan_status = 3;
+        $transaction->save();
+        
         return view('checkout-confirmation',  compact('transaction'));
     }
 

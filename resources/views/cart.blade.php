@@ -99,7 +99,12 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="login_form_inner ">
-                                                    <h3>Shipping</h3>
+                                                    <h3 class="mb-2">Shipping</h3>
+                                                    <p class="col-md-12 px-3 mb-4">
+                                                        Produk akan dikirim dari: <br>
+                                                        Jl. Basuki Rahmat No.8-12, Kedungdoro, Tegalsari,<br>
+                                                        Surabaya, East Java 60261
+                                                    </p>
                                                     <div class="col-md-12 form-group">
                                                         <input type="text" class="form-control" id="address" name="address" autocomplete="off" placeholder="Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'">
                                                     </div>

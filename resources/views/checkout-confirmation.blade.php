@@ -37,9 +37,12 @@
                     </button>
                 </div>
             @elseif ($transaction->htrans_penjualan_status == 2)
-			    <h2 class="title_confirmation text-info">Thank you. Your order has been processed and ready to be picked up at our store</h2>
+			<div class="d-flex justify-content-center">
+			    <h2 class="title_confirmation text-info w-75 mb-1">Thank you for your order! It’s been processed and is now on its way to you. Let us know that your order has been delivered.</h2>
+			</div>
+			<a href="{{ route('order-received', $transaction->htrans_penjualan_id) }}" class="genric-btn radius info info py-2 small m-5 ">Order Received</a>
             @elseif ($transaction->htrans_penjualan_status == 3)
-			    <h2 class="title_confirmation">Your order has been picked up.</h2>
+			    <h2 class="title_confirmation">Your order has been successfully delivered. Thank you for your purchase!</h2>
             @endif
 			<div class="row order_d_inner">
 				<div class="col-lg-6">
