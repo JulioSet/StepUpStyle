@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2024 at 09:08 PM
+-- Generation Time: Jun 11, 2024 at 09:50 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -74,7 +74,8 @@ CREATE TABLE `htrans_penjualan` (
   `htrans_penjualan_status` int(11) NOT NULL DEFAULT 1 COMMENT '0: cancel | 1: belum dibayar | 2: sudah dibayar | 3: sudah dipickup',
   `snap_token` varchar(255) DEFAULT NULL,
   `service` text NOT NULL,
-  `etd` int(11) NOT NULL,
+  `service_price` int(11) NOT NULL,
+  `etd` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

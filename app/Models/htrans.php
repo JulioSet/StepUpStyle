@@ -15,7 +15,10 @@ class htrans extends Model
         'fk_customer',
         'htrans_penjualan_total',
         'htrans_penjualan_status',
-        'snap_token'
+        'snap_token',
+        'service',
+        'service_price',
+        'etd'
     ];
     // public $incrementing = true;
     public $timestamps = true;
@@ -30,5 +33,5 @@ class htrans extends Model
         return $this->belongsTo(user::class, 'fk_customer', 'user_id');
     }
 
-    
+
 }
