@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2024 at 08:31 PM
+-- Generation Time: Jun 11, 2024 at 09:02 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -73,6 +73,8 @@ CREATE TABLE `htrans_penjualan` (
   `htrans_penjualan_total` int(11) DEFAULT NULL,
   `htrans_penjualan_status` int(11) NOT NULL DEFAULT 1 COMMENT '0: cancel | 1: belum dibayar | 2: sudah dibayar | 3: sudah dipickup',
   `snap_token` varchar(255) DEFAULT NULL,
+  `service` text NOT NULL,
+  `eta` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -211,7 +213,8 @@ INSERT INTO `user` (`user_id`, `user_name`, `user_email`, `user_password`, `user
 (2, 'admin', 'admin', '$2y$10$yF7fa/7DNeu2YWa.Izbd7ek7JBFuYeNsgP7rtBFlsMVTXNcV1c2M2', NULL, 'admin', 1, 'admin', '2024-03-26 01:41:19', '2024-03-26 01:41:19', NULL),
 (3, 'users', 'user@gmail.com', '$2y$10$QmzfX0jA01dHzlVziv2puu9HKexZ1rF9hMMrnHpREP7U8UiibLqJG', '1713948627.png', 'customer', 1, '$2y$10$5SrXG.osy5oBb44gjJB6gOgUHVH5jCiUqvdxWo.OuATWJhdrGGOli', NULL, '2024-04-24 01:50:27', NULL),
 (4, 'abe', 'bernadette.g21@mhs.istts.ac.id', '$2y$10$f7.drZPWG5uMBYFH/FSctuhqE7sltRgoSpFcLjmOQl1DrGbtpp98a', 'basic_profile_picture.jpg', 'customer', 1, '$2y$10$eVsH9psowUIfOKJ1WcY2LuuygTP.JVl593QVyPV9FDiNimPFiHzC2', NULL, '2024-04-01 00:38:47', NULL),
-(5, 'tes', 'tes@gmail.com', 'test', '1713948472.png', 'customer', 0, 'special', '2024-04-24 01:47:52', '2024-04-24 01:47:52', NULL);
+(5, 'tes', 'tes@gmail.com', 'test', '1713948472.png', 'customer', 0, 'special', '2024-04-24 01:47:52', '2024-04-24 01:47:52', NULL),
+(8, 'a', 'juliotiono94@gmail.com', '$2y$10$O0n3mecJ/4p8eSqQ10R.Ce2Ll2NCGL.v9wGMPMmszLrZmgjCBTILq', 'basic_profile_picture.jpg', 'customer', 1, '$2y$10$UlPXNH8yZuN6n1sYbAJlwOileth.y46ntOJ9blwMHp9nU6IBdS7la', NULL, '2024-06-11 11:55:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -355,7 +358,7 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
