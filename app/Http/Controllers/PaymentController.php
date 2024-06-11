@@ -177,7 +177,7 @@ class PaymentController extends Controller
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true) ?? [];
         $shipping_description = json_decode(Cookie::get('shipping-description'), true) ?? "Service";
         $shipping_price = json_decode(Cookie::get('shipping-price'), true) ?? 0;
-        
+
         $cart = json_decode(Cookie::get('tempCart'), true);
         if ($cart != null){
             $temp = [];
@@ -203,7 +203,6 @@ class PaymentController extends Controller
         Cookie::queue('shipping-description', json_encode($req->input('shipping-description')), 1209600);
         Cookie::queue('shipping-price', json_encode($req->input('shipping-price')), 1209600);
 
-
         $cart = json_decode(Cookie::get('cartSepatu'), true); //cookie 14 hari
         $user = Session::get('userLoggedIn');
         $htrans_penjualan_id = rand(10000,99999);
@@ -221,6 +220,9 @@ class PaymentController extends Controller
             'htrans_penjualan_id' => $htrans_penjualan_id,
             'fk_customer' => $user['id'],
             'htrans_penjualan_status' => 1,
+            'service' => $req->input('shipping-description'),
+            'service_price' => $req->input('shipping-price'),
+            'etd' => $req->input('shipping-etd')
         ]);
 
         foreach ($cart as $c) {
@@ -320,7 +322,7 @@ class PaymentController extends Controller
     public function received(htrans $transaction){
         $transaction->htrans_penjualan_status = 3;
         $transaction->save();
-        
+
         return view('checkout-confirmation',  compact('transaction'));
     }
 

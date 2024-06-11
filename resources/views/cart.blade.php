@@ -144,6 +144,7 @@
                                             <a class="gray_btn" style="padding: 0px 13px" href="/products">Continue Shopping</a>
                                             <input type="hidden" id="shipping-description" name="shipping-description" value="service">
                                             <input type="hidden" id="shipping-price" name="shipping-price" value="0">
+                                            <input type="hidden" id="shipping-etd" name="shipping-etd" value="etd">
                                             @if ($cartSepatu != NULL)
                                                 <button class="btn primary-btn">Checkout</button>
                                             @else
@@ -254,6 +255,8 @@
             descriptionInput.value = data[0]['description'];
             const costInput = document.getElementById("shipping-price");
             costInput.value = data[0]['cost'][0]['value'];
+            const etdInput = document.getElementById("shipping-etd");
+            etdInput.value = data[0]['cost'][0]['etd'];
         }
 
         // CALCULATE COST
@@ -312,6 +315,8 @@
                 descriptionInput.value = data[selectedRadio.value]['description'];
                 const costInput = document.getElementById("shipping-price");
                 costInput.value = data[selectedRadio.value]['cost'][0]['value'];
+                const etdInput = document.getElementById("shipping-etd");
+                etdInput.value = data[selectedRadio.value]['cost'][0]['etd'];
             }
         });
     </script>

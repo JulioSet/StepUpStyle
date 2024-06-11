@@ -15,6 +15,8 @@
                         <th>Order ID</th>
                         <th>Email</th>
                         <th>Subtotal</th>
+                        <th>Service</th>
+                        <th>ETD</th>
                         <th>Date</th>
                         <th>Action</th>
                     </tr>
@@ -26,6 +28,8 @@
                         <td>{{$item->htrans_penjualan_id}}</td>
                         <td>{{$item->customer->user_email}}</td>
                         <td>{{ formatCurrencyIDR($item->htrans_penjualan_total)}}</td>
+                        <td>{{$item->service}}</td>
+                        <td>{{$item->etd}} Day</td>
                         <td>{{$item->created_at->format('d M Y')}}</td>
                         <td>
                             <div class="d-flex">

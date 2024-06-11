@@ -45,7 +45,7 @@
 			    <h2 class="title_confirmation">Your order has been successfully delivered. Thank you for your purchase!</h2>
             @endif
 			<div class="row order_d_inner">
-				<div class="col-lg-6">
+				<div class="col-lg-4">
 					<div class="details_item">
 						<h4>Order Info</h4>
 						<ul class="list">
@@ -56,7 +56,18 @@
 						</ul>
 					</div>
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-4">
+					<div class="details_item">
+						<h4>Shipping</h4>
+						<ul class="list">
+							<li><a href="#"><span>Service</span> : {{ $transaction->service}}</a></li>
+							<li><a href="#"><span>ETD</span> : {{ $transaction->etd }} Day</a></li>
+							<li><a href="#"><span>Price</span> : {{ formatCurrencyIDR($transaction->service_price) }}</a></li>
+							{{-- <li><a href="#"><span>Payment method</span> : Check payments</a></li> --}}
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4">
 					<div class="details_item">
 						<h4>Customer Info</h4>
 						<ul class="list">
@@ -80,6 +91,7 @@
 						<tbody>
 							@php
 								$listProducts = $transaction->dtrans()->get();
+                                $subtotalProducts = 0;
 							@endphp
 
 							@foreach ($listProducts as $dtrans)
@@ -129,10 +141,13 @@
 											{{-- </div> --}}
 									</td>
 									<td class="align-middle">
-											<h5 class="text-center">{{ $dtrans->dtrans_penjualan_qty }}</h5>
+                                        <h5 class="text-center">{{ $dtrans->dtrans_penjualan_qty }}</h5>
 									</td>
 									<td class="align-middle">
-											<h5> {{ formatCurrencyIDR( $dtrans->dtrans_penjualan_subtotal) }} </h5>
+                                        <h5> {{ formatCurrencyIDR( $dtrans->dtrans_penjualan_subtotal) }} </h5>
+                                        @php
+                                            $subtotalProducts += $dtrans->dtrans_penjualan_subtotal;
+                                        @endphp
 									</td>
 								</tr>
 							@endforeach
@@ -142,7 +157,7 @@
 									<h2 class="text-right">TOTAL</h2>
 								</td>
 								<td class="align-middle">
-									<h2>{{ formatCurrencyIDR($transaction->htrans_penjualan_total) }}</h2>
+									<h2>{{ formatCurrencyIDR($subtotalProducts) }}</h2>
 								</td>
 							</tr>
 							{{-- <tr>
