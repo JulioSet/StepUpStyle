@@ -27,7 +27,7 @@
                 <a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
                 <div class="col-lg-4 col-md-6">
                     <div class="single-product" style="width: max-content">
-                        <img class="img-fluid" src="{{ Storage::url("photo/$gambar") }}" alt="">
+                    <img class="img-fluid" src="{{ Storage::url("photo/$gambar") }}" alt="" >
                         <div class="product-details">
                             <h6>{{ $sepatu->sepatu_name }}</h6>
                             <div class="price">
@@ -83,6 +83,7 @@
                 </a>
             
         @empty
+            <div style="height: 15vh;"></div>
             <h1 style="margin:auto">No Products Yet</h1>
         @endforelse
     </div>

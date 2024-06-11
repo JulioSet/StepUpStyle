@@ -137,15 +137,18 @@ class PageController extends Controller
         //select DB
         $page = "Best Seller";
 
-        // $bestSeller = dtrans::select('fk_sepatu')
-        // ->groupBy('fk_sepatu')
-        // ->orderByRaw('COUNT(*) DESC')
+        // $listSepatu = DB::table('sepatu')
+        // ->join('dtrans_penjualan', 'sepatu.sepatu_id', '=', 'dtrans_penjualan.fk_detail_sepatu')
+        // ->select('sepatu.sepatu_id','sepatu.sepatu_name', DB::raw('count(*) as total_bought'))
+        // ->groupBy('sepatu.sepatu_id','sepatu.sepatu_name')
+        // ->orderByDesc('total_bought')
         // ->get();
 
         $listSepatu = DB::table('sepatu')
-        ->join('dtrans_penjualan', 'sepatu.sepatu_id', '=', 'dtrans_penjualan.fk_sepatu')
-        ->select('sepatu.sepatu_id','sepatu.sepatu_name', DB::raw('count(*) as total_bought'))
-        ->groupBy('sepatu.sepatu_id','sepatu.sepatu_name')
+        ->join('detail_sepatu', 'sepatu.sepatu_id', '=', 'detail_sepatu.fk_sepatu')
+        ->join('dtrans_penjualan', 'detail_sepatu.detail_sepatu_id', '=', 'dtrans_penjualan.fk_detail_sepatu')
+        ->select('sepatu.sepatu_id', 'sepatu.sepatu_name', DB::raw('SUM(dtrans_penjualan.dtrans_penjualan_qty) as total_bought'))
+        ->groupBy('sepatu.sepatu_id', 'sepatu.sepatu_name')
         ->orderByDesc('total_bought')
         ->get();
 
