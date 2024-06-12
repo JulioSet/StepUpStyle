@@ -42,17 +42,28 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach ($listretur as $item)
+                    <?php
+                        $namaFilePhotosJson = $item->retur_foto;
+                        $namaFilePhotos = json_decode($namaFilePhotosJson, true);
+                    ?>
                     <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td><img src="{{ Storage::url("photo/$item->retur_foto") }}" alt="" width="100%" ></td>
-                        <td>{{$item->dtrans->htrans->htrans_penjualan_id}}</td>
-                        <td>{{$item->sepatu->sepatu_name}}</td>
-                        <td>{{$item->retur_price}}</td>
-                        <td>{{$item->retur_qty}}</td>
-                        <td>{{$item->retur_reason}}</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>
+                            @foreach ($namaFilePhotos as $photo)
+                            <img class="p-2" src="{{ Storage::url('retur/' . $photo) }}" alt="" width="40%" height="40%">
+                            @endforeach
+                        </td>
+                        <td>{{ $item->dtrans->htrans->htrans_penjualan_id }}</td>
+                        <td>{{ $item->sepatu->sepatu_name }}</td>
+                        <td>{{ $item->retur_price }}</td>
+                        <td>{{ $item->retur_qty }}</td>
+                        <td>{{ $item->retur_reason }}</td>
                     </tr>
                     @endforeach
+                    
+                    
                 </tbody>
             </table>
         </div>
