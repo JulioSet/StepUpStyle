@@ -50,7 +50,7 @@ class laporanController extends Controller
         $end=$request->input('enddate');
 
         $cektanggal = retur::whereBetween('created_at', [$start, $end])
-                    ->where('retur_status', 2)
+                    ->where('retur_status', 1)
                     ->get();
 
         return view('owner.Laporan.Laporanretur',['listretur'=>$cektanggal]);
