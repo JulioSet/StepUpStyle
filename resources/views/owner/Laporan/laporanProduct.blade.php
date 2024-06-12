@@ -20,13 +20,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $counter = 1; @endphp
                     @foreach ($listproduct as $item)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$item->sepatu_name}}</td>
-                        <td>{{$item->sepatu_color}}</td>
-                        <td>{{$item->detail->detail_sepatu_stok}}</td>
-                        <td>{{$item->sepatu_stock}}</td>
+                        @foreach ($item->details as $detail)
+                        <tr>
+                            <td>{{$counter }}</td> 
+                            <td>{{$item->sepatu_name}}</td>
+                            <td>{{$item->sepatu_color}}</td>
+                            <td>{{$detail->detail_sepatu_ukuran}}</td>
+                            <td>{{$detail->detail_sepatu_stok}}</td>
+                        </tr>
+                        @php $counter++; @endphp
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>
