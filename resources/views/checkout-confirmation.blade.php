@@ -69,8 +69,6 @@
 						<ul class="list">
 							<li><a href="#"><span>Service</span> : {{ $transaction->service}}</a></li>
 							<li><a href="#"><span>ETD</span> : {{ $transaction->etd }} Day</a></li>
-							<li><a href="#"><span>Price</span> : {{ formatCurrencyIDR($transaction->service_price) }}</a></li>
-							{{-- <li><a href="#"><span>Payment method</span> : Check payments</a></li> --}}
 						</ul>
 					</div>
 				</div>
@@ -98,7 +96,6 @@
 						<tbody>
 							@php
 								$listProducts = $transaction->dtrans()->get();
-                                $subtotalProducts = 0;
 							@endphp
 
 							@foreach ($listProducts as $dtrans)
@@ -152,19 +149,28 @@
 									</td>
 									<td class="align-middle">
                                         <h5> {{ formatCurrencyIDR( $dtrans->dtrans_penjualan_subtotal) }} </h5>
-                                        @php
-                                            $subtotalProducts += $dtrans->dtrans_penjualan_subtotal;
-                                        @endphp
 									</td>
 								</tr>
 							@endforeach
+
+                            <tr>
+                                <td class="align-middle d-flex">
+                                    <div class="flex-fill align-middle">
+                                        <h5>SHIPPING</h5>
+                                    </div>
+                                </td>
+                                <td class="align-middle"></td>
+                                <td class="align-middle">
+                                    <h5> {{ formatCurrencyIDR($transaction->service_price) }} </h5>
+                                </td>
+                            </tr>
 
 							<tr>
 								<td colspan="2" class="align-middle">
 									<h2 class="text-right">TOTAL</h2>
 								</td>
 								<td class="align-middle">
-									<h2>{{ formatCurrencyIDR($subtotalProducts) }}</h2>
+									<h2>{{ formatCurrencyIDR($transaction->htrans_penjualan_total) }}</h2>
 								</td>
 							</tr>
 							{{-- <tr>
