@@ -303,7 +303,7 @@ class PaymentController extends Controller
         return $this->process($cartSepatu);
     }
 
-    public function success(htrans $transaction){
+    public function success(htrans $transaction){ // sudah dibayar
         $transaction->htrans_penjualan_status = 2;
         $transaction->save();
 
@@ -311,6 +311,16 @@ class PaymentController extends Controller
         $notif->notifikasi_type = 1;
         $notif->notifikasi_content = "Ada pesanan baru dari ".$transaction->customer->user_email;
         $notif->save();
+
+        $dtrans = dtrans::select('fk_detail_sepatu')
+        ->where('fk_htrans_penjualan','=',$transaction->htrans_penjualan_id)
+        ->get();
+
+        for ($i=0; $i < sizeof($dtrans); $i++) { 
+            $sepatu = DetailSepatu::find($dtrans[$i]->fk_detail_sepatu);
+            $sepatu->detail_sepatu_stok -= $dtrans[$i]->dtrans_penjualan_qty;
+            $sepatu->save();
+        }
 
         return view('checkout-confirmation',  compact('transaction'));
     }
@@ -320,7 +330,7 @@ class PaymentController extends Controller
     }
 
     public function received(htrans $transaction){
-        $transaction->htrans_penjualan_status = 3;
+        $transaction->htrans_penjualan_status = 4;
         $transaction->save();
 
         return view('checkout-confirmation',  compact('transaction'));

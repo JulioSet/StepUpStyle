@@ -23,16 +23,21 @@
 	->where('fk_sepatu','=',$sepatu['id'])
 	->distinct()
 	->get();
+	
+	$detail = DetailSepatu::select('*')
+	->where('fk_sepatu','=',$sepatu['id'])
+	->get();
 
-	$gambar = '';
+	// $gambar = [];
 	$harga = 0;
 
-	foreach($listDetail as $key) {
-        if ($key->fk_sepatu == $sepatu['id']) {
-            $gambar = $key->detail_sepatu_gambar;
-			$harga = $key->detail_sepatu_harga;
-        }
-    }
+	// foreach($listDetail as $key) {
+    //     if ($key->fk_sepatu == $sepatu['id']) {
+    //         array_push($gambar, $key->detail_sepatu_gambar);
+	// 		// $gambar = $key->detail_sepatu_gambar;
+	// 		$harga = $key->detail_sepatu_harga;
+    //     }
+    // }
 
     foreach($listCategory as $key) {
         if ($key->kategori_id == $sepatu['kategori']) {
@@ -74,7 +79,10 @@
 			<div class="container">
 				<div class="row s_product_inner">
 					<div class="col-lg-6">
-						<img src="{{ Storage::url("photo/$gambar") }}" class="img-fluid"  alt="">
+						{{-- GAMBAR PRODUK --}}
+						
+
+						{{-- <img src="{{ Storage::url("photo/$gambar") }}" class="img-fluid"  alt=""> --}}
 					</div>
 					<div class="col-lg-5 offset-lg-1">
 						<div class="s_product_text">
