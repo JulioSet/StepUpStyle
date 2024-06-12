@@ -108,6 +108,49 @@ class PageController extends Controller
         return view('productDetail', ["sepatu" => $sepatu]);
     }
 
+    function getSizeDetail($id, $size)
+    {
+        $temp = DetailSepatu::select('*')
+        ->where('fk_sepatu','=',$id)
+        ->where('detail_sepatu_ukuran','=',$size)
+        ->orderBy('detail_sepatu_ukuran')
+        ->get();
+
+        $listcolor = array();
+        $price = 0;
+        $stock = 0;
+        foreach ($temp as $key => $item) {
+            if ($key == 0) {
+                $price = $item->detail_sepatu_harga;
+                $stock = $item->detail_sepatu_stok;
+            }
+            $listcolor[] = [
+                'nama' => $item->detail_sepatu_warna
+            ];
+        }
+
+        return response()->json([
+            'listcolor' => $listcolor ?? [],
+            'price' => $price,
+            'stock' => $stock
+        ]);
+    }
+
+    function getColorDetail($id, $size, $color)
+    {
+        $temp = DetailSepatu::select('*')
+        ->where('fk_sepatu','=',$id)
+        ->where('detail_sepatu_ukuran','=',$size)
+        ->where('detail_sepatu_warna','=',$color)
+        ->get();
+        $price = $temp[0]['detail_sepatu_harga'];
+        $stock = $temp[0]['detail_sepatu_stok'];
+        return response()->json([
+            'price' => $price,
+            'stock' => $stock
+        ]);
+    }
+
     public function viewNewArrival(){
         //select DB
         $page = "New Arrival";

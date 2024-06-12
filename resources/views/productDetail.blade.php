@@ -16,20 +16,23 @@
 
 	$listSize = DetailSepatu::select('detail_sepatu_ukuran')
 	->where('fk_sepatu','=',$sepatu['id'])
+    ->orderBy('detail_sepatu_ukuran')
 	->distinct()
 	->get();
 
 	$listWarna = DetailSepatu::select('detail_sepatu_warna')
 	->where('fk_sepatu','=',$sepatu['id'])
-	->distinct()
+    ->where('detail_sepatu_ukuran','=',$listSize[0]['detail_sepatu_ukuran'])
 	->get();
-	
+
 	$detail = DetailSepatu::select('*')
 	->where('fk_sepatu','=',$sepatu['id'])
+    ->orderBy('detail_sepatu_ukuran')
 	->get();
 
 	// $gambar = [];
-	$harga = 0;
+	$harga = $detail[0]['detail_sepatu_harga'];
+	$stok = $detail[0]['detail_sepatu_stok'];
 
 	// foreach($listDetail as $key) {
     //     if ($key->fk_sepatu == $sepatu['id']) {
@@ -54,7 +57,7 @@
 @endphp
 
 @section('content')
-
+    <input type="hidden" id="id" value="{{$sepatu['id']}}">
 	<!-- Start Banner Area -->
 	<section class="banner-area organic-breadcrumb">
 		<div class="container">
@@ -80,7 +83,7 @@
 				<div class="row s_product_inner">
 					<div class="col-lg-6">
 						{{-- GAMBAR PRODUK --}}
-						
+
 
 						{{-- <img src="{{ Storage::url("photo/$gambar") }}" class="img-fluid"  alt=""> --}}
 					</div>
@@ -88,7 +91,7 @@
 						<div class="s_product_text">
 							<input type="hidden" name="sepatu_id" value="{{ $sepatu['id'] }}">
 							<h3>{{ $sepatu['name'] }}</h3>
-							<h2>{{ formatCurrencyIDR($harga) }}</h2>
+							<h2 id="price">{{ formatCurrencyIDR($harga) }}</h2>
 							<ul class="list">
 								<li><a class="active" href="category/{{$sepatu['kategori']}}"><span>Category</span> : {{ $kategori }}</a></li>
 								<li><a class="active" href="brand/{{$sepatu['supplier']}}"><span>Brand</span> : {{ $brand }}</a></li>
@@ -96,16 +99,16 @@
 							<p>
 								{{ $sepatu['name'] }} <br>
 								Size : <br>
-									<select name="size" style="height:10vh;width:15vw">
+									<select id="size" name="size" style="height:10vh;width:15vw">
 										@foreach ($listSize as $key => $size)
-											<option id="{{ $size->detail_sepatu_ukuran }}"  value="{{ $size->detail_sepatu_ukuran }}">{{ $size->detail_sepatu_ukuran }}</option>
+											<option id="{{ $size->fk_sepatu }}"  value="{{ $size->detail_sepatu_ukuran }}">{{ $size->detail_sepatu_ukuran }}</option>
 										@endforeach
-									</select>	
+									</select>
 								<br> <br>
 								Color : <br>
-								<select name="color" id="">
+								<select id="color" name="color">
 									@foreach ($listWarna as $key => $warna)
-										<option id="{{ $warna->detail_sepatu_warna }}"  value="{{ $warna->detail_sepatu_warna }}"> {{ $warna->detail_sepatu_warna }}</option>
+										<option id="{{ $warna->fk_sepatu }}"  value="{{ $warna->detail_sepatu_warna }}"> {{ $warna->detail_sepatu_warna }}</option>
 									@endforeach
 								</select>
 								<div class="product_count">
@@ -117,7 +120,7 @@
 										class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
 								</div>
 								<br> <br>
-								Stock : {{ $sepatu['stock'] }}
+								Stock : <span id="stock">{{ $stok }}</span>
 							</p>
 							<div class="card_area d-flex align-items-center">
 								<button type="submit" name="cart" class="icon_btn border-0"><i class="ti-bag"></i></button>
@@ -145,8 +148,63 @@
 	<!-- Start related-product Area -->
 
 	@include('layout.deals-of-the-week')
-	
+
 	<!-- End related-product Area -->
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        // IDR CONVERTER
+        function formatCurrencyIDR(amount) {
+            // Fix number of decimals and round if necessary
+            amount = Math.round(amount * 100) / 100;
+
+            // Separate integer and decimal parts
+            const parts = amount.toString().split('.');
+
+            // Format integer part with commas for thousands
+            let integerPart = parts[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+
+            // Handle decimals (if any)
+            const decimalPart = parts.length > 1 ? `.${parts[1].slice(0, 2)}` : ''; // Limit to 2 decimals
+
+            // Combine and return formatted string
+            return `Rp ${integerPart}${decimalPart}`;
+        }
+
+        $(document).ready(function() {
+            $('#size').on('change', function() {
+                var id = $('#id').val();
+                var size = $(this).val();
+
+                $.ajax({
+                    url: '/get-size-detail/' + id + '/' + size,
+                    success: function(data) {
+                        $('#color').empty(); // Clear existing options
+                        $.each(data.listcolor, function(key, color) {
+                            $('#color').append('<option value="' + color.nama + '">' + color.nama + '</option>');
+                        });
+                        $('#color').niceSelect('destroy');
+                        $('#color').niceSelect();
+                        $('#price').text(formatCurrencyIDR(data.price));
+                        $('#stock').text(data.stock);
+                    }
+                });
+            });
+
+            $('#color').on('change', function() {
+                var id = $('#id').val();
+                var size = $('#size').val();
+                var color = $(this).val();
+
+                $.ajax({
+                    url: '/get-color-detail/' + id + '/' + size + '/' + color,
+                    success: function(data) {
+                        $('#price').text(formatCurrencyIDR(data.price));
+                        $('#stock').text(data.stock);
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection

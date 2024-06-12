@@ -37,6 +37,8 @@ Route::get('/flush', function () {
 });
 
 Route::get('/get-sub-items/{id}', [PageController::class, 'getSubKategori']);
+Route::get('/get-size-detail/{id}/{size}', [PageController::class, 'getSizeDetail']);
+Route::get('/get-color-detail/{id}/{size}/{color}', [PageController::class, 'getColorDetail']);
 Route::post('/backPage', [PageController::class, 'backPage'])->name('back-page');
 
 // SHIPPING
