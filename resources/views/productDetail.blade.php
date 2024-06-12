@@ -30,7 +30,7 @@
     ->orderBy('detail_sepatu_ukuran')
 	->get();
 
-	// $gambar = [];
+	$gambar = $detail[0]['detail_sepatu_pict'];
 	$harga = $detail[0]['detail_sepatu_harga'];
 	$stok = $detail[0]['detail_sepatu_stok'];
 
@@ -82,10 +82,7 @@
 			<div class="container">
 				<div class="row s_product_inner">
 					<div class="col-lg-6">
-						{{-- GAMBAR PRODUK --}}
-
-
-						{{-- <img src="{{ Storage::url("photo/$gambar") }}" class="img-fluid"  alt=""> --}}
+						<img src="{{ Storage::url("photo/$gambar") }}" id="picture" class="img-fluid" alt="">
 					</div>
 					<div class="col-lg-5 offset-lg-1">
 						<div class="s_product_text">
@@ -187,6 +184,7 @@
                         $('#color').niceSelect();
                         $('#price').text(formatCurrencyIDR(data.price));
                         $('#stock').text(data.stock);
+                        $('#picture').attr('src', '/storage/photo/' + data.picture);
                     }
                 });
             });
@@ -201,6 +199,8 @@
                     success: function(data) {
                         $('#price').text(formatCurrencyIDR(data.price));
                         $('#stock').text(data.stock);
+                        $('#picture').attr('src', '/storage/photo/' + data.picture);
+                        console.log($('#picture'));
                     }
                 });
             });

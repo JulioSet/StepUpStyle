@@ -119,10 +119,12 @@ class PageController extends Controller
         $listcolor = array();
         $price = 0;
         $stock = 0;
+        $picture = "";
         foreach ($temp as $key => $item) {
             if ($key == 0) {
                 $price = $item->detail_sepatu_harga;
                 $stock = $item->detail_sepatu_stok;
+                $picture = $item->detail_sepatu_pict;
             }
             $listcolor[] = [
                 'nama' => $item->detail_sepatu_warna
@@ -132,7 +134,8 @@ class PageController extends Controller
         return response()->json([
             'listcolor' => $listcolor ?? [],
             'price' => $price,
-            'stock' => $stock
+            'stock' => $stock,
+            'picture' => $picture
         ]);
     }
 
@@ -145,9 +148,11 @@ class PageController extends Controller
         ->get();
         $price = $temp[0]['detail_sepatu_harga'];
         $stock = $temp[0]['detail_sepatu_stok'];
+        $picture = $temp[0]->detail_sepatu_pict;
         return response()->json([
             'price' => $price,
-            'stock' => $stock
+            'stock' => $stock,
+            'picture' => $picture
         ]);
     }
 
