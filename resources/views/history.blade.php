@@ -69,8 +69,10 @@
                                         @elseif ($item->htrans_penjualan_status == 1)
                                             <a href="{{ route('checkout-details', $item->htrans_penjualan_id) }}" class="genric-btn radius small primary py-2" style="font-size: 1em; line-height: 15px">Waiting for Payment</a>
                                         @elseif ($item->htrans_penjualan_status == 2)
-                                            <a href="{{ route('checkout-details', $item->htrans_penjualan_id) }}" class="genric-btn radius small info py-2" style="font-size: 1em; line-height: 15px">Delivery in Progress</a>
+                                            <a href="{{ route('checkout-details', $item->htrans_penjualan_id) }}" class="genric-btn radius small py-2 btn-light" style="font-size: 1em; line-height: 15px">Processing Orders</a>
                                         @elseif ($item->htrans_penjualan_status == 3)
+                                            <a href="{{ route('checkout-details', $item->htrans_penjualan_id) }}" class="genric-btn radius small info py-2" style="font-size: 1em; line-height: 15px">Delivery in Progress</a>
+                                        @elseif ($item->htrans_penjualan_status == 4)
                                             <a href="{{ route('checkout-details', $item->htrans_penjualan_id) }}" class="genric-btn radius small btn-success py-2" style="font-size: 1em; line-height: 15px">Product Received</a>
                                         @endif
                                     </td>

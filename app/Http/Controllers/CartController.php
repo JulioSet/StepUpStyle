@@ -62,18 +62,31 @@ class CartController extends Controller
         return redirect('/cart');
     }
 
+    public function deleteCart($id){
+        $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
+        $updatedCart = [];
+
+        for ($i=0 ; $i < count($cartSepatu) ; $i++) {
+            if ($cartSepatu[$i]['detail_id'] == $id ) {
+                array_splice($cartSepatu, $i, 1);
+                Cookie::queue('cartSepatu', json_encode($cartSepatu));
+                return redirect('/cart');
+            }
+        }
+    }
+
     public function substractQty($id){
         $cartSepatu = json_decode(Cookie::get('cartSepatu'), true);
         $updatedCart = [];
 
         for ($i=0 ; $i < count($cartSepatu) ; $i++) {
-            if ($cartSepatu[$i]['detail_id'] == $id && $cartSepatu[$i]['qty'] > 0) {
+            if ($cartSepatu[$i]['detail_id'] == $id && $cartSepatu[$i]['qty'] > 1) {
                 $cartSepatu[$i]['qty'] -= 1;
-                if ($cartSepatu[$i]['qty'] == 0){
-                    array_splice($cartSepatu, $i, 1);
-                    Cookie::queue('cartSepatu', json_encode($cartSepatu));
-                    return redirect('/cart');
-                }
+                // if ($cartSepatu[$i]['qty'] == 0){
+                //     array_splice($cartSepatu, $i, 1);
+                //     Cookie::queue('cartSepatu', json_encode($cartSepatu));
+                //     return redirect('/cart');
+                // }
             }
             array_push($updatedCart, $cartSepatu[$i]);
         }

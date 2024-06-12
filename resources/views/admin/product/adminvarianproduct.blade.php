@@ -27,7 +27,7 @@
                         @if ($item->deleted_at == null)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td><img src="{{ Storage::url("photo/$item->detail_sepatu_pict") }}" alt="" width="100%" ></td>
+                            <td><img src="{{ Storage::url("photo/$item->detail_sepatu_pict") }}" alt="" width="150px" ></td>
                             <td>{{$item->detail_sepatu_ukuran}}</td>
                             <td>{{$item->detail_sepatu_stok}}</td>
                             <td>{{ formatCurrencyIDR($item->detail_sepatu_harga) }}</td>

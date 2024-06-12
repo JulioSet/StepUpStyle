@@ -214,6 +214,7 @@ Route::middleware(['authuser'])->group(function () {
         Route::get('/add/{id}/{size}/{color}/{qty}', [CartController::class, 'addToCart'])->name("add-to-cart");
         Route::get('/up/{id}', [CartController::class, 'addQty'])->name("increase-cart-qty");
         Route::get('/down/{id}', [CartController::class, 'substractQty'])->name("reduced-cart-qty");
+        Route::get('/delete/{id}', [CartController::class, 'deleteCart'])->name("delete-cart");
     });
 
     // Route::get('/checkout', [PageController::class, 'viewCheckout']); // nampilin halaman payment
