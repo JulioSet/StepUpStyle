@@ -51,14 +51,14 @@
                 </thead>
                 <tbody>
                     @foreach ($listdtrans as $item)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$item->sepatu->sepatu_name}}</td>
-                        <td>{{$item->sepatu->ukuran->ukuran_sepatu_nama}}</td>
-                        <td>{{$item->dtrans_penjualan_qty}}</td>
-                        <td>{{formatCurrencyIDR($item->dtrans_penjualan_price)}}</td>
-                        <td>{{formatCurrencyIDR($item->dtrans_penjualan_subtotal)}}</td>
-                    </tr>
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$item->detail->sepatu->sepatu_name}}</td>
+                            <td>{{$item->detail->ukuran_sepatu_nama}}</td>
+                            <td>{{$item->dtrans_penjualan_qty}}</td>
+                            <td>{{formatCurrencyIDR($item->dtrans_penjualan_price)}}</td>
+                            <td>{{formatCurrencyIDR($item->dtrans_penjualan_subtotal)}}</td>
+                        </tr>
                     @endforeach
                     <tr>
                         <td colspan="5"><b>Grand Total</b></td>
