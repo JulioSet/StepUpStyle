@@ -376,7 +376,7 @@ class AdminController extends Controller
         $varian->detail_sepatu_warna = $request->input('warna');
         $varian->detail_sepatu_ukuran= $request->input('ukuran');
         $varian->detail_sepatu_stok = $request->input('stock');
-        $varian->detail_sepatu_harga = $request->input('harga');
+        $varian->detail_sepatu_harga = str_replace(',','',$request->input('harga'));
         $varian->save();
 
         return redirect()->route('viewVarianProduct', ['id' => $request->id]);
