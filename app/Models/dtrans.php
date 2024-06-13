@@ -34,5 +34,11 @@ class dtrans extends Model
     // {
     // return $this->hasMany(DetailSepatu::class, 'fk_dtrans_penjualan', 'dtrans_penjualan_id');
     // }
+    
+    public function sepatu()
+    {
+        return $this->hasOneThrough(Sepatu::class, DetailSepatu::class, 'detail_sepatu_id', 'sepatu_id', 'fk_detail_sepatu', 'fk_sepatu');
+    }
+
 
 }
