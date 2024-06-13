@@ -35,6 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @dd($listWishlist)
                         @forelse ($listWishlist as $c)
                             <tr>
                                 <td>
@@ -44,7 +45,8 @@
                                                 <img class="img-fluid" src="{{ Storage::url("photo/$c->shoe->details->detail_sepatu_pict") }}" alt="">
                                             </div>
                                             <div class="media-body">
-                                                <h4>{{ $c->shoe->sepatu_name }}</h4>
+                                                {{-- <h4>{{ $c->shoe->sepatu_name }}</h4> --}}
+                                                {{-- <h4>{{ $c->sepati }}</h4> --}}
                                             </div>
                                         </div>
                                     </a>

@@ -16,16 +16,6 @@
     <div class="row">
         @forelse ($listSepatu as $key=>$sepatu)
         <!-- single product -->  
-                {{-- @foreach ($listDetail as $key => $detail) 
-                    @if ($detail->detail_sepatu_id == $sepatu->sepatu_id)
-                        @php
-                            $price = $detail->detail_sepatu_harga ;
-                            $gambar = $detail->detail_sepatu_gambar ; 
-                        @endphp
-                    @endif
-                @endforeach --}}
-                {{-- <dd>{{$sepatu->details}}</dd> --}}
-                
                 @php
                     $price = $sepatu->details[0]->detail_sepatu_harga ;
                     $gambar =  $sepatu->details[0]->detail_sepatu_pict ; 
@@ -34,7 +24,7 @@
                 <a href="{{ route('product-detail', $sepatu->sepatu_id) }}">
                 <div class="col-lg-4 col-md-6">
                     <div class="single-product" style="width: max-content">
-                    <img class="img-fluid" style="width: 200px; height: 200px;" src="{{ Storage::url("photo/$gambar") }}" alt="" >
+                    <img class="img-fluid object-fit-cover" style="width: 15vw; height: 30vh;" src="{{ Storage::url("photo/$gambar") }}" alt="" >
                         <div class="product-details">
                             <h6>{{ $sepatu->sepatu_name }}</h6>
                             <div class="price">
