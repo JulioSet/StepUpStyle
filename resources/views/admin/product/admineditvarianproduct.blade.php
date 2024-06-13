@@ -17,8 +17,8 @@
                 <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="gambar" name="foto">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        <input type="file" class="custom-file-input" id="gambar" name="foto" value="{{$varian->sepatu->details->first()->detail_sepatu_pict}}">
+                        <label class="custom-file-label" for="exampleInputFile">{{$varian->sepatu->details->first()->detail_sepatu_pict}}"</label>
                         <span style="color: red;">{{ $errors->first('foto') }}</span>
                     </div>
                 </div>
@@ -41,19 +41,19 @@
                 <!-- Ukuran -->
                 <div class="mb-3">
                     <label for="ukuran" class="form-label">Ukuran</label>
-                    <input type="text" class="form-control" id="ukuran" name="ukuran" placeholder="Masukkan Ukuran">
+                    <input type="text" class="form-control" id="ukuran" name="ukuran" placeholder="Masukkan Ukuran" value="{{$varian->sepatu->details->first()->detail_sepatu_ukuran}}">
                 </div>
 
                 <!-- Stok -->
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock</label>
-                    <input type="text" class="form-control" id="stock" name="stock" placeholder="Masukkan Stok">
+                    <input type="text" class="form-control" id="stock" name="stock" placeholder="Masukkan Stok" value="{{$varian->sepatu->details->first()->detail_sepatu_stok}}">
                 </div>
 
                 <!-- Harga -->
                 <div class="mb-3">
                     <label for="harga" class="form-label">Harga</label>
-                    <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga">
+                    <input type="text" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga" value="{{$varian->sepatu->details->first()->detail_sepatu_harga}}">
                 </div>
 
                 <!-- Tombol Submit -->
