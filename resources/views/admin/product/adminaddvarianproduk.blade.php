@@ -34,6 +34,8 @@
                         <option value="Biru">Biru</option>
                         <option value="Hijau">Hijau</option>
                         <option value="Kuning">Kuning</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Cream">Cream</option>
                         <!-- Tambahkan opsi warna lainnya sesuai kebutuhan -->
                     </select>
                     <span style="color: red;">{{ $errors->first('warna') }}</span>
