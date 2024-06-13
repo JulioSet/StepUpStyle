@@ -31,7 +31,7 @@
                         <form class="row login_form" action="{{ route('user-edit') }}" method="post" id="profile" enctype="multipart/form-data">
                         @csrf
                             <div class="col-md-12 form-group">
-                                <img src="{{ Storage::url("photo/$userLoggedIn[profile]") }}" alt="" style="width:7vw; height:15vh; border-radius:100%;">
+                                <img src="{{ Storage::url("photo/$userLoggedIn[profile]") }}" class="object-fit-cover" alt="" style="width:7vw; height:15vh; border-radius:100%;">
                                 <br><input type="file" name="profile_picture[]" id="">
                                 <span style="color: red;">{{ $errors->first('profile_picture') }}</span>
 							</div>	
