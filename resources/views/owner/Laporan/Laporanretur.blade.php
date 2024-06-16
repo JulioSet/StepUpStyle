@@ -7,6 +7,11 @@
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Laporan Retur</h3>
+                <div class="ml-auto align-end">
+                    <a href="{{route("viewPDFRetur")}}">
+                        <button class="btn btn-primary"> PDF</button>
+                    </a>
+                </div>
             </div>
             <form action="{{route("filterR")}}" method="post" class="mb-3">
                 @csrf
@@ -52,7 +57,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>
                             @foreach ($namaFilePhotos as $photo)
-                            <img class="p-2" src="{{ Storage::url('retur/' . $photo) }}" alt="" width="40%" height="40%">
+                            <img class="p-2" src="{{ Storage::url('retur/' . $photo) }}" alt="" width="100%" height="100%">
                             @endforeach
                         </td>
                         <td>{{ $item->dtrans->htrans->htrans_penjualan_id }}</td>

@@ -7,6 +7,11 @@
         <div class="card-body w-100 ">
             <div class="d-flex container-fluid p-2">
                 <h3>Laporan Product</h3>
+                <div class="ml-auto align-end">
+                    <a href="{{route("viewPDFProduk")}}">
+                        <button class="btn btn-primary"> PDF</button>
+                    </a>
+                </div>
             </div>
             <table id="myTable" class="table table-bordered">
                 <thead>
@@ -26,7 +31,7 @@
                         <tr>
                             <td>{{$counter }}</td> 
                             <td>{{$item->sepatu_name}}</td>
-                            <td>{{$item->sepatu_color}}</td>
+                            <td>{{$detail->detail_sepatu_warna}}</td>
                             <td>{{$detail->detail_sepatu_ukuran}}</td>
                             <td>{{$detail->detail_sepatu_stok}}</td>
                         </tr>
