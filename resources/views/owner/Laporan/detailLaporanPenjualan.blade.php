@@ -36,7 +36,7 @@
                         <h5 class="p-2">: {{$item->created_at->format('d M Y')}}</h5>
                     </div>
                 </div>
-                @endforeach
+                
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -54,7 +54,7 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$item->detail->sepatu->sepatu_name}}</td>
-                            <td>{{$item->detail->ukuran_sepatu_nama}}</td>
+                            <td>{{$item->detail->detail_sepatu_warna}}</td>
                             <td>{{$item->dtrans_penjualan_qty}}</td>
                             <td>{{formatCurrencyIDR($item->dtrans_penjualan_price)}}</td>
                             <td>{{formatCurrencyIDR($item->dtrans_penjualan_subtotal)}}</td>
@@ -66,6 +66,13 @@
                     </tr>
                 </tbody>
             </table>
+            <div class=" pt-5 ml-auto align-end">
+                {{-- @dd($item->htrans->htrans_penjualan_id) --}}
+                <a href="{{route("viewPDF",$item->htrans->htrans_penjualan_id)}}">
+                    <button class="btn btn-primary"> PDF</button>
+                </a>
+            </div>
+            @endforeach
         </div>
     </div>
 </div>

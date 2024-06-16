@@ -52,6 +52,10 @@ Route::middleware(['authowner'])->group(function () {
             Route::get('/', [PageController::class, 'viewLaporanPenjualan']);
             Route::post('/', [laporanController::class, 'filterLaporanPenjualan'])->name("filter");
             Route::get('/detail/{id}', [PageController::class, 'viewDetailLaporanPenjualan'])->name("detail");
+            Route::get('/viewpdf/{id}', [laporanController::class, 'viewPDF'])->name("viewPDF");
+            Route::get('/viewpdfPenjualan', [laporanController::class, 'viewPDF2'])->name("viewPDFPenjualan");
+            Route::get('/viewpdfProduk', [laporanController::class, 'viewPDF3'])->name("viewPDFProduk");
+            Route::get('/viewpdfRetur', [laporanController::class, 'viewPDF4'])->name("viewPDFRetur");
         });
 
         Route::prefix('retur')->group(function () {
