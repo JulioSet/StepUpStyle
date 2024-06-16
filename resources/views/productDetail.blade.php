@@ -82,7 +82,7 @@
 			<div class="container">
 				<div class="row s_product_inner">
 					<div class="col-lg-6">
-						<img src="{{ Storage::url("photo/$gambar") }}" id="picture" class="img-fluid" alt="">
+						<img src="{{ Storage::url("photo/$gambar") }}" style="width: 25vw; height: 50vh" id="picture" class="object-fit-cover img-fluid" alt="">
 					</div>
 					<div class="col-lg-5 offset-lg-1">
 						<div class="s_product_text">
