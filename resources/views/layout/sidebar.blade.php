@@ -93,7 +93,7 @@
                     <input type="text" name="max_price" placeholder="Max Price">
                 </ul>
             </div>
-            <button class="primary-btn" type="submit" style="width:100%;text-align:center">Filter</button>
+            <button class="primary-btn" type="submit" style="width:100%;text-align:center; border: 0">Filter</button>
         </div>
     </form>
 </div>

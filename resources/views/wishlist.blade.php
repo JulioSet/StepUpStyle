@@ -35,17 +35,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @dd($listWishlist)
+                            {{-- @dd($listWishlist) --}}
                         @forelse ($listWishlist as $c)
                             <tr>
                                 <td>
                                     <a href="{{ route('product-detail', $c->fk_sepatu) }}">
                                         <div class="media">
                                             <div class="d-flex col-4">
-                                                <img class="img-fluid" src="{{ Storage::url("photo/$c->shoe->details->detail_sepatu_pict") }}" alt="">
+                                                {{-- <img class="img-fluid" src="{{ Storage::url("photo/$c->shoe->details->detail_sepatu_pict") }}" alt=""> --}}
+                                                @php
+                                                    $sepatu = DetailSepatu::where('fk_sepatu','=',$c->fk_sepatu)->get()
+                                                    // $g = $sepatu[0]->detail_sepatu_pict
+                                                @endphp
+                                                <img class="img-fluid" src="{{ Storage::url("photo/$sepatu[0]->detail_sepatu_pict") }}" alt="">
                                             </div>
                                             <div class="media-body">
-                                                {{-- <h4>{{ $c->shoe->sepatu_name }}</h4> --}}
+                                                <h4>{{ $c->shoe->sepatu_name }}</h4>
                                                 {{-- <h4>{{ $c->sepati }}</h4> --}}
                                             </div>
                                         </div>

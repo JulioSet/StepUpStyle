@@ -31,7 +31,7 @@ class chartPenjualan
     
         $salesData = Htrans::where('htrans_penjualan_status', 2)
             ->whereBetween('created_at', [$start, $end])
-            ->get()
+            ->get()->sortBy('created_at')
             ->groupBy(function($date) {
                 return Carbon::parse($date->created_at)->format('d');
             })
