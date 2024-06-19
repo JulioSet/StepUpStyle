@@ -21,31 +21,34 @@
 	<!--================Contact Area =================-->
 	<section class="contact_area section_gap_bottom">
 		<div class="container">
-			<div id="mapBox" class="mapBox" data-lat="40.701083" data-lon="-74.1522848" data-zoom="13" data-info="PO Box CT16122 Collins Street West, Victoria 8007, Australia."
+			{{-- <div id="mapBox" class="mapBox" data-lat="40.701083" data-lon="-74.1522848" data-zoom="13" data-info="PO Box CT16122 Collins Street West, Victoria 8007, Australia."
 			 data-mlat="40.701083" data-mlon="-74.1522848">
+			</div> --}}
+			<div class="flex justify-center m-5">
+				<img src="{{ Storage::url("photo/map.jpg") }}" style="width: 50vw" class="object-fit-cover justify-center" alt="">
 			</div>
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="contact_info">
-						<div class="info_item">
+			<div class="row W-100">
+				{{-- <div class="col-lg-3 row"> --}}
+					<div class="contact_info row  justify-content-between">
+						<div class="info_item mr-5">
 							<i class="lnr lnr-home"></i>
-							<h6>California, United States</h6>
-							<p>Santa monica bullevard</p>
+							<h6>Surabaya, East Java 60261</h6>
+							<p>Jl. Basuki Rahmat No.8-12, Kedungdoro, Tegalsari</p>
 						</div>
-						<div class="info_item">
+						<div class="info_item mr-5">
 							<i class="lnr lnr-phone-handset"></i>
-							<h6><a href="#">00 (440) 9865 562</a></h6>
+							<h6><a href="#">+62 895 9500 898</a></h6>
 							<p>Mon to Fri 9am to 6 pm</p>
 						</div>
 						<div class="info_item">
 							<i class="lnr lnr-envelope"></i>
-							<h6><a href="#">support@colorlib.com</a></h6>
-							<p>Send us your query anytime!</p>
+							<h6><a href="#">support@stepinshoes.com</a></h6>
+							<p>Send us your message anytime!</p>
 						</div>
 					</div>
-				</div>
-				<div class="col-lg-9">
-					<form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+				{{-- </div>
+				<div class="col-lg-9"> --}}
+					{{-- <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
 						<div class="col-md-6">
 							<div class="form-group">
 								<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'">
@@ -65,8 +68,8 @@
 						<div class="col-md-12 text-right">
 							<button type="submit" value="submit" class="primary-btn">Send Message</button>
 						</div>
-					</form>
-				</div>
+					</form> --}}
+				{{-- </div> --}}
 			</div>
 		</div>
 	</section>

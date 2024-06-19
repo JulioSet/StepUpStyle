@@ -111,7 +111,7 @@
 													<p>Size : {{ $dtrans->detail->detail_sepatu_ukuran }}</p>
 													<p>Color : {{ $dtrans->detail->detail_sepatu_warna }}</p>
 												</div>
-												@if ($transaction->htrans_penjualan_status == 3)
+												@if ($transaction->htrans_penjualan_status == 4)
 												<div class="col-4 text-center">
 													@if ($dtrans->dtrans_penjualan_retur == null)
                                                         <a href="{{ route('form-retur', $dtrans->dtrans_penjualan_id) }}" class="genric-btn info radius py-1" style="line-height: 12px" id="pay-button">

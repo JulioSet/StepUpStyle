@@ -57,7 +57,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>
                             @foreach ($namaFilePhotos as $photo)
-                            <img class="p-2" src="{{ Storage::url('retur/' . $photo) }}" alt="" width="100%" height="100%">
+                            <img class="p-2" src="{{ Storage::url('retur/' . $photo) }}" alt="" width="25%" height="25%">
                             @endforeach
                         </td>
                         <td>{{ $item->dtrans->htrans->htrans_penjualan_id }}</td>

@@ -30,7 +30,7 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>@foreach ($namaFilePhotos as $items)
-                        <img class="p-2" src="{{ Storage::url("retur/$items") }}" alt="" width="40%" height="40%" >
+                        <img class="p-2" src="{{ Storage::url("retur/$items") }}" alt="" width="30%" height="30%" >
                         @endforeach</td>
                         <td>{{ $item->sepatu->sepatu_name }}</td>
                         <td>{{ $item->user->user_email }}</td>
